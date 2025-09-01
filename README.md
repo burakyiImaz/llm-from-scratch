@@ -1,6 +1,6 @@
 
 
-# MasterTokenizer — Day 1 README (EN)
+# 1-MasterTokenizer 
 
 ## Purpose
 `MasterTokenizer` uses a vocabulary file (`tokenizer.json`) to split text into subwords, convert them into token IDs, apply padding to a fixed length, and decode them back to text.
