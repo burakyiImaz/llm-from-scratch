@@ -1,5 +1,7 @@
-#LLM-FROM-SCRATCH
-# 1-MasterTokenizer
+Here’s a clean **Day 1 README in English** for your tokenizer project. I kept it short and beginner-friendly since you’ll add more details day by day.
+
+````markdown
+# MasterTokenizer — Day 1 README (EN)
 
 ## Purpose
 `MasterTokenizer` uses a vocabulary file (`tokenizer.json`) to split text into subwords, convert them into token IDs, apply padding to a fixed length, and decode them back to text.
@@ -26,4 +28,35 @@ Vocabulary (excerpt):
   "!": 13,
   " ": 14
 }
+````
 
+Input text:
+
+```
+"Merhaba dünya!"
+```
+
+Token IDs:
+
+```
+[10, 11, 14, 12, 13]
+```
+
+Decoded back:
+
+```
+"Merhaba dünya!"
+```
+
+## Visual Explanation
+
+Below diagram shows the workflow of the tokenizer using `tokenizer.json`:
+
+![Tokenizer Flow](images/tokenizer_flow.png)
+
+```
+
+---
+
+Do you want me to also generate the **`tokenizer_flow.png`** diagram for you, so you can just drop it into an `images/` folder in your repo?
+```
