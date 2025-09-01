@@ -1,4 +1,4 @@
-Here’s a clean **Day 1 README in English** for your tokenizer project. I kept it short and beginner-friendly since you’ll add more details day by day.
+
 
 ````markdown
 # MasterTokenizer — Day 1 README (EN)
@@ -52,11 +52,7 @@ Decoded back:
 
 Below diagram shows the workflow of the tokenizer using `tokenizer.json`:
 
-![Tokenizer Flow](images/tokenizer_flow.png)
+<img width="1536" height="542" alt="image" src="https://github.com/user-attachments/assets/344f134a-ba0e-4ce0-9640-e892f4c1a6d0" />
 
 ```
 
----
-
-Do you want me to also generate the **`tokenizer_flow.png`** diagram for you, so you can just drop it into an `images/` folder in your repo?
-```
