@@ -1,6 +1,5 @@
 
 
-````markdown
 # MasterTokenizer — Day 1 README (EN)
 
 ## Purpose
