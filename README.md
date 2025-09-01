@@ -50,7 +50,10 @@ Decoded back:
 
 ## Visual Explanation
 
-Below diagram shows the workflow of the tokenizer using `tokenizer.json`:
+Below diagram shows the workflow of the tokenizer
+
+<img width="474" height="534" alt="image" src="https://github.com/user-attachments/assets/cc9c0b71-d5af-439a-9c83-f271666edf8a" />
+
 
 <img width="1536" height="542" alt="image" src="https://github.com/user-attachments/assets/344f134a-ba0e-4ce0-9640-e892f4c1a6d0" />
 
