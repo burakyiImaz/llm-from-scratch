@@ -58,3 +58,73 @@ Below diagram shows the workflow of the tokenizer
 
 ```
 
+```
+
+
+## 2- MasterEmbedding with Rotary Positional Encoding
+
+
+##  Overview
+
+The module does two main things:
+
+1. **Embedding Tokens with `nn.Embedding`:**
+
+   * Maps token IDs (integers representing words/subwords) into **dense, trainable vectors**.
+   * These vectors capture **semantic meaning**: similar tokens have vectors that are closer in space.
+   * The vectors are **learned during training** via backpropagation.
+
+2. **Adding Positional Information:**
+
+   * Uses **rotary positional encoding** to encode the **position of each token** in the sequence.
+   * This allows the model to distinguish **token order**, which is essential for language understanding.
+
+---
+
+##  How It Works
+
+1. **`nn.Embedding` Step:**
+
+   * Takes a token ID and returns the corresponding **embedding vector** from a lookup table (matrix of shape `(vocab_size, embedding_dim)`).
+   * Each vector is **trainable**, so the model learns the semantic representation of tokens.
+
+2. **Rotary Positional Encoding:**
+
+   * Splits each embedding vector into **even and odd halves**.
+   * Rotates these halves using **sine and cosine functions** based on the token's position.
+   * Produces **position-aware embeddings** that encode both token meaning and order.
+
+3. **UstaEmbedding Layer:**
+
+   * Combines the embedding and positional encoding steps.
+   * Input: token IDs
+   * Output: `(batch_size, sequence_length, embedding_dim)` tensor of **position-aware embeddings**, ready for transformers.
+
+---
+
+##  Why It Matters
+
+* `nn.Embedding` converts token IDs into **continuous vectors**, allowing the model to learn **relationships between tokens**.
+* Rotary positional encoding introduces **sequence order information**, so the model can process sequences effectively.
+* Together, this forms a **core building block for transformer-based language models**.
+
+---
+
+##  Example Usage
+
+```python
+import torch
+
+embedding_layer = UstaEmbedding(vocab_size=1000, embedding_dim=64, context_length=32, device="cpu")
+tokens = torch.randint(0, 1000, (2, 32))  # batch of 2 sequences
+output = embedding_layer(tokens)           # output shape: (2, 32, 64)
+```
+
+---
+
+ **Summary:**
+`UstaEmbedding` takes token IDs and outputs **dense, position-aware embeddings**. The combination of **semantic embeddings** (`nn.Embedding`) and **rotary positional encoding** allows transformer models to understand **both what each token means and where it appears in a sequence**.
+
+
+
+
