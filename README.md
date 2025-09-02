@@ -51,7 +51,7 @@ Decoded back:
 
 Below diagram shows the workflow of the tokenizer
 
-<img width="474" height="534" alt="image" src="https://github.com/user-attachments/assets/cc9c0b71-d5af-439a-9c83-f271666edf8a" />
+<img width="1536" height="534" alt="image" src="https://github.com/user-attachments/assets/cc9c0b71-d5af-439a-9c83-f271666edf8a" />
 
 
 <img width="1536" height="542" alt="image" src="https://github.com/user-attachments/assets/344f134a-ba0e-4ce0-9640-e892f4c1a6d0" />
@@ -115,7 +115,7 @@ The module does two main things:
 ```python
 import torch
 
-embedding_layer = UstaEmbedding(vocab_size=1000, embedding_dim=64, context_length=32, device="cpu")
+embedding_layer = MasterEmbedding(vocab_size=1000, embedding_dim=64, context_length=32, device="cpu")
 tokens = torch.randint(0, 1000, (2, 32))  # batch of 2 sequences
 output = embedding_layer(tokens)           # output shape: (2, 32, 64)
 ```
