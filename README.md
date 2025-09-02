@@ -125,6 +125,7 @@ output = embedding_layer(tokens)           # output shape: (2, 32, 64)
  **Summary:**
 `UstaEmbedding` takes token IDs and outputs **dense, position-aware embeddings**. The combination of **semantic embeddings** (`nn.Embedding`) and **rotary positional encoding** allows transformer models to understand **both what each token means and where it appears in a sequence**.
 
+![Rotary Positional Encoding (RoPE) Diyagramı](https://learnopencv.com/wp-content/uploads/2025/07/rope_positional_encoding_figure_1.png)
 
 
 
