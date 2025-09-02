@@ -94,7 +94,7 @@ The module does two main things:
    * Rotates these halves using **sine and cosine functions** based on the token's position.
    * Produces **position-aware embeddings** that encode both token meaning and order.
 
-3. **UstaEmbedding Layer:**
+3. **MasterEmbedding Layer:**
 
    * Combines the embedding and positional encoding steps.
    * Input: token IDs
@@ -123,13 +123,13 @@ output = embedding_layer(tokens)           # output shape: (2, 32, 64)
 ---
 
  **Summary:**
-`UstaEmbedding` takes token IDs and outputs **dense, position-aware embeddings**. The combination of **semantic embeddings** (`nn.Embedding`) and **rotary positional encoding** allows transformer models to understand **both what each token means and where it appears in a sequence**.
+`MasterEmbedding` takes token IDs and outputs **dense, position-aware embeddings**. The combination of **semantic embeddings** (`nn.Embedding`) and **rotary positional encoding** allows transformer models to understand **both what each token means and where it appears in a sequence**.
 
 
 <img width="768" height="432" alt="image" src="https://github.com/user-attachments/assets/f48228f6-acd2-4788-b0f2-265499836fd0" />
 
 
-<img width="574" height="649" alt="image" src="https://github.com/user-attachments/assets/2929a8e4-2a90-4018-96bd-4eed287aeac8" />
+<img width="768" height="649" alt="image" src="https://github.com/user-attachments/assets/2929a8e4-2a90-4018-96bd-4eed287aeac8" />
 
 
 
