@@ -127,7 +127,11 @@ output = embedding_layer(tokens)           # output shape: (2, 32, 64)
 
 
 <img width="768" height="432" alt="image" src="https://github.com/user-attachments/assets/f48228f6-acd2-4788-b0f2-265499836fd0" />
+
+
 <img width="574" height="649" alt="image" src="https://github.com/user-attachments/assets/2929a8e4-2a90-4018-96bd-4eed287aeac8" />
+
+
 <img width="768" height="432" alt="image" src="https://github.com/user-attachments/assets/8dded30f-b3be-4bfb-956a-540455d53358" />
 
 
