@@ -177,10 +177,9 @@ This implementation includes the **scale (γ)** parameter. The **shift (β)** pa
 **LayerNorm axis diagram:**
 
 
-<img width="551" height="600" alt="image" src="https://github.com/user-attachments/assets/9521bcb9-d9d7-40ae-bfb2-8ef4de7a298f" >
+<img width="551" height="600" alt="image" src="https://github.com/user-attachments/assets/9521bcb9-d9d7-40ae-bfb2-8ef4de7a298f" src="https://github.com/user-attachments/assets/3d352aef-0dbf-4292-8957-41290755e12d" >
 
 
-<img width="551" height="600" alt="image" src="https://github.com/user-attachments/assets/3d352aef-0dbf-4292-8957-41290755e12d" />
 
 
 
