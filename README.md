@@ -132,9 +132,6 @@ output = embedding_layer(tokens)           # output shape: (2, 32, 64)
 <img width="768" height="649" alt="image" src="https://github.com/user-attachments/assets/2929a8e4-2a90-4018-96bd-4eed287aeac8" />
 
 
-Got it 👍 Here’s an English version you can directly put into your README.
-
----
 
 # 3-MasterLayerNorm 
 
