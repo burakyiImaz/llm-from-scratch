@@ -175,13 +175,13 @@ This implementation includes the **scale (γ)** parameter. The **shift (β)** pa
 ## Visual for README
 
 **LayerNorm axis diagram:**
-![Layer Normalization axis diagram (AI Summer)](https://theaisummer.com/static/3ed7199184645f3e632d17ab6441244f/63a68/layer-norm.png)
 
-*Source: [AI Summer — Normalization Techniques](https://theaisummer.com/normalization/)*
 
----
+<img width="551" height="727" alt="image" src="https://github.com/user-attachments/assets/9521bcb9-d9d7-40ae-bfb2-8ef4de7a298f" />
 
-Do you also want me to make this README section more **short and beginner-friendly**, or keep it at this **technical depth**?
+
+<img width="551" height="768" alt="image" src="https://github.com/user-attachments/assets/3d352aef-0dbf-4292-8957-41290755e12d" />
+
 
 
 
