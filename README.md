@@ -61,7 +61,7 @@ Below diagram shows the workflow of the tokenizer
 ```
 
 
-## 2- MasterEmbedding with Rotary Positional Encoding
+# 2- MasterEmbedding with Rotary Positional Encoding
 
 
 ##  Overview
@@ -130,6 +130,59 @@ output = embedding_layer(tokens)           # output shape: (2, 32, 64)
 
 
 <img width="768" height="649" alt="image" src="https://github.com/user-attachments/assets/2929a8e4-2a90-4018-96bd-4eed287aeac8" />
+
+
+Got it 👍 Here’s an English version you can directly put into your README.
+
+---
+
+# 3-MasterLayerNorm 
+
+**Layer Normalization (LN)** standardizes the activations **along the feature (embedding) dimension of each individual example/token**. The goal is to rescale values so that each vector has **zero mean** and **unit variance**, followed by a **learnable scale parameter (γ)** (and optionally a shift parameter β). This keeps activations well-behaved, leading to **more stable training** that is **independent of batch size**. Since LN does not rely on batch statistics, it behaves the same during both training and inference.
+
+**How to think about it**
+Given an embedding vector $x \in \mathbb{R}^{d}$, LN computes its mean and variance, normalizes it as
+
+$$
+\hat{x} = \frac{x - \mu}{\sqrt{\sigma^2 + \varepsilon}}
+$$
+
+and then applies scaling (and optionally shifting):
+
+$$
+y = \gamma \odot \hat{x} (+ \, \beta)
+$$
+
+Here $\varepsilon$ ensures numerical stability, and $\gamma$ (and optionally $\beta$) preserve the model’s expressiveness.
+
+**Where it is useful**
+
+* Transformers use LN around sublayers (Attention, Feed-Forward).
+* **Pre-LN** (before the sublayer) improves gradient flow in deep networks and is widely adopted in practice.
+* **Post-LN** is mathematically similar but can cause optimization issues in very deep models.
+
+**UstaLayerNorm note**
+This implementation includes the **scale (γ)** parameter. The **shift (β)** parameter can easily be added if needed.
+
+**Key benefits**
+
+* Works **independently of batch size**, suitable for RNNs and Transformers,
+* Consistent behavior during training and inference,
+* Improves optimization stability and gradient flow in deep stacks.
+
+---
+
+## Visual for README
+
+**LayerNorm axis diagram:**
+![Layer Normalization axis diagram (AI Summer)](https://theaisummer.com/static/3ed7199184645f3e632d17ab6441244f/63a68/layer-norm.png)
+
+*Source: [AI Summer — Normalization Techniques](https://theaisummer.com/normalization/)*
+
+---
+
+Do you also want me to make this README section more **short and beginner-friendly**, or keep it at this **technical depth**?
+
 
 
 
