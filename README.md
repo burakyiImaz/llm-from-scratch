@@ -180,7 +180,7 @@ This implementation includes the **scale (γ)** parameter. The **shift (β)** pa
 
 
 
-# 2-MasterMLP with Custom GELU
+# 4-MasterMLP with Custom GELU
 
 This project implements a simplified version of an MLP (Multi-Layer Perceptron) block inspired by modern Transformer architectures.
 The main goal is to process the input through multiple pathways, fuse the results, and transform them back into the original space, resulting in richer and more controlled representations.
@@ -244,6 +244,9 @@ This block processes data through multiple pathways, applies smooth gating with 
 <img width="800" height="372" alt="image" src="https://github.com/user-attachments/assets/32d54717-4526-4ab1-b23d-1afdc056d118" />
 
 <img width="800" height="675" alt="image" src="https://github.com/user-attachments/assets/34254382-1732-4681-a29d-f4a58624e71b" />
+
+<img width="800" height="160" alt="image" src="https://github.com/user-attachments/assets/17447ef3-b9df-4578-b0b2-4e84b9988dfd" />
+
 
 
 
