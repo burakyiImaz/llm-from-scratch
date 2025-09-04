@@ -180,6 +180,72 @@ This implementation includes the **scale (γ)** parameter. The **shift (β)** pa
 
 
 
+# 2-MasterMLP with Custom GELU
+
+This project implements a simplified version of an MLP (Multi-Layer Perceptron) block inspired by modern Transformer architectures.
+The main goal is to process the input through multiple pathways, fuse the results, and transform them back into the original space, resulting in richer and more controlled representations.
+
+## Core Idea
+
+Input Transformation
+The input is projected through two different linear pathways:
+
+Gate pathway: learns how much information should pass through.
+
+Up pathway: transforms the input into a higher-dimensional hidden space.
+
+Activation (GELU)
+The gate pathway applies GELU (Gaussian Error Linear Unit), a smooth activation function.
+
+Unlike ReLU, GELU provides a softer, probabilistic gating of information.
+
+This results in more stable learning and better performance in deep architectures.
+
+Fusion (Element-wise Multiplication)
+The outputs of the gate and up pathways are multiplied element-wise.
+
+This acts like a filtering mechanism, allowing the model to keep only the most useful information.
+
+Output Transformation
+The fused representation is projected back into the original embedding dimension.
+
+Ensures that input and output shapes match.
+
+Makes the block easy to integrate into larger architectures.
+
+## Why This Design?
+
+Gating mechanism → Controls the flow of information.
+
+GELU activation → Provides smoother and more effective transformations, widely used in models like GPT and BERT.
+
+Flexible structure → Can be applied in Transformers, vision models, or as a standalone feature extractor.
+
+## Suggested Visuals
+
+To make the README more clear, you can add diagrams like:
+
+MLP Block Structure
+(Input → Gate + Up projections → GELU → Multiplication/Fusion → Output projection)
+
+
+GELU Activation Curve
+
+
+Transformer Block Context
+(Showing how MLP fits within a Transformer block)
+
+
+## Summary:
+This block processes data through multiple pathways, applies smooth gating with GELU, and fuses information to produce more meaningful representations. This design enhances learning capacity and enables controlled information flow in deep neural networks.
+
+
+
+<img width="800" height="372" alt="image" src="https://github.com/user-attachments/assets/32d54717-4526-4ab1-b23d-1afdc056d118" />
+
+<img width="800" height="675" alt="image" src="https://github.com/user-attachments/assets/34254382-1732-4681-a29d-f4a58624e71b" />
+
+
 
 
 
