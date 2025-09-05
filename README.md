@@ -297,29 +297,24 @@ Think of it like this:
 
 ---
 
-##  Example Visuals
-
-Here are some diagrams I recommend you include in your GitHub README:
-
-1. **Scaled Dot-Product Attention**
-
-![Attention Mechanism](https://miro.medium.com/v2/resize\:fit:828/format\:webp/1*hzK0Rrg2yN54OqvQ10ELvA.png)
-
-
-2. **Multi-Head Attention Concept**
-   ![Multi-Head Attention](https://jalammar.github.io/images/xlnet/self-attention-multihead.png)
-
-
-3. **Causal Masking in Attention**
-   ![Causal Mask](https://theaisummer.com/static/causal_attention-17aa6cc62ee3657b8fa94a2d06170bc0.png)
-
----
 
 ##  Why It Matters
 
 * Captures **different relationships** in text sequences.
 * Enables Transformers to model **contextual meaning** effectively.
 * Essential for models like **BERT, GPT, and Vision Transformers**.
+
+
+
+##  Example Visuals
+
+<img width="900" height="1030" alt="image" src="https://github.com/user-attachments/assets/1b7be8b3-8c19-4b24-bfd4-4323092250f9" />
+
+<img width="900" height="420" alt="image" src="https://github.com/user-attachments/assets/1374afca-b6c6-47bc-a5c1-5bba94e4b454" />
+
+
+<img width="900" height="1095" alt="image" src="https://github.com/user-attachments/assets/d01b0e81-69a2-4091-9246-ef9ec1af6754" />
+
 
 
 
