@@ -302,10 +302,13 @@ Think of it like this:
 Here are some diagrams I recommend you include in your GitHub README:
 
 1. **Scaled Dot-Product Attention**
-   ![Attention Mechanism](https://miro.medium.com/v2/resize\:fit:828/format\:webp/1*hzK0Rrg2yN54OqvQ10ELvA.png)
+
+![Attention Mechanism](https://miro.medium.com/v2/resize\:fit:828/format\:webp/1*hzK0Rrg2yN54OqvQ10ELvA.png)
+
 
 2. **Multi-Head Attention Concept**
    ![Multi-Head Attention](https://jalammar.github.io/images/xlnet/self-attention-multihead.png)
+
 
 3. **Causal Masking in Attention**
    ![Causal Mask](https://theaisummer.com/static/causal_attention-17aa6cc62ee3657b8fa94a2d06170bc0.png)
