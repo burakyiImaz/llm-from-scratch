@@ -250,6 +250,79 @@ This block processes data through multiple pathways, applies smooth gating with 
 
 
 
+# 5-MasterMultiHeadAttention
+
+##  Core Idea
+
+Multi-Head Attention allows a model to **focus on different parts of a sequence simultaneously**. Instead of computing a single attention distribution, it uses multiple "heads," each learning a unique way to relate tokens.
+
+Think of it like this:
+
+* One head might focus on **short-term dependencies** (e.g., the next word).
+* Another head might capture **long-range dependencies** (e.g., subject–verb agreement).
+* When combined, the model has a **richer understanding** of the sequence.
+
+---
+
+##  How It Works
+
+1. **Input Embeddings**
+   Each token is represented as a vector of size `embedding_dim`.
+
+2. **Linear Projections (Q, K, V)**
+   The embeddings are projected into **Query (Q)**, **Key (K)**, and **Value (V)** spaces.
+
+   * Queries ask: *"Which other tokens should I pay attention to?"*
+   * Keys provide: *"Here’s my identity."*
+   * Values carry: *"Here’s my content."*
+
+3. **Scaled Dot-Product Attention**
+   Attention scores are computed as:
+
+   $$
+   \text{Attention}(Q,K,V) = \text{Softmax}\left(\frac{QK^T}{\sqrt{d_k}}\right)V
+   $$
+
+   This tells us how much each token should pay attention to others.
+
+4. **Multiple Heads**
+   Instead of one set of Q, K, V → multiple are created (`num_heads`).
+   Each head learns **different types of relationships** in parallel.
+
+5. **Concatenation + Projection**
+   All heads are concatenated and passed through a linear layer (like your `self.projection`).
+
+6. **Causal Mask (your code)**
+   In autoregressive models (like GPT), the mask ensures that **future tokens are hidden**—a token cannot "cheat" by looking ahead.
+
+---
+
+##  Example Visuals
+
+Here are some diagrams I recommend you include in your GitHub README:
+
+1. **Scaled Dot-Product Attention**
+   ![Attention Mechanism](https://miro.medium.com/v2/resize\:fit:828/format\:webp/1*hzK0Rrg2yN54OqvQ10ELvA.png)
+
+2. **Multi-Head Attention Concept**
+   ![Multi-Head Attention](https://jalammar.github.io/images/xlnet/self-attention-multihead.png)
+
+3. **Causal Masking in Attention**
+   ![Causal Mask](https://theaisummer.com/static/causal_attention-17aa6cc62ee3657b8fa94a2d06170bc0.png)
+
+---
+
+##  Why It Matters
+
+* Captures **different relationships** in text sequences.
+* Enables Transformers to model **contextual meaning** effectively.
+* Essential for models like **BERT, GPT, and Vision Transformers**.
+
+
+
+
+
+
 
 
 
