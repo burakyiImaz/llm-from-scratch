@@ -317,18 +317,55 @@ Think of it like this:
 
 
 
+# 6-Decoder Block
 
+The `MasterDecoderBlock` you implemented represents a **Decoder block in the Transformer architecture**.
 
+Decoder blocks are the **building units of models like GPT**, where the goal is to process sequential data (such as text) and capture both local and long-range dependencies.
 
-## 🧩 Decoder Block Diagram
+A Decoder block typically consists of the following components:
 
-```mermaid
-flowchart TD
-    A[Input Embeddings] --> B[Multi-Head Self-Attention]
-    B --> C[Add & Norm (Residual + LayerNorm)]
-    C --> D[Feed Forward Network (MLP)]
-    D --> E[Add & Norm (Residual + LayerNorm)]
-    E --> F[Output Representation]
+---
+
+### 1. **Self-Attention Layer**
+
+* Each input vector (token embedding) interacts with all other tokens in the sequence.
+* This is achieved through **Multi-Head Self-Attention (MHA)**, which allows the model to capture multiple types of relationships simultaneously (e.g., syntactic, semantic).
+* Self-Attention ensures that each token has a context-aware representation.
+
+---
+
+### 2. **Residual Connection + Layer Normalization (Norm1)**
+
+* The output of the attention layer is added back to the original input using a **residual connection**.
+* Residuals help avoid vanishing gradients and improve information flow across layers.
+* A **Layer Normalization** step follows, which stabilizes the training by normalizing the outputs across features.
+
+---
+
+### 3. **Feed Forward Network (MLP)**
+
+* After normalization, the representations are passed through a **two-layer MLP (feed-forward network)**.
+* This step introduces **non-linearity** and increases the model’s capacity to learn complex transformations beyond linear attention.
+* Typically, this MLP consists of a linear layer → activation function (e.g., GELU/ReLU) → another linear layer.
+
+---
+
+### 4. **Residual Connection + Layer Normalization (Norm2)**
+
+* The output of the MLP is again combined with its input through another **residual connection**.
+* A second **Layer Normalization** is applied, ensuring stable gradients and consistent scaling of representations.
+
+---
+
+###  In summary:
+
+A Decoder Block follows this structure:
+
+**Decoder Block = (Self-Attention → Residual + Norm) + (MLP → Residual + Norm)**
+
+By stacking multiple Decoder blocks, we can build deep models capable of capturing **hierarchical patterns and dependencies** in sequential data. This design is the backbone of large language models such as **GPT**.
+
 
 
 
