@@ -367,6 +367,10 @@ A Decoder Block follows this structure:
 By stacking multiple Decoder blocks, we can build deep models capable of capturing **hierarchical patterns and dependencies** in sequential data. This design is the backbone of large language models such as **GPT**.
 
 
+<img width="850" height="811" alt="image" src="https://github.com/user-attachments/assets/fc3ba46c-bc43-4a87-849e-aeb885f45ce3" />
+
+
+
 
 
 
