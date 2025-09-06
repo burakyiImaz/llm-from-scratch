@@ -320,6 +320,15 @@ Think of it like this:
 
 
 
+## 🧩 Decoder Block Diagram
+
+```mermaid
+flowchart TD
+    A[Input Embeddings] --> B[Multi-Head Self-Attention]
+    B --> C[Add & Norm (Residual + LayerNorm)]
+    C --> D[Feed Forward Network (MLP)]
+    D --> E[Add & Norm (Residual + LayerNorm)]
+    E --> F[Output Representation]
 
 
 
