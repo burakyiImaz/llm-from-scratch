@@ -371,7 +371,44 @@ By stacking multiple Decoder blocks, we can build deep models capable of capturi
 
 
 
+# 7-MasterModel
 
+MasterModel is a decoder-only, Transformer-based language model. It represents the foundational architecture behind modern large language models (LLMs) such as GPT. This project provides a simplified yet illustrative version of how such models function at their core.
 
+ Key Components
 
+Embedding
+
+Input tokens (words or symbols) are transformed into dense numerical vectors.
+
+Positional encoding is added so the model can capture the order of tokens within the sequence.
+
+Decoder Block
+
+The central unit of the model.
+
+Contains Multi-Head Self-Attention and Feed Forward Neural Networks.
+
+The attention mechanism allows the model to understand contextual relationships between tokens.
+
+Language Modeling Head (LM Head)
+
+Projects the decoder output into the vocabulary space.
+
+Enables the model to assign probabilities to possible next tokens.
+
+Sampling Strategies
+
+Temperature: Controls randomness and creativity in generation.
+
+Top-k sampling: Restricts the choice to the top k most likely tokens.
+
+Top-p (nucleus) sampling: Chooses from the smallest set of tokens whose cumulative probability exceeds p.
+
+ Concept
+
+The model essentially tries to answer one key question:
+ “Given a sequence of tokens, what is the most probable next token?”
+
+By combining embedding → decoder blocks → probability distribution → sampling, the model can both learn contextual meaning and generate coherent new text.
 
