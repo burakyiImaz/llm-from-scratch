@@ -3,20 +3,26 @@ import torch
 import numpy as np
 
 
-class MasterTokenizer:
+class Tokenizer:
     """
     Türkçe LLM için morfem-tabanlı tokenizer
     JSON yapısı: kategorilere bölünmüş token sözlüğü
+    Dinamik öğrenme: Yeni kelimeleri otomatik olarak ekleyebilir
     """
     
-    def __init__(self, vocab_file, encoding='utf-8'):
+    def __init__(self, vocab_file, encoding='utf-8', auto_learn=True):
         """
         Tokenizer'ı başlat
         
         Args:
             vocab_file (str): Tokenizer JSON dosyasının yolu
             encoding (str): Dosya encoding tipi (varsayılan: utf-8)
+            auto_learn (bool): Yeni kelimeleri otomatik olarak öğren (varsayılan: True)
         """
+        self.vocab_file = vocab_file
+        self.encoding = encoding
+        self.auto_learn = auto_learn
+        
         with open(vocab_file, 'r', encoding=encoding) as f:
             vocab_data = json.load(f)
         
@@ -29,8 +35,22 @@ class MasterTokenizer:
                 self.vocab_categories[category] = tokens
                 self.vocab.update(tokens)
         
-        # Ters sözlük (ID -> Token)
-        self.reverse_vocab = {v: k for k, v in self.vocab.items()}
+        # Ters sözlük (ID -> Token) - özel tokenleri önceliklendir
+        self.reverse_vocab = {}
+        
+        # Önce özel tokenları ekle
+        special_tokens = ["<pad>", "<unk>", "<başla>", "<bitiş>", "<büyük_harf>"]
+        for token, token_id in self.vocab.items():
+            if token in special_tokens:
+                self.reverse_vocab[token_id] = token
+        
+        # Sonra diğerlerini ekle (çift ID durumunda, açıkça tanımlanmış olanı al)
+        for token, token_id in self.vocab.items():
+            if token not in special_tokens:
+                self.reverse_vocab[token_id] = token
+        
+        # Sonraki token ID'si (dinamik ekleme için)
+        self.next_token_id = max(self.vocab.values()) + 1 if self.vocab else 0
         
         # Özel tokenler
         self.pad_id = self.vocab.get("<pad>", 722)
@@ -91,6 +111,7 @@ class MasterTokenizer:
     def _tokenize_word(self, word, tokens):
         """
         Kelimeyi subword token'lere ayır (Greedy matching)
+        Eşleşme bulunamayan karakterleri dinamik olarak ekler
         
         Args:
             word (str): Tokenize edilecek kelime
@@ -110,9 +131,23 @@ class MasterTokenizer:
                     found_match = True
                     break
             
-            # Eşleşme bulunamadıysa <unk> ekle
+            # Eşleşme bulunamadıysa
             if not found_match:
-                tokens.append(self.unk_id)
+                # Tek karakteri al
+                char = word[i]
+                
+                # Eğer karakter zaten vocab'da varsa, kullan
+                if char in self.vocab:
+                    tokens.append(self.vocab[char])
+                else:
+                    # Auto-learn açıksa, yeni karakteri ekle
+                    if self.auto_learn:
+                        self.add_token(char, "karakterler")
+                        tokens.append(self.vocab[char])
+                    else:
+                        # Aksi halde unknown token ekle
+                        tokens.append(self.unk_id)
+                
                 i += 1
     
     def encode_batch(self, texts, context_length, 
@@ -199,3 +234,77 @@ class MasterTokenizer:
     def get_token_name(self, token_id):
         """Token ID'sinden adını al"""
         return self.reverse_vocab.get(token_id, f"<id:{token_id}>")
+    
+    def add_token(self, token, category="diğer"):
+        """
+        Yeni bir token ekle
+        
+        Args:
+            token (str): Eklenecek token
+            category (str): Tokenin kategorisi
+            
+        Returns:
+            int: Token'in ID'si
+        """
+        # Token zaten varsa, mevcut ID'sini döndür
+        if token in self.vocab:
+            return self.vocab[token]
+        
+        # Yeni ID ata
+        token_id = self.next_token_id
+        self.next_token_id += 1
+        
+        # Vocab'a ekle
+        self.vocab[token] = token_id
+        self.reverse_vocab[token_id] = token
+        
+        # Kategoriye ekle
+        if category not in self.vocab_categories:
+            self.vocab_categories[category] = {}
+        self.vocab_categories[category][token] = token_id
+        
+        return token_id
+    
+    def add_tokens(self, tokens_list, category="diğer"):
+        """
+        Birden fazla token ekle
+        
+        Args:
+            tokens_list (list): Eklenecek tokenler listesi
+            category (str): Tokenların kategorisi
+            
+        Returns:
+            list: Eklenen tokenların ID'leri
+        """
+        token_ids = []
+        for token in tokens_list:
+            token_ids.append(self.add_token(token, category))
+        return token_ids
+    
+    def save_vocab(self, output_file=None):
+        """
+        Güncellenmiş vocab'ı JSON dosyasına kaydet
+        
+        Args:
+            output_file (str): Kaydedilecek dosya yolu (varsayılan: orijinal dosya)
+        """
+        if output_file is None:
+            output_file = self.vocab_file
+        
+        with open(output_file, 'w', encoding=self.encoding) as f:
+            json.dump(self.vocab_categories, f, ensure_ascii=False, indent=2)
+    
+    def get_learning_stats(self):
+        """
+        Öğrenme istatistiklerini al
+        
+        Returns:
+            dict: Vocab boyutu, kategori sayısı vb.
+        """
+        return {
+            "toplam_token_sayısı": len(self.vocab),
+            "kategori_sayısı": len(self.vocab_categories),
+            "kategoriler": list(self.vocab_categories.keys()),
+            "sonraki_token_id": self.next_token_id,
+            "auto_learn_aktif": self.auto_learn
+        }
