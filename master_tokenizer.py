@@ -23,6 +23,10 @@ class MasterTokenizer:
 
     def encode(self,text):
         tokens=[]
+        
+        # Cümle büyük harfle başlıyorsa, <büyük_harf> tokeni ekle
+        if text and text[0].isupper() and "<büyük_harf>" in self.vocab:
+            tokens.append(self.vocab["<büyük_harf>"])
 
         for word in text.split():
             i=0
@@ -41,9 +45,9 @@ class MasterTokenizer:
                     i+=1
             tokens.append(self.vocab[" "])
         
-    if not text.endswith(" "):
-        tokens.pop()
-    return torch.tensor(tokens)
+        if not text.endswith(" "):
+            tokens.pop()
+        return torch.tensor(tokens)
 
 
     def tokenize(self, text):
