@@ -1,203 +1,242 @@
-# Türkçe Morfem Tabanlı Tokenizer
+---
 
-Bu repository, **Türkçe için özel olarak tasarlanmış, morfoloji farkındalığı olan bir tokenizer** içerir. Proje, eklemeli (agglutinative) bir dil olan Türkçe’nin yapısal özelliklerini doğrudan tokenizasyon aşamasına entegre etmeyi amaçlar.
+# Türkçe Morfem-Tabanlı Tokenizer
 
-Tokenizer, özel olarak geliştirilmiş bir **Transformer mimarisi** ile birlikte çalışacak şekilde tasarlanmıştır.
+Bu repository, **Türkçe için özel olarak tasarlanmış**,
+**JSON tabanlı**, **subword (alt-birim) odaklı** ve **dinamik öğrenme destekli** bir tokenizer implementasyonu içerir.
+
+Tokenizer, özellikle **Türkçenin eklemeli (agglutinative) yapısını** dikkate alarak geliştirilmiştir ve bir Transformer / LLM pipeline’ında doğrudan kullanılabilir.
 
 ---
 
-## 📌 Temel Motivasyon
+## 📌 Temel Özellikler
 
-Klasik tokenizer yaklaşımları (BPE, WordPiece):
+* 📁 **JSON tabanlı vocab**
+* 🧩 **Subword (alt-parça) tokenization**
+* 🔁 **Greedy (en uzun eşleşme) algoritması**
+* 🧠 **Dinamik vocab genişletme (auto-learn)**
+* 🏷️ **Kategorilere ayrılmış token yapısı**
+* 🔤 **Büyük harf bilgisi için özel token**
+* 🧪 **Batch encoding + padding desteği**
+* 🔄 **Encode / Decode fonksiyonları**
 
-* Türkçe ekleri rastgele böler
-* Çok büyük vocabulary üretir
-* Dilbilgisel bilgiyi modele bırakır
+---
+
+## 📂 Vocab Yapısı
+
+Tokenizer, vocab’ı **kategorilere ayrılmış bir JSON dosyasından** yükler.
+
+Örnek yapı:
+
+```json
+{
+  "özel_tokenler": {
+    "<pad>": 0,
+    "<unk>": 1,
+    "<başla>": 2,
+    "<bitiş>": 3,
+    "<büyük_harf>": 4
+  },
+  "kelimeler": {
+    "ankara": 10,
+    "türkiye": 11
+  },
+  "ekler": {
+    "ler": 100,
+    "lar": 101,
+    "de": 102,
+    "da": 103
+  },
+  "karakterler": {
+    "a": 300,
+    "b": 301
+  }
+}
+```
+
+Tokenizer bu yapıyı:
+
+* Tek bir `vocab` sözlüğünde birleştirir
+* Aynı zamanda **kategori bilgisini** korur
+
+---
+
+## ⚙️ Sınıf: `Tokenizer`
+
+### Başlatma
+
+```python
+tokenizer = Tokenizer(
+    vocab_file="vocab.json",
+    auto_learn=True
+)
+```
+
+**Parametreler:**
+
+* `vocab_file`: Tokenlerin bulunduğu JSON dosyası
+* `auto_learn`: Vocab’da olmayan karakterleri otomatik ekler
+
+---
+
+## 🔢 Encode (Metin → Token ID)
+
+```python
+ids = tokenizer.encode(
+    "Ankara Türkiye'dedir",
+    add_uppercase_token=True,
+    add_special_tokens=True
+)
+```
+
+### Encode sırasında yapılan işlemler:
+
+1. Metin temizlenir (`strip`)
+2. İsteğe bağlı olarak:
+
+   * `<başla>` tokeni eklenir
+   * Büyük harfle başlıyorsa `<büyük_harf>` eklenir
+3. Metin kelimelere ayrılır
+4. Her kelime **greedy subword tokenization** ile parçalanır
+5. Kelimeler arasına **space token** eklenir
+6. En sona isteğe bağlı `<bitiş>` tokeni eklenir
+
+---
+
+## 🧩 Subword Tokenization (Greedy)
+
+Tokenizer, her kelimeyi **en uzun parçadan başlayarak** vocab’da arar:
 
 Örnek:
 
 ```
-kitaplarımdan
-→ kitaplar ##ım ##dan
+"kitaplardan"
+→ kitap + lar + dan
 ```
 
-Bu proje ile hedeflenen:
+Algoritma:
 
-```
-kitap + lar + ım + dan
-```
+* En uzun eşleşme aranır
+* Bulunamazsa karakter seviyesine düşülür
+* Karakter de yoksa:
 
-şeklinde **dilbilgisel olarak anlamlı** bir tokenizasyon elde etmektir.
+  * `auto_learn=True` ise vocab’a eklenir
+  * Aksi halde `<unk>` kullanılır
 
 ---
 
-## 🧠 Tokenizer Tasarım Prensipleri
-
-* Morfem temelli parçalama
-* Unigram Language Model ile istatistiksel seçim
-* Eklerin fonksiyonel bilgisini modele aktarma
-* Eğitim ve inference aşamalarının ayrılması
-
----
-
-## 🧩 Tokenizer Mimarisi
-
-### Genel Akış
-
-```
-Raw Text
-   ↓
-Normalization
-   ↓
-Word Segmentation (space token yok)
-   ↓
-Zemberek Morfem Analizi
-   ↓
-Unigram LM Token Seçimi
-   ↓
-Token ID + Token Type ID
-```
-
----
-
-## 1️⃣ Unigram Language Model (Greedy Yerine)
-
-### Amaç
-
-Greedy algoritmalar yerine, **en olası morfem dizisini** seçmek.
-
-### Neden?
-
-Greedy yöntemler yalnızca lokal en uzun eşleşmeye bakar. Unigram LM ise tüm olası tokenizasyonları değerlendirir.
-
-### Örnek Kod
+## 📦 Batch Encode + Padding
 
 ```python
-# Unigram LM skor hesaplama (basitleştirilmiş)
-def score(tokens, token_probs):
-    return sum(token_probs.get(t, -1e9) for t in tokens)
+batch = tokenizer.encode_batch(
+    texts=["Merhaba dünya", "Ankara"],
+    context_length=16
+)
+```
+
+* Her cümle encode edilir
+* Uzunsa **truncate**
+* Kısaysa `<pad>` ile doldurulur
+* Çıktı: `(batch_size, context_length)` tensor
+
+---
+
+## 🔁 Decode (Token ID → Metin)
+
+```python
+text = tokenizer.decode(ids)
+```
+
+* Token ID’ler tekrar string’e çevrilir
+* Varsayılan olarak:
+
+  * `<pad>`, `<başla>`, `<bitiş>`, `<unk>`, `<büyük_harf>` **çıkarılır**
+
+---
+
+## 🧪 Debug Amaçlı Token Gösterimi
+
+```python
+tokenizer.tokenize("Ankara")
+```
+
+Çıktı:
+
+```python
+["<büyük_harf>", "ankara"]
 ```
 
 ---
 
-## 2️⃣ Zemberek ile Otomatik Morfem Bölme
+## ➕ Dinamik Token Ekleme
 
-### Amaç
-
-Tokenizer’ın ekleri tahmin etmesi yerine **bilerek ayırması**.
-
-### Kullanım
+### Tek token ekleme
 
 ```python
-from zemberek import TurkishMorphology
-
-morphology = TurkishMorphology.create_with_defaults()
-analysis = morphology.analyze("kitaplarımdan")
-
-for result in analysis:
-    print(result.get_stem(), result.get_suffixes())
+tokenizer.add_token("den", category="ekler")
 ```
 
-### Kazanım
+### Çoklu token ekleme
 
-* Dilbilgisel doğruluk
-* Daha az öğrenme yükü
+```python
+tokenizer.add_tokens(["miş", "mış"], category="ekler")
+```
+
+* Token ID’ler otomatik atanır
+* Hem vocab’a hem kategoriye eklenir
 
 ---
 
-## 3️⃣ Space Token Yerine Pozisyonel Ayrım
-
-### Amaç
-
-Boşluğu vocabulary’den çıkarmak.
-
-### Yaklaşım
-
-* Space ayrı token değildir
-* Kelime sınırları pozisyonel embedding ile modellenir
+## 💾 Vocab Kaydetme
 
 ```python
-# space token eklenmez
-vocab = {"[PAD]": 0, "[UNK]": 1}
+tokenizer.save_vocab("yeni_vocab.json")
 ```
+
+* Güncel vocab
+* Kategoriler korunarak JSON’a yazılır
 
 ---
 
-## 4️⃣ Eklerin Token Type ID ile Encode Edilmesi
-
-### Amaç
-
-Token’ın **ne olduğu** bilgisini modele ayrı bir kanal olarak vermek.
-
-### Token Type Şeması
+## 📊 Öğrenme İstatistikleri
 
 ```python
-TOKEN_TYPES = {
-    "ROOT": 0,
-    "PLURAL_SUFFIX": 1,
-    "CASE_SUFFIX": 2,
-    "POSSESSIVE_SUFFIX": 3,
-    "VERB_TENSE": 4
+stats = tokenizer.get_learning_stats()
+```
+
+Örnek çıktı:
+
+```json
+{
+  "toplam_token_sayısı": 742,
+  "kategori_sayısı": 6,
+  "kategoriler": ["kelimeler", "ekler", "karakterler"],
+  "sonraki_token_id": 743,
+  "auto_learn_aktif": true
 }
 ```
 
-### Örnek Encoding
-
-```python
-tokens = ["kitap", "lar", "ım", "dan"]
-token_ids = [1021, 204, 317, 411]
-token_type_ids = [0, 1, 3, 2]
-```
-
 ---
 
-## 5️⃣ Auto-Learn Mekanizması (Sadece Train-Time)
+## 🎯 Tasarım Amacı
 
-### Amaç
+Bu tokenizer:
 
-Inference sırasında tokenizer davranışının değişmesini önlemek.
+* Türkçenin **eklemeli yapısına uygun**
+* Küçük vocab ile **yüksek kapsama**
+* Eğitim sırasında **kendini genişletebilen**
+* Transformer tabanlı modellerle **doğrudan uyumlu**
 
-### Mantık
-
-```python
-class Tokenizer:
-    def __init__(self, train_mode=False):
-        self.train_mode = train_mode
-
-    def add_token(self, token):
-        if self.train_mode:
-            self.vocab[token] = len(self.vocab)
-```
-
----
-
-## 🔒 Deterministik Inference
-
-* Vocabulary inference sırasında sabittir
-* Embedding uyumsuzluğu oluşmaz
-* Sonuçlar reproducible’dır
-
----
-
-## 📊 Klasik Tokenizer Karşılaştırması
-
-| Özellik             | BPE / WordPiece | Bu Tokenizer |
-| ------------------- | --------------- | ------------ |
-| Türkçe uyumu        | Düşük           | Yüksek       |
-| Morfem farkındalığı | Yok             | Var          |
-| Vocabulary boyutu   | Büyük           | Daha küçük   |
-| Dilbilgisel bilgi   | Öğrenilmeli     | Entegre      |
-
----
-
-## 🚀 Hedeflenen Kullanım Alanları
-
-* Türkçe LLM’ler
-* Akademik NLP araştırmaları
-* Dilbilgisel farkındalık gerektiren görevler
+bir yapı sunmayı hedefler.
 
 ---
 
 ## 📌 Not
 
-Bu tokenizer, Türkçe için **inductive bias** eklemeyi amaçlayan deneysel bir çalışmadır ve klasik tokenizer’ların birebir alternatifi değil, **dil-özel bir çözüm** olarak tasarlanmıştır.
+Bu implementasyon:
+
+* Greedy subword yaklaşımı kullanır
+* Space token açıkça temsil edilir
+* Morfolojik analiz **harici** değil, vocab üzerinden yapılır
+
+---
