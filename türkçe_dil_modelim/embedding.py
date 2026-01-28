@@ -1,6 +1,8 @@
 import torch
 import torch.nn as nn
 
+# kedi köpeği kovaladı , köpek kediyi kovaladı
+#yukarıda her ne kadar kelimeler aynı olsa da anlamsal bir farklılık vardır. Bu farklılığı sağlamak için pozisyonel kodlama kullanılır.
 def get_rotary_position_encoding(input: torch.Tensor, base=10000, device= "cpu"):
     batch_size, context_length, dimension= input.shape
 
