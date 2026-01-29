@@ -33,3 +33,8 @@ class TextDataset(Dataset):
     def __getitem__(self, idx):
         return self.inputs[idx], self.targets[idx]
 
+
+    def create_data_loader(token_ids: list, context_length:int, stride:int, batch_size:int, shuffle:bool=True):
+        dataset= TextDataset(token_ids, context_length, stride)
+        data_loader= torch.utils.data.DataLoader(dataset, batch_size=batch_size, shuffle=shuffle)
+        return data_loader
