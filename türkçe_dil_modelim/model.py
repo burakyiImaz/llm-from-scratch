@@ -98,7 +98,7 @@ def get_position_encoding(context_length, embedding_dim,base=10000 ,device= "cpu
                 pos_embedding[pos, 2*i +1]= torch.cos(pos / (base ** (2*i/ embedding_dim)))
     return pos_embedding.unsqueeze(0)  # [1, context_length, embedding_dim] unsqueeze ile batch dimension eklenir ve tensore dönüştürülür.
 
-class Embedding(nn.Module):
+class Model(nn.Module):
     def __init__(self,vocab_size,embedding_dim, context_length, device):
         super().__init__()
         self.embedding= nn.Embedding(vocab_size, embedding_dim, device=device) # şu an için torch kullanılıyor ilerleyen süreçte bireysel olarak modelin özellikle büyük matris işlemlerinde performansı da göz önünde bulundurularak daha sağlam bir optimizasyon geliştiricem.
