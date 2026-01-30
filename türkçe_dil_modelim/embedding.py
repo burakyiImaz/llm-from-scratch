@@ -3,27 +3,90 @@ import torch.nn as nn
 
 # kedi köpeği kovaladı , köpek kediyi kovaladı
 #yukarıda her ne kadar kelimeler aynı olsa da anlamsal bir farklılık vardır. Bu farklılığı sağlamak için pozisyonel kodlama kullanılır. Deepseek in kullandığı RoPE yaklaşımı
-def get_rotary_position_encoding(input: torch.Tensor, base=10000, device= "cpu"):
-    batch_size, context_length, dimension= input.shape
+def get_rotary_position_encoding(input: torch.Tensor, base=10000, device="cpu"):
+    """
+    Rotary Positional Encoding (RoPE) uygular.
 
-    assert dimension %2 ==0 , "boyut çift olmalı"
+    Bu fonksiyon, embedding vektörlerine pozisyon bilgisini
+    sinüs–kosinüs tabanlı bir rotasyon ile ekler.
+    Böylece attention mekanizması göreli konumları öğrenebilir.
 
-    half_dimension= dimension// 2
-    freqs_indices= torch.arange(0, half_dimension, device=device, dtype= torch.float32)
-    freqs = 1.0 / (base** (freqs_indices/ dimension))
-    positions= torch.arange(0, context_length, device=device, dtype= torch.float32)
-    angles= positions * freqs
+    Girdi:
+        input: [batch_size, context_length, dimension]
+        dimension mutlaka çift olmalıdır.
+
+    Çıkış:
+        Aynı shape'te, pozisyon bilgisi eklenmiş embedding tensorü
+    """
+
+    batch_size, context_length, dimension = input.shape
+
+    """
+    RoPE çalışabilmesi için embedding boyutunun çift olması gerekir.
+    Çünkü her iki boyut bir 2D vektör gibi ele alınır.
+    """
+    assert dimension % 2 == 0, "boyut çift olmalı"
+
+    half_dimension = dimension // 2
+
+    """
+    Her embedding boyutu için farklı frekanslar üretilir.
+    Düşük boyutlar → yavaş değişen sinüsler
+    Yüksek boyutlar → hızlı değişen sinüsler
+    """
+    freqs_indices = torch.arange(
+        0, half_dimension,
+        device=device,
+        dtype=torch.float32
+    )
+
+    freqs = 1.0 / (base ** (freqs_indices / dimension))
+
+    """
+    Token pozisyonlarını temsil eden indeksler.
+    Her token kendi pozisyonuna göre döndürülecek.
+    """
+    positions = torch.arange(
+        0, context_length,
+        device=device,
+        dtype=torch.float32
+    )
+
+    """
+    Açılar, pozisyon ile frekansın çarpımıdır.
+    Bu açılar sin ve cos fonksiyonlarına girecek.
+    """
+    angles = positions[:, None] * freqs[None, :]
+
     sin_angles = torch.sin(angles)
-    cos_angles = torch.cos(angles)      
+    cos_angles = torch.cos(angles)
 
-    input_even = input[:, :, :half_dimension]   # [0,2,4,6,..]
-    input_odd= input[:,:,half_dimension:]      # [1,3,5,..]
+    """
+    Embedding vektörü iki parçaya ayrılır.
+    İlk yarı x bileşeni,
+    ikinci yarı y bileşeni gibi düşünülür.
+    """
+    input_even = input[:, :, :half_dimension]
+    input_odd  = input[:, :, half_dimension:]
 
+    """
+    Klasik 2 boyutlu rotasyon uygulanır.
+    Bu işlem embedding'i pozisyona bağlı olarak döndürür.
+    """
     input_even_rotated = input_even * cos_angles - input_odd * sin_angles
-    input_odd_rotated = input_even * sin_angles + input_odd * cos_angles
+    input_odd_rotated  = input_even * sin_angles + input_odd * cos_angles
 
-    input_rotated= torch.cat([input_even_rotated, input_odd_rotated], dim=-1)
+    """
+    Döndürülmüş parçalar tekrar birleştirilir
+    ve orijinal embedding boyutuna dönülür.
+    """
+    input_rotated = torch.cat(
+        [input_even_rotated, input_odd_rotated],
+        dim=-1
+    )
+
     return input_rotated
+
 
 #günümüzde aktif olarak kullanılan bir yöntemdir.
 def get_position_encoding(context_length, embedding_dim,base=10000 ,device= "cpu"):
