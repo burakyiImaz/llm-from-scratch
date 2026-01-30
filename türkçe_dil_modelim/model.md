@@ -71,7 +71,7 @@ Buradaki `θ`, token pozisyonuna ve boyuta bağlıdır.
 
 ---
 
-## 🧠 Sınıf: `Embedding`
+## 🧠 Sınıf: `Model`
 
 Bu sınıf, PyTorch’un `nn.Module` yapısını kullanarak **öğrenilebilir token embedding** ile **RoPE**’u birleştirir.
 
@@ -116,17 +116,10 @@ Rotary Positional Encoding
 * Absolute positional embedding yok → daha esnek
 * Relative pozisyon ilişkileri korunur
 * GPT‑NeoX, LLaMA gibi modern modellerle uyumlu
-* Kendi LLM’ini yazmak isteyenler için temiz ve öğretici bir örnek
 
 ---
 
-## 🚀 Kullanım Senaryoları
 
-* Kendi Transformer / LLM modelini yazanlar
-* Positional encoding mantığını derinlemesine öğrenmek isteyenler
-* GPT‑2 tabanlı ama daha modern bir positional yapı denemek isteyenler
-
----
 
 ## 📌 Notlar
 
@@ -135,7 +128,4 @@ Rotary Positional Encoding
 
 ---
 
-## ✨ Sonuç
-
-Bu modül, sıfırdan bir dil modeli geliştirme sürecinde **modern positional encoding yaklaşımlarını** anlamak ve uygulamak için sağlam bir temel sunar.
 
