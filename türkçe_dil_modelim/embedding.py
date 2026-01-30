@@ -101,7 +101,7 @@ def get_position_encoding(context_length, embedding_dim,base=10000 ,device= "cpu
 class Embedding(nn.Module):
     def __init__(self,vocab_size,embedding_dim, context_length, device):
         super().__init__()
-        self.embedding= nn.Embedding(vocab_size, embedding_dim, device=device)
+        self.embedding= nn.Embedding(vocab_size, embedding_dim, device=device) # şu an için torch kullanılıyor ilerleyen süreçte bireysel olarak modelin özellikle büyük matris işlemlerinde performansı da göz önünde bulundurularak daha sağlam bir optimizasyon geliştiricem.
         self.get_pos= get_rotary_position_encoding
         self.device= device
 
