@@ -3,90 +3,27 @@ import torch.nn as nn
 
 # kedi köpeği kovaladı , köpek kediyi kovaladı
 #yukarıda her ne kadar kelimeler aynı olsa da anlamsal bir farklılık vardır. Bu farklılığı sağlamak için pozisyonel kodlama kullanılır. Deepseek in kullandığı RoPE yaklaşımı
-def get_rotary_position_encoding(input: torch.Tensor, base=10000, device="cpu"):
-    """
-    Rotary Positional Encoding (RoPE) uygular.
 
-    Bu fonksiyon, embedding vektörlerine pozisyon bilgisini
-    sinüs–kosinüs tabanlı bir rotasyon ile ekler.
-    Böylece attention mekanizması göreli konumları öğrenebilir.
+def get_rotary_position_encoding(input, base=10000, device="cpu"):
+    batch_size, context_length, dimension = input.shape
+    assert dimension % 2 == 0
 
-    Girdi:
-        input: [batch_size, context_length, dimension]
-        dimension mutlaka çift olmalıdır.
+    half_dim = dimension // 2
 
-    Çıkış:
-        Aynı shape'te, pozisyon bilgisi eklenmiş embedding tensorü
-    """
+    freqs = 1.0 / (base ** (torch.arange(0, half_dim, device=device) / dimension))
+    positions = torch.arange(0, context_length, device=device)
 
-    context_length, dimension = input.shape
-
-    """
-    RoPE çalışabilmesi için embedding boyutunun çift olması gerekir.
-    Çünkü her iki boyut bir 2D vektör gibi ele alınır.
-    """
-    assert dimension % 2 == 0, "boyut çift olmalı"
-
-    half_dimension = dimension // 2
-
-    """
-    Her embedding boyutu için farklı frekanslar üretilir.
-    Düşük boyutlar → yavaş değişen sinüsler
-    Yüksek boyutlar → hızlı değişen sinüsler
-    """
-    freqs_indices = torch.arange(
-        0, half_dimension,
-        device=device,
-        dtype=torch.float32
-    )
-
-    freqs = 1.0 / (base ** (freqs_indices / dimension))
-
-    """
-    Token pozisyonlarını temsil eden indeksler.
-    Her token kendi pozisyonuna göre döndürülecek.
-    """
-    positions = torch.arange(
-        0, context_length,
-        device=device,
-        dtype=torch.float32
-    )
-
-    """
-    Açılar, pozisyon ile frekansın çarpımıdır.
-    Bu açılar sin ve cos fonksiyonlarına girecek.
-    """
     angles = positions[:, None] * freqs[None, :]
+    sin = torch.sin(angles).unsqueeze(0)
+    cos = torch.cos(angles).unsqueeze(0)
 
-    sin_angles = torch.sin(angles)
-    cos_angles = torch.cos(angles)
+    x_even = input[:, :, :half_dim]
+    x_odd  = input[:, :, half_dim:]
 
-    """
-    Embedding vektörü iki parçaya ayrılır.
-    İlk yarı x bileşeni,
-    ikinci yarı y bileşeni gibi düşünülür.
-    """
-    input_even = input[:, :, :half_dimension]
-    input_odd  = input[:, :, half_dimension:]
+    x_rot_even = x_even * cos - x_odd * sin
+    x_rot_odd  = x_even * sin + x_odd * cos
 
-    """
-    Klasik 2 boyutlu rotasyon uygulanır.
-    Bu işlem embedding'i pozisyona bağlı olarak döndürür.
-    """
-    input_even_rotated = input_even * cos_angles - input_odd * sin_angles
-    input_odd_rotated  = input_even * sin_angles + input_odd * cos_angles
-
-    """
-    Döndürülmüş parçalar tekrar birleştirilir
-    ve orijinal embedding boyutuna dönülür.
-    """
-    input_rotated = torch.cat(
-        [input_even_rotated, input_odd_rotated],
-        dim=-1
-    )
-
-    return input_rotated
-
+    return torch.cat([x_rot_even, x_rot_odd], dim=-1)
 
 #günümüzde aktif olarak kullanılan bir yöntemdir.
 def get_position_encoding(context_length, embedding_dim,base=10000 ,device= "cpu"):
@@ -99,16 +36,16 @@ def get_position_encoding(context_length, embedding_dim,base=10000 ,device= "cpu
     return pos_embedding.unsqueeze(0)  # [1, context_length, embedding_dim] unsqueeze ile batch dimension eklenir ve tensore dönüştürülür.
 
 class Model(nn.Module):
-    def __init__(self,vocab_size,embedding_dim,context_length,device="cpu"):
+    def __init__(self, vocab_size, embedding_dim, device="cpu"):
         super().__init__()
-        self.embedding= nn.Embedding(vocab_size, embedding_dim, device=device) # şu an için torch kullanılıyor ilerleyen süreçte bireysel olarak modelin özellikle büyük matris işlemlerinde performansı da göz önünde bulundurularak daha sağlam bir optimizasyon geliştiricem.
-        self.pos_embedding= nn.Embedding(context_length, embedding_dim, device=device)
-        self.get_pos= get_rotary_position_encoding
-        self.device= device
+        self.embedding = nn.Embedding(vocab_size, embedding_dim)
+        self.device = device
 
-    def forward(self,x):
-        x= self.embedding(x) #tokenlerin sözlükteki anlamlarını vektörlere dönüştürür.
-        x= self.get_pos(x,device=self.device) #tokenlerin pozisyonel bilgilerini ekler.
-        x= self.pos_embedding(x)
+    def forward(self, x):
+        if x.dim() == 1:
+            x = x.unsqueeze(0)  # batch dimension ekle
+        x = self.embedding(x)
+        x = get_rotary_position_encoding(x, device=self.device)
         return x
+
 
