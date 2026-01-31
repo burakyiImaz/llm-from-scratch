@@ -19,7 +19,7 @@ def get_rotary_position_encoding(input: torch.Tensor, base=10000, device="cpu"):
         Aynı shape'te, pozisyon bilgisi eklenmiş embedding tensorü
     """
 
-    batch_size, context_length, dimension = input.shape
+    context_length, dimension = input.shape
 
     """
     RoPE çalışabilmesi için embedding boyutunun çift olması gerekir.
@@ -99,14 +99,16 @@ def get_position_encoding(context_length, embedding_dim,base=10000 ,device= "cpu
     return pos_embedding.unsqueeze(0)  # [1, context_length, embedding_dim] unsqueeze ile batch dimension eklenir ve tensore dönüştürülür.
 
 class Model(nn.Module):
-    def __init__(self,vocab_size,embedding_dim, context_length, device):
+    def __init__(self,vocab_size,embedding_dim,context_length,device="cpu"):
         super().__init__()
         self.embedding= nn.Embedding(vocab_size, embedding_dim, device=device) # şu an için torch kullanılıyor ilerleyen süreçte bireysel olarak modelin özellikle büyük matris işlemlerinde performansı da göz önünde bulundurularak daha sağlam bir optimizasyon geliştiricem.
+        self.pos_embedding= nn.Embedding(context_length, embedding_dim, device=device)
         self.get_pos= get_rotary_position_encoding
         self.device= device
 
     def forward(self,x):
-        x= self.embedding(x)
-        x= self.get_pos(x,device=self.device)
+        x= self.embedding(x) #tokenlerin sözlükteki anlamlarını vektörlere dönüştürür.
+        x= self.get_pos(x,device=self.device) #tokenlerin pozisyonel bilgilerini ekler.
+        x= self.pos_embedding(x)
         return x
 
