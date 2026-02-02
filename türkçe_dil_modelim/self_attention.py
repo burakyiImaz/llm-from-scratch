@@ -15,7 +15,7 @@ class SelfAttention(nn.Module):
         k= self.k_weights(x)
         v= self.v_weights(x)
 
-        attention_scores = q @ k.T
+        attention_scores = q @ k.transpose(-2, -1) # son 2 boyutta değişiklik yapsın diye..
         attention_weights = torch.softmax(attention_scores / torch.sqrt(torch.tensor(k.shape[-1], dtype=torch.float32)), dim=1)
         return attention_weights @ v
 
