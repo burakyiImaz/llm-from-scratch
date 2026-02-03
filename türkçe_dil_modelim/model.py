@@ -37,11 +37,11 @@ def get_position_encoding(context_length, embedding_dim,base=10000 ,device= "cpu
     return pos_embedding.unsqueeze(0)  # [1, context_length, embedding_dim] unsqueeze ile batch dimension eklenir ve tensore dönüştürülür.
 
 class Model(nn.Module):
-    def __init__(self, vocab_size, embedding_dim, device="cpu"):
+    def __init__(self, vocab_size, embedding_dim,context_length=24, device="cpu"):
         super().__init__()
         self.embedding = nn.Embedding(vocab_size, embedding_dim)
         self.device = device
-        self.self_attention = CausalAttention(embedding_dim, embedding_dim,dropout_rate=0.2) #şimdilik output dim girdi olarak koymamak için eşit boyutlu olarak matris oluşturan bir attention var
+        self.causal_attention = CausalAttention(embedding_dim, embedding_dim,context_length, dropout_rate=0.2) #şimdilik output dim girdi olarak koymamak için eşit boyutlu olarak matris oluşturan bir attention var
 
 
     def forward(self, x):
@@ -49,7 +49,7 @@ class Model(nn.Module):
             x = x.unsqueeze(0)  # batch dimension ekle
         x = self.embedding(x)
         x = get_rotary_position_encoding(x, device=self.device)
-        x = self.self_attention(x)
+        x = self.causal_attention(x)
         return x
 
 
