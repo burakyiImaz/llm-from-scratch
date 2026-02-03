@@ -41,7 +41,7 @@ class Model(nn.Module):
         super().__init__()
         self.embedding = nn.Embedding(vocab_size, embedding_dim)
         self.device = device
-        self.self_attention = CausalAttention(embedding_dim, embedding_dim) #şimdilik output dim girdi olarak koymamak için eşit boyutlu olarak matris oluşturan bir attention var
+        self.self_attention = CausalAttention(embedding_dim, embedding_dim,dropout_rate=0.2) #şimdilik output dim girdi olarak koymamak için eşit boyutlu olarak matris oluşturan bir attention var
 
 
     def forward(self, x):
