@@ -37,13 +37,11 @@ def get_position_encoding(context_length, embedding_dim,base=10000 ,device= "cpu
     return pos_embedding.unsqueeze(0)  # [1, context_length, embedding_dim] unsqueeze ile batch dimension eklenir ve tensore dönüştürülür.
 
 class Model(nn.Module):
-    def __init__(self, vocab_size, embedding_dim,context_length=24, device="cpu"):
+    def __init__(self, vocab_size, embedding_dim,num_heads=2,context_length=24, device="cpu"):
         super().__init__()
         self.embedding = nn.Embedding(vocab_size, embedding_dim)
         self.device = device
-        self.multi_head_attention = MultiHeadAttention(embedding_dim, embedding_dim,context_length, dropout_rate=0.2) #şimdilik output dim girdi olarak koymamak için eşit boyutlu olarak matris oluşturan bir attention var
-
-
+        self.multi_head_attention = MultiHeadAttention(embedding_dim, embedding_dim,num_heads=num_heads , context_length=context_length, dropout_rate=0.2) #şimdilik output dim girdi olarak koymamak için eşit boyutlu olarak matris oluşturan bir attention var
     def forward(self, x):
         if x.dim() == 1:
             x = x.unsqueeze(0)  # batch dimension ekle

@@ -1,4 +1,3 @@
-from causal_attention import CausalAttention
 import torch
 import torch.nn as nn
 
@@ -6,5 +5,18 @@ class MultiHeadAttention(nn.Module):
     def __init__(self, embed_size, output_size, num_heads, context_length, dropout_rate=0):
         super().__init__()
        
-        self.head_dim = output_size // num_heads
-        self.num_heads = num_heads
+        self.context_length= context_length
+
+        self.multi_head_attention= nn.MultiheadAttention(embed_size, num_heads, dropout=dropout_rate)
+        self.projection= nn.Linear(embed_size, output_size)
+
+        self.register_buffer("mask", torch.triu(torch.ones(context_length, context_length), diagonal=1).bool())
+
+    def forward(self, x):
+        number_of_tokens= x.shape[0]
+        x= x[:self.context_length]
+        attention_mask= self.mask[:number_of_tokens, :number_of_tokens]
+        out, _= self.multi_head_attention(x, x, x, attn_mask= attention_mask) # multi head attention a query key value olarak gönderiyoruz
+        #hem maske hali hem de maske olmayan hali var
+        out= self.projection(out)
+        return out
