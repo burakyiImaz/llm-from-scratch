@@ -1,6 +1,7 @@
 import torch
 import torch.nn as nn
 from multi_head_attention import MultiHeadAttention   
+from layer_norm import LayerNorm
 
 # kedi köpeği kovaladı , köpek kediyi kovaladı
 #yukarıda her ne kadar kelimeler aynı olsa da anlamsal bir farklılık vardır. Bu farklılığı sağlamak için pozisyonel kodlama kullanılır. Deepseek in kullandığı RoPE yaklaşımı
@@ -42,12 +43,14 @@ class Model(nn.Module):
         self.embedding = nn.Embedding(vocab_size, embedding_dim)
         self.device = device
         self.multi_head_attention = MultiHeadAttention(embedding_dim, embedding_dim,num_heads=num_heads , context_length=context_length, dropout_rate=0.2) #şimdilik output dim girdi olarak koymamak için eşit boyutlu olarak matris oluşturan bir attention var
+        self.layer_norm= LayerNorm(embedding_dim)
     def forward(self, x):
         if x.dim() == 1:
             x = x.unsqueeze(0)  # batch dimension ekle
         x = self.embedding(x)
         x = get_rotary_position_encoding(x, device=self.device)
         x = self.multi_head_attention(x)
+        x= self.layer_norm(x)
         return x
 
 
