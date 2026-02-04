@@ -11,9 +11,12 @@ class MultiHeadAttention(nn.Module):
             CausalAttention(embed_size, self.head_dim, context_length, dropout_rate)
             for _ in range(num_heads)
         ])
+        self.projection = nn.Linear(embed_size, output_size)
 
     def forward(self, x):
         attention_outs= []
         for head in self.num_heads:
             attention_outs.append(head(x))
-        return torch.cat(attention_outs, dim=-1)
+        attention_outs= torch.cat(attention_outs, dim=-1)
+        attention_outs= self.projection(attention_outs)
+        return attention_outs
