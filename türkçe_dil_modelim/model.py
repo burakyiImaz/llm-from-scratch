@@ -3,6 +3,7 @@ import torch.nn as nn
 from multi_head_attention import MultiHeadAttention   
 from layer_norm import LayerNorm
 from mlp import MLP
+from decoder_block import DecoderBlock
 
 # kedi köpeği kovaladı , köpek kediyi kovaladı
 #yukarıda her ne kadar kelimeler aynı olsa da anlamsal bir farklılık vardır. Bu farklılığı sağlamak için pozisyonel kodlama kullanılır. Deepseek in kullandığı RoPE yaklaşımı
@@ -39,21 +40,19 @@ def get_position_encoding(context_length, embedding_dim,base=10000 ,device= "cpu
     return pos_embedding.unsqueeze(0)  # [1, context_length, embedding_dim] unsqueeze ile batch dimension eklenir ve tensore dönüştürülür.
 
 class Model(nn.Module):
-    def __init__(self, vocab_size, embedding_dim,num_heads=2,context_length=24, device="cpu"):
+    def __init__(self, vocab_size, embedding_dim,num_heads=2,context_length=24, device="cpu",num_layers=6):
         super().__init__()
         self.embedding = nn.Embedding(vocab_size, embedding_dim)
+        self.get_pos= get_rotary_position_encoding
         self.device = device
-        self.multi_head_attention = MultiHeadAttention(embedding_dim, embedding_dim,num_heads=num_heads , context_length=context_length, dropout_rate=0.2) #şimdilik output dim girdi olarak koymamak için eşit boyutlu olarak matris oluşturan bir attention var
-        self.layer_norm= LayerNorm(embedding_dim)
-        self.mlp= MLP(embedding_dim, hidden_dim= embedding_dim *4)
+        self.layers= nn.ModuleList([DecoderBlock(embedding_dim, num_heads, context_length) for _ in range(num_layers)])
     def forward(self, x):
         if x.dim() == 1:
             x = x.unsqueeze(0)  # batch dimension ekle
         x = self.embedding(x)
-        x = get_rotary_position_encoding(x, device=self.device)
-        x = self.multi_head_attention(x)
-        x= self.layer_norm(x)
-        x= self.mlp(x)
+        x = self.get_pos(x, device=self.device)
+        for layer in self.layers:
+            x = layer(x)
         return x
 
 
