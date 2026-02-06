@@ -45,14 +45,15 @@ class Model(nn.Module):
         self.embedding = nn.Embedding(vocab_size, embedding_dim)
         self.get_pos= get_rotary_position_encoding
         self.device = device
-        self.layers= nn.ModuleList([DecoderBlock(embedding_dim, num_heads, context_length) for _ in range(num_layers)])
+        self.layers= nn.Sequential(*[DecoderBlock(embedding_dim, num_heads, context_length) for _ in range(num_layers)])
+        self.lm_head= nn.Linear(embedding_dim, vocab_size)
     def forward(self, x):
         if x.dim() == 1:
             x = x.unsqueeze(0)  # batch dimension ekle
         x = self.embedding(x)
         x = self.get_pos(x, device=self.device)
-        for layer in self.layers:
-            x = layer(x)
+        x= self.layers(x)
+        x= self.lm_head(x)
         return x
 
 
