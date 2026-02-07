@@ -40,20 +40,63 @@ def get_position_encoding(context_length, embedding_dim,base=10000 ,device= "cpu
     return pos_embedding.unsqueeze(0)  # [1, context_length, embedding_dim] unsqueeze ile batch dimension eklenir ve tensore dönüştürülür.
 
 class Model(nn.Module):
-    def __init__(self, vocab_size, embedding_dim,num_heads=2,context_length=24, device="cpu",num_layers=6):
+    def __init__(
+        self,
+        vocab_size,
+        embedding_dim,
+        num_heads=2,
+        context_length=24,
+        device="cpu",
+        num_layers=6
+    ):
         super().__init__()
+
         self.embedding = nn.Embedding(vocab_size, embedding_dim)
-        self.get_pos= get_rotary_position_encoding
+        self.get_pos = get_rotary_position_encoding
         self.device = device
-        self.layers= nn.Sequential(*[DecoderBlock(embedding_dim, num_heads, context_length) for _ in range(num_layers)])
-        self.lm_head= nn.Linear(embedding_dim, vocab_size)
+
+        self.layers = nn.Sequential(
+            *[
+                DecoderBlock(
+                    embedding_dim,
+                    num_heads,
+                    context_length
+                )
+                for _ in range(num_layers)
+            ]
+        )
+
+        self.lm_head = nn.Linear(embedding_dim, vocab_size)
+
+        # 🔴 ÖNEMLİ: modeli device'a taşı
+        self.to(device)
+
     def forward(self, x):
+        # ---- shape güvenliği ----
         if x.dim() == 1:
-            x = x.unsqueeze(0)  # batch dimension ekle
+            x = x.unsqueeze(0)
+
+        # ---- dtype güvenliği ----
+        x = x.long().to(self.device)
+
+        # ---- embedding index güvenliği (debug amaçlı) ----
+        if torch.any(x >= self.embedding.num_embeddings):
+            raise ValueError(
+                f"Token id vocab dışı! "
+                f"max token={x.max().item()}, "
+                f"vocab_size={self.embedding.num_embeddings}"
+            )
+
+        # ---- embedding ----
         x = self.embedding(x)
+
+        # ---- rotary position encoding ----
         x = self.get_pos(x, device=self.device)
-        x= self.layers(x)
-        x= self.lm_head(x)
+
+        # ---- decoder blocks ----
+        x = self.layers(x)
+
+        # ---- vocab projection ----
+        x = self.lm_head(x)
+
         return x
-
-
