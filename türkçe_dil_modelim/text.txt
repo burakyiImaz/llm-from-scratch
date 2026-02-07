@@ -1,0 +1,22 @@
+Yapay zekâ sistemleri, insan düşünme biçimini taklit etmeye çalışırken aslında çok daha temel bir prensibe dayanır: geçmişten öğrenerek geleceği tahmin etmek. 
+Bir cümlede geçen her kelime, kendisinden önce gelen kelimelerle anlam kazanır ve bu bağlam ilişkisi doğru kurulmadığında ortaya çıkan sonuç çoğu zaman anlamsız olur. 
+Bu nedenle modern dil modelleri, yalnızca kelimelerin tekil anlamlarını değil, kelimelerin bir araya geldiğinde oluşturduğu yapıyı, sırayı ve bağlamı dikkate alır. 
+Örneğin bir cümlede zaman zarfı, fiilin anlamını değiştirirken; özne, yüklemin kim tarafından gerçekleştirildiğini belirler. İnsan beyni bu ilişkileri sezgisel olarak kurabilirken, bir yapay zekâ modeli bu bilgiyi sayılar aracılığıyla öğrenir. 
+Eğitim süreci boyunca model, hangi kelimenin hangisinden sonra gelme ihtimalinin daha yüksek olduğunu istatistiksel olarak keşfeder ve bu keşifler zamanla daha tutarlı, daha anlamlı ve daha doğru metinler üretmesini sağlar. 
+Eğer model geleceği görmeden yalnızca geçmişe bakarak tahmin yapabiliyorsa, bu onun gerçekten dili öğrendiğinin en önemli göstergesidir.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
