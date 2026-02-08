@@ -97,25 +97,35 @@ class Model(nn.Module):
 
         return x
 
-    def generate(self, x, max_new_tokens):
-        """
-        x: (seq_len,) veya (1, seq_len)
-        """
+    def generate(self, x, max_new_tokens, stop_token="."):
+
 
         if x.dim() == 1:
             x = x.unsqueeze(0)  # (1, seq_len)
 
-        tokens = x[0].tolist()  
+        tokens = x[0].tolist()
+
+        # stop token id (örn: ".")
+        stop_token_id = "."
+        if hasattr(self, "tokenizer"):
+            stop_token_id = self.tokenizer.vocab.get(stop_token, None)
 
         for _ in range(max_new_tokens):
-            logits = self.forward(torch.tensor([tokens], device=self.device))
 
-            # SADECE SON TOKEN'IN LOGITS'İ
+            if len(tokens) > 32:
+                break
+
+            logits = self.forward(
+                torch.tensor([tokens], device=self.device)
+            )
+
             probs = torch.softmax(logits[0, -1], dim=-1)
-
             _, max_index = torch.max(probs, dim=-1)
-            next_token = max_index.item()  # KRİTİK
+            next_token = max_index.item()
 
             tokens.append(next_token)
+
+            if stop_token_id is not None and next_token == stop_token_id:
+                break
 
         return tokens
