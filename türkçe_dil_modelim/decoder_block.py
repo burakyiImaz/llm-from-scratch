@@ -1,7 +1,7 @@
 import torch.nn as nn
-from multi_head_attention_old import MultiHeadAttention
-from layer_norm import LayerNorm
-from mlp import MLP
+from .multi_head_attention_old import MultiHeadAttention
+from .layer_norm import LayerNorm
+from .mlp import MLP
 
 
 class DecoderBlock(nn.Module):

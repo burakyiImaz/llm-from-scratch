@@ -1,9 +1,9 @@
 import torch
 import torch.nn as nn
-from multi_head_attention import MultiHeadAttention   
-from layer_norm import LayerNorm
-from mlp import MLP
-from decoder_block import DecoderBlock
+from .multi_head_attention import MultiHeadAttention   
+from .layer_norm import LayerNorm
+from .mlp import MLP
+from .decoder_block import DecoderBlock
 
 # kedi köpeği kovaladı , köpek kediyi kovaladı
 #yukarıda her ne kadar kelimeler aynı olsa da anlamsal bir farklılık vardır. Bu farklılığı sağlamak için pozisyonel kodlama kullanılır. Deepseek in kullandığı RoPE yaklaşımı

@@ -1,4 +1,4 @@
-from causal_attention import CausalAttention
+from .causal_attention import CausalAttention
 import torch
 import torch.nn as nn
 
