@@ -87,16 +87,35 @@ class Model(nn.Module):
                 f"vocab_size={self.embedding.num_embeddings}"
             )
 
-        # ---- embedding ----
         x = self.embedding(x)
 
-        # ---- rotary position encoding ----
         x = self.get_pos(x, device=self.device)
 
-        # ---- decoder blocks ----
         x = self.layers(x)
 
-        # ---- vocab projection ----
         x = self.lm_head(x)
 
         return x
+
+    def generate(self, x, max_new_tokens):
+        """
+        x: (seq_len,) veya (1, seq_len)
+        """
+
+        if x.dim() == 1:
+            x = x.unsqueeze(0)  # (1, seq_len)
+
+        tokens = x[0].tolist()  
+
+        for _ in range(max_new_tokens):
+            logits = self.forward(torch.tensor([tokens], device=self.device))
+
+            # SADECE SON TOKEN'IN LOGITS'İ
+            probs = torch.softmax(logits[0, -1], dim=-1)
+
+            _, max_index = torch.max(probs, dim=-1)
+            next_token = max_index.item()  # KRİTİK
+
+            tokens.append(next_token)
+
+        return tokens
