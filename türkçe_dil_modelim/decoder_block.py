@@ -27,8 +27,8 @@ class DecoderBlock(nn.Module):
         )
 
         #  Transformer decoder PRE-NORM kullanır
-        self.layer_norm1 = LayerNorm(embedding_dim, device)
-        self.layer_norm2 = LayerNorm(embedding_dim, device)
+        self.layer_norm1 = LayerNorm(embedding_dim,eps=1e-5, device="cpu")
+        self.layer_norm2 = LayerNorm(embedding_dim,eps=1e-5 ,device="cpu")
 
         #  Feed-forward (MLP)
         self.mlp = MLP(
