@@ -33,7 +33,8 @@ def get_rotary_position_encoding(input: torch.Tensor, base=10000, device= "cpu")
     return input_rotated
 
 class Embedding(nn.Module):
-    def __init__(self,vocab_size,embedding_dim, context_length, device):
+    def __init__(self,vocab_size,embedding_dim, context_length, device="cpu"):
+        super().__init__()
         self.embedding= nn.Embedding(vocab_size, embedding_dim, device=device)
         self.context_length= context_length
         self.get_pos= get_rotary_position_encoding
@@ -41,6 +42,6 @@ class Embedding(nn.Module):
 
     def forward(self,x):
 
-        x= self.embedding(x,device=self.device)
+        x= self.embedding(x)
         x= self.get_pos(x,device=self.device)
         return x

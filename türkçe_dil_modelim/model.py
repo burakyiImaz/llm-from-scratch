@@ -56,16 +56,18 @@ class Model(nn.Module):
         self.device = device
 
         self.layers = nn.Sequential(
-            *[
-                DecoderBlock(
-                    embedding_dim,
-                    num_heads,
-                    context_length,
-                    device=device
-                )
-                for _ in range(num_layers)
-            ]
+    *[
+        DecoderBlock(
+            embedding_dim=embedding_dim,
+            num_heads=num_heads,
+            context_length=context_length,
+            device=device,
+            dropout=0.1
         )
+        for _ in range(num_layers)
+    ]
+    )
+
 
         self.lm_head = nn.Linear(embedding_dim, vocab_size,device=device)
 
