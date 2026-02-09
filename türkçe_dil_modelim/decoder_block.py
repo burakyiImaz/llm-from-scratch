@@ -5,12 +5,12 @@ from .mlp import MLP
 
 
 class DecoderBlock(nn.Module):
-    def __init__(self, embedding_dim, num_heads, context_length):
+    def __init__(self, embedding_dim, num_heads, context_length,device):
         super().__init__()
-        self.attention= MultiHeadAttention(embedding_dim, embedding_dim, num_heads, context_length)
-        self.layer_norm1= LayerNorm(embedding_dim)
-        self.mlp= MLP(embedding_dim, embedding_dim*4)
-        self.layer_norm2= LayerNorm(embedding_dim)
+        self.attention= MultiHeadAttention(embedding_dim, embedding_dim, num_heads, context_length,device)
+        self.layer_norm1= LayerNorm(embedding_dim,device)
+        self.mlp= MLP(embedding_dim, embedding_dim*4,device)
+        self.layer_norm2= LayerNorm(embedding_dim,device)
     def forward(self, x):
         res= x
         res= self.layer_norm2(res)

@@ -9,13 +9,13 @@ class GELU(nn.Module):
 
 
 class MLP(nn.Module):
-    def __init__(self, embedding_dim, hidden_dim):
+    def __init__(self, embedding_dim, hidden_dim,device="cpu"):
 
         super().__init__()
-        self.gate_proj= nn.Linear(embedding_dim, hidden_dim)
-        self.up_proj= nn.Linear(embedding_dim, hidden_dim)
-        self.down_proj= nn.Linear(hidden_dim, embedding_dim)
-        self.gelu= GELU()
+        self.gate_proj= nn.Linear(embedding_dim, hidden_dim,device=device)
+        self.up_proj= nn.Linear(embedding_dim, hidden_dim,device=device)
+        self.down_proj= nn.Linear(hidden_dim, embedding_dim,device=device)
+        self.gelu= GELU().to(device=device)
     def forward(self, x):
         gate= self.gate_proj(x) 
         gate= self.gelu(gate)

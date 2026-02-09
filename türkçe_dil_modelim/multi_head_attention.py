@@ -2,13 +2,13 @@ import torch
 import torch.nn as nn
 
 class MultiHeadAttention(nn.Module):
-    def __init__(self, embed_size, output_size, num_heads, context_length, dropout_rate=0):
+    def __init__(self, embed_size, output_size, num_heads, context_length, dropout_rate=0,device="cpu"):
         super().__init__()
        
         self.context_length= context_length
 
-        self.multi_head_attention= nn.MultiheadAttention(embed_size, num_heads, dropout=dropout_rate)
-        self.projection= nn.Linear(embed_size, output_size)
+        self.multi_head_attention= nn.MultiheadAttention(embed_size, num_heads, dropout=dropout_rate,device=device)
+        self.projection= nn.Linear(embed_size, output_size,device=device)
 
         self.register_buffer("mask", torch.triu(torch.ones(context_length, context_length), diagonal=1).bool())
 
