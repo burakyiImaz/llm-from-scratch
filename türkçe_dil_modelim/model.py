@@ -4,6 +4,7 @@ from .multi_head_attention import MultiHeadAttention
 from .layer_norm import LayerNorm
 from .mlp import MLP
 from .decoder_block import DecoderBlock
+from .embedding import Embedding
 
 # kedi köpeği kovaladı , köpek kediyi kovaladı
 #yukarıda her ne kadar kelimeler aynı olsa da anlamsal bir farklılık vardır. Bu farklılığı sağlamak için pozisyonel kodlama kullanılır. Deepseek in kullandığı RoPE yaklaşımı
@@ -51,8 +52,7 @@ class Model(nn.Module):
     ):
         super().__init__()
 
-        self.embedding = nn.Embedding(vocab_size, embedding_dim)
-        self.get_pos = get_rotary_position_encoding
+        self.embedding = Embedding(vocab_size, embedding_dim,context_length,device=device)
         self.device = device
 
         self.layers = nn.Sequential(
@@ -60,15 +60,15 @@ class Model(nn.Module):
                 DecoderBlock(
                     embedding_dim,
                     num_heads,
-                    context_length
+                    context_length,
+                    device=device
                 )
                 for _ in range(num_layers)
             ]
         )
 
-        self.lm_head = nn.Linear(embedding_dim, vocab_size)
+        self.lm_head = nn.Linear(embedding_dim, vocab_size,device=device)
 
-        # 🔴 ÖNEMLİ: modeli device'a taşı
         self.to(device)
 
     def forward(self, x):
