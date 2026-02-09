@@ -9,8 +9,8 @@ class LayerNorm(nn.Module):
         self.device= device
 
     def forward(self, x):
-        mean = x.mean(dim=-1, keepdim=True,device=self.device)
-        var = x.var(dim=-1, keepdim=True, unbiased=False,device=self.device)
-        normalized_x = (x - mean) / (torch.sqrt(var + self.eps,device=self.device))
+        mean = x.mean(dim=-1, keepdim=True)
+        var = x.var(dim=-1, keepdim=True, unbiased=False)
+        normalized_x = (x - mean) / (torch.sqrt(var + self.eps))
         out = self.weights * normalized_x
         return out

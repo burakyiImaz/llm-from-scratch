@@ -1,47 +1,80 @@
 import torch
 import torch.nn as nn
 
-def get_rotary_position_encoding(input: torch.Tensor, base=10000, device= "cpu"):
-    batch_size, context_length, dimension= input.shape
 
-    assert dimension %2 ==0 , "dimension must be even"
+# kedi köpeği kovaladı , köpek kediyi kovaladı
+#yukarıda her ne kadar kelimeler aynı olsa da anlamsal bir farklılık vardır. Bu farklılığı sağlamak için pozisyonel kodlama kullanılır. Deepseek in kullandığı RoPE yaklaşımı
 
-    half_dimension= dimension// 2
+def get_rotary_position_encoding(input, base=10000, device="cpu"):
+    batch_size, context_length, dimension = input.shape
+    assert dimension % 2 == 0
 
-    freqs_indices= torch.arange(0, half_dimension, device=device, dtype= torch.float32)
+    half_dim = dimension // 2
 
-    freqs = 1.0 / (base** (freqs_indices/ dimension))
+    freqs = 1.0 / (base ** (torch.arange(0, half_dim, device=device) / dimension))
+    positions = torch.arange(0, context_length, device=device)
 
-    positions= torch.arange(0, context_length, device=device, dtype= torch.float32)
+    angles = positions[:, None] * freqs[None, :]
+    sin = torch.sin(angles).unsqueeze(0)
+    cos = torch.cos(angles).unsqueeze(0)
 
-    angles= positions * freqs
+    x_even = input[:, :, :half_dim]
+    x_odd  = input[:, :, half_dim:]
 
-    sin_angles = torch.sin(angles,device=device)
-    cos_angles = torch.cos(angles,device=device)
+    x_rot_even = x_even * cos - x_odd * sin
+    x_rot_odd  = x_even * sin + x_odd * cos
 
-    input_even = input[:, :, :dimension//2] # [0,2,4,6,..]
-    input_odd= input[:,:,dimension//2:] #[1,3,5,..]
+    return torch.cat([x_rot_even, x_rot_odd], dim=-1)
 
-    input_even_rotated = input_even * cos_angles - input_odd * sin_angles
-    input_odd_rotated = input_even * sin_angles + input_odd * cos_angles
-
-    input_rotated= torch.empty_like(input, device=device)
-
-    input_rotated[:,:,:dimension//2] = input_even_rotated
-    input_rotated[:,:,dimension//2:] = input_odd_rotated
-
-    return input_rotated
-
+#günümüzde aktif olarak kullanılan bir yöntemdir.
+def get_position_encoding(context_length, embedding_dim,base=10000 ,device= "cpu"):
+    pos_embedding= torch.zeros(context_length, embedding_dim,device=device)
+    for pos in range(context_length):
+        for i in range(0, embedding_dim//2):
+            pos_embedding[pos, 2*i]= torch.sin(pos / (base ** (2*i/ embedding_dim)))
+            if i+1 < embedding_dim//2:
+                pos_embedding[pos, 2*i +1]= torch.cos(pos / (base ** (2*i/ embedding_dim)))
+    return pos_embedding.unsqueeze(0)  # [1, context_length, embedding_dim] unsqueeze ile batch dimension eklenir ve tensore dönüştürülür.
 class Embedding(nn.Module):
-    def __init__(self,vocab_size,embedding_dim, context_length, device="cpu"):
+    def __init__(self, vocab_size, embedding_dim, context_length, device="cpu"):
         super().__init__()
-        self.embedding= nn.Embedding(vocab_size, embedding_dim, device=device)
-        self.context_length= context_length
-        self.get_pos= get_rotary_position_encoding
-        self.device= device
 
-    def forward(self,x):
+        #  vocab_size'ı dışarıdan erişilebilir yapıyoruz
+        # Böylece model.forward içinde
+        # self.embedding.num_embeddings HATASI almayacağız
+        self.num_embeddings = vocab_size  
 
-        x= self.embedding(x)
-        x= self.get_pos(x,device=self.device)
+        #  token embedding katmanı
+        self.embedding = nn.Embedding(
+            vocab_size,
+            embedding_dim
+        ).to(device)
+
+        #  context length saklanıyor (RoPE için mantıklı)
+        self.context_length = context_length
+
+        #  rotary position encoding fonksiyonunu referans olarak tutuyoruz
+        # (her forward'da yeniden import vs olmasın diye)
+        self.get_pos = get_rotary_position_encoding
+
+        #  device bilgisini sınıf içinde saklıyoruz
+        self.device = device
+
+    def forward(self, x):
+        """
+        x: (batch, seq_len) veya (seq_len,)
+        """
+
+        #  Güvenlik: token id vocab dışına çıkmış mı?
+        # Bu kontrol SENİN debug için eklediğin yerle birebir uyumlu
+        if torch.any(x >= self.num_embeddings):
+            raise ValueError("Token id vocab_size dışına çıktı")
+
+        #  Token embedding
+        x = self.embedding(x)
+
+        #  Rotary Position Encoding
+        # RoPE embedding boyutunu bozmaz, sadece rotate eder
+        x = self.get_pos(x, device=self.device)
+
         return x
