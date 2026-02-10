@@ -44,11 +44,11 @@ class Tokenizer:
         sentence_tokens= []
         
         for text in texts:
-            tokens= self.encode(text).to_list()
+            tokens= self.encode(text).tolist()
             if len(tokens)>context_length:
                 tokens= tokens[:context_length]
             else:
-                tokens= tokens + [self.vocab["pad"]]*(context_length-len(tokens))
+                tokens= tokens + [self.pad_id]*(context_length-len(tokens))
             sentence_tokens.append(tokens)
         return torch.tensor(sentence_tokens)
     
