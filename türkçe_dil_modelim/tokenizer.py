@@ -54,8 +54,6 @@ class Tokenizer:
     
     
     
-    
-    
     def encode(self, text):
         tokens = []
 
@@ -88,3 +86,23 @@ class Tokenizer:
             tokens.pop()
 
         return torch.tensor(tokens, dtype=torch.long)
+    
+    def decode(self, token_ids, remove_special_tokens=True):
+
+        if isinstance(token_ids, torch.Tensor):
+            token_ids = token_ids.tolist()
+        
+        # Özel token ID'leri
+        special_ids = {self.pad_id, self.start_id, self.end_id, 
+                      self.unk_id, self.uppercase_id}
+        
+        text = ""
+        for token_id in token_ids:
+            # Özel tokenları atla
+            if remove_special_tokens and token_id in special_ids:
+                continue
+            
+            token_str = self.reverse_vocab.get(token_id, "")
+            text += token_str
+        
+        return text
