@@ -20,17 +20,18 @@ class TextDataset(Dataset):
 
             self.inputs.append(torch.tensor(input_chunk, dtype=torch.long))
             self.targets.append(torch.tensor(target_chunk, dtype=torch.long))
-
+    
+    
     def __len__(self):
         return len(self.inputs)
 
     def __getitem__(self, idx):
         return self.inputs[idx], self.targets[idx]
 
-
-
-
-    def create_data_loader(token_ids: list, context_length:int, stride:int, batch_size:int, shuffle:bool=True):
+def create_data_loader(token_ids: list, context_length:int, stride:int, batch_size:int, shuffle:bool=True):
         dataset= TextDataset(token_ids, context_length, stride)
         data_loader= torch.utils.data.DataLoader(dataset, batch_size=batch_size, shuffle=shuffle)
         return data_loader
+
+
+
