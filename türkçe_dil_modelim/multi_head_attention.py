@@ -60,7 +60,7 @@ class MultiHeadAttention(nn.Module):
             torch.triu(
                 torch.ones(context_length, context_length),
                 diagonal=1
-            ).bool()
+            ).bool() # sonrasında gerekirse bu kısmı da device'a al
         )
 
     def forward(self, x):

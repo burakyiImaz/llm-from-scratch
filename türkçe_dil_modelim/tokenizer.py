@@ -39,6 +39,23 @@ class Tokenizer:
     def get_vocab_size(self):
         return self.next_token_id
 
+    
+    def encode_batch(self, texts,context_length):
+        sentence_tokens= []
+        
+        for text in texts:
+            tokens= self.encode(text).to_list()
+            if len(tokens)>context_length:
+                tokens= tokens[:context_length]
+            else:
+                tokens= tokens + [self.vocab["pad"]]*(context_length-len(tokens))
+            sentence_tokens.append(tokens)
+        return torch.tensor(sentence_tokens)
+    
+    
+    
+    
+    
     def encode(self, text):
         tokens = []
 
