@@ -88,12 +88,15 @@ class Model(nn.Module):
             )
 
             probs = torch.softmax(logits[0, -1], dim=-1)
-            _, max_index = torch.max(probs, dim=-1)
-            next_token = max_index.item()
+            sample= torch.multinomial(probs,1)
 
-            tokens.append(next_token)
+            #_, max_index = torch.max(probs, dim=-1)
+            max_index= sample.item()
+            #next_token = max_index.item()
 
-            if stop_token_id is not None and next_token == stop_token_id:
+            tokens.append(max_index)
+
+            if stop_token_id is not None and max_index == stop_token_id:
                 break
 
         return tokens
