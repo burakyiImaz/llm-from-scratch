@@ -65,9 +65,9 @@ class Model(nn.Module):
 
         return x
 
-    def generate(self, x, max_new_tokens, stop_token="."):
+    def generate(self, x, max_new_tokens: int, stop_token=".", temperature: float = 1.0):
 
-
+        
         if x.dim() == 1:
             x = x.unsqueeze(0)  # (1, seq_len)
 
@@ -86,17 +86,16 @@ class Model(nn.Module):
             logits = self.forward(
                 torch.tensor([tokens], device=self.device)
             )
+            last_logits = logits[0, -1, :] #sadece son token logitsi
+            scaled_logits = last_logits / temperature
+            probs = torch.softmax(scaled_logits, dim=-1)
+            
 
-            probs = torch.softmax(logits[0, -1], dim=-1)
-            sample= torch.multinomial(probs,1)
+            next_token = torch.multinomial(probs, num_samples=1).item()
 
-            #_, max_index = torch.max(probs, dim=-1)
-            max_index= sample.item()
-            #next_token = max_index.item()
+            tokens.append(next_token)
 
-            tokens.append(max_index)
-
-            if stop_token_id is not None and max_index == stop_token_id:
+            if stop_token_id is not None and next_token == stop_token_id:
                 break
 
         return tokens
