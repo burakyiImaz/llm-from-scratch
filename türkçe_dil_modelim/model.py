@@ -65,7 +65,7 @@ class Model(nn.Module):
 
         return x
 
-    def generate(self, x, max_new_tokens: int, stop_token=".", temperature: float = 1.0):
+    def generate(self, x, max_new_tokens: int, stop_token=".", temperature: float = 1.0, top_k: int =1376):
 
         
         if x.dim() == 1:
@@ -87,7 +87,8 @@ class Model(nn.Module):
                 torch.tensor([tokens], device=self.device)
             )
             last_logits = logits[0, -1, :] #sadece son token logitsi
-            scaled_logits = last_logits / temperature
+            topk_values,topk_indices= torch.topk(last_logits,k=top_k)
+            scaled_logits = topk_values / temperature
             probs = torch.softmax(scaled_logits, dim=-1)
             
 
