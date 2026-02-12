@@ -78,7 +78,7 @@ class Model(nn.Module):
 
         return filtered_logits
 
-    def generate(self, x, max_new_tokens: int, stop_token=".", temperature: float = 1.0, top_k: int =1376, top_p: float=1.0):
+    def generate(self, x, max_new_tokens: int, stop_token=".", temperature: float = 1.0, top_k: int =None, top_p: float=1.0):
 
         
         if x.dim() == 1:
@@ -100,9 +100,22 @@ class Model(nn.Module):
                 torch.tensor([tokens], device=self.device)
             )
             last_logits = logits[0, -1, :] #sadece son token logitsi
-            topk_values,topk_indices= torch.topk(last_logits,k=top_k)
-            scaled_logits = topk_values / temperature
-            probs = torch.softmax(scaled_logits, dim=-1)
+            
+            
+            if temperature!= 0:
+                last_logits= last_logits/temperature
+            
+            if top_k is not None:
+                values, indices = torch.topk(last_logits,top_k)
+                filtered_logits= torch.full_like(last_logits,-float("inf"))
+                filtered_logits.scatter_(0,indices,values) # önce logitleri sıfırladık sonra top_k ye uygun indice ve değerleri 0 yerine yazdık
+                last_logits= filtered_logits
+            
+            if top_p>0 and top_p<1:
+                last_logits= self.top_p_filtering(last_logits,top_p)
+
+
+            probs = torch.softmax(last_logits, dim=-1)
             
 
             next_token = torch.multinomial(probs, num_samples=1).item()
