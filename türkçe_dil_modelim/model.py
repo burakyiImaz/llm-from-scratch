@@ -64,11 +64,13 @@ class Model(nn.Module):
         x = self.lm_head(x)
 
         return x
+
+                                         
     def top_p_filtering(self, logits, top_p):
         sorted_logits, sorted_indices= torch.sort(logits, descending=True)
         cumulative_probs= torch.cumsum(torch.softmax(sorted_logits,dim=-1),dim=-1)
         sorted_indices_to_remove= cumulative_probs>top_p
-        sorted_indices_to_remove[...,1:]= sorted_indices_to_remove[...,1:].clone()
+        sorted_indices_to_remove[...,1:]= sorted_indices_to_remove[...,:-1].clone()
         sorted_indices_to_remove[...,0]=False
 
         sorted_logits[sorted_indices_to_remove]= -float('inf')
