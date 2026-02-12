@@ -73,12 +73,12 @@ class Model(nn.Module):
 
         sorted_logits[sorted_indices_to_remove]= -float('inf')
 
-        filtered_logits= filtered_logits.clone()
+        filtered_logits= torch.full_like(logits,-float('inf'))
         filtered_logits.scatter_(0,sorted_indices,sorted_logits)
 
         return filtered_logits
 
-    def generate(self, x, max_new_tokens: int, stop_token=".", temperature: float = 1.0, top_k: int =1376):
+    def generate(self, x, max_new_tokens: int, stop_token=".", temperature: float = 1.0, top_k: int =1376, top_p: float=1.0):
 
         
         if x.dim() == 1:
