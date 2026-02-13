@@ -1,13 +1,19 @@
 import json
 import torch
+from pathlib import Path
 
 
 class Tokenizer:
     def __init__(self, vocab_file, encoding="utf-8", auto_learn=True):
+        self.vocab_file = Path(vocab_file)
         self.auto_learn = auto_learn
 
-        with open(vocab_file, "r", encoding=encoding) as f:
-            vocab_data = json.load(f)
+        # JSON'dan vocab yükle
+        if self.vocab_file.exists():
+            with open(vocab_file, "r", encoding=encoding) as f:
+                vocab_data = json.load(f)
+        else:
+            vocab_data = {}
 
         self.vocab = {}
         self.reverse_vocab = {}
@@ -15,10 +21,9 @@ class Tokenizer:
 
         current_id = 0
 
-        # JSON kategorilerini sırayla ve ÇAKIŞMASIZ yükle
+        # JSON kategorilerini sırayla yükle
         for category, tokens in vocab_data.items():
             self.vocab_categories[category] = {}
-
             for token in tokens.keys():
                 if token not in self.vocab:
                     self.vocab[token] = current_id
@@ -28,32 +33,45 @@ class Tokenizer:
 
         self.next_token_id = current_id
 
-        # Özel token ID'leri
-        self.pad_id = self.vocab["<pad>"]
-        self.unk_id = self.vocab["<unk>"]
-        self.start_id = self.vocab["<başla>"]
-        self.end_id = self.vocab["<bitiş>"]
-        self.uppercase_id = self.vocab["<büyük_harf>"]
-        self.space_id = self.vocab[" "]
+        # Özel token ID'leri (varsayılmış vocab içinde olmalı)
+        self.pad_id = self.vocab.get("<pad>", self._add_special_token("<pad>"))
+        self.unk_id = self.vocab.get("<unk>", self._add_special_token("<unk>"))
+        self.start_id = self.vocab.get("<başla>", self._add_special_token("<başla>"))
+        self.end_id = self.vocab.get("<bitiş>", self._add_special_token("<bitiş>"))
+        self.uppercase_id = self.vocab.get("<büyük_harf>", self._add_special_token("<büyük_harf>"))
+        self.space_id = self.vocab.get(" ", self._add_special_token(" "))
+
+    def _add_special_token(self, token):
+        """Yeni özel token ekler"""
+        token_id = self.next_token_id
+        self.vocab[token] = token_id
+        self.reverse_vocab[token_id] = token
+        self.next_token_id += 1
+        return token_id
+
+    def save_vocab(self):
+        """Vocab’ı JSON’a kaydet"""
+        categories = self.vocab_categories.copy()
+        # Eklenmiş tokenlar için 'ekstra' kategorisi
+        ekstra_tokens = {t: {"id": i} for t, i in self.vocab.items() if all(t not in cat for cat in self.vocab_categories.values())}
+        categories["ekstra"] = ekstra_tokens
+        with open(self.vocab_file, "w", encoding="utf-8") as f:
+            json.dump(categories, f, ensure_ascii=False, indent=2)
 
     def get_vocab_size(self):
         return self.next_token_id
 
-    
-    def encode_batch(self, texts,context_length):
-        sentence_tokens= []
-        
+    def encode_batch(self, texts, context_length):
+        sentence_tokens = []
         for text in texts:
-            tokens= self.encode(text).tolist()
-            if len(tokens)>context_length:
-                tokens= tokens[:context_length]
+            tokens = self.encode(text).tolist()
+            if len(tokens) > context_length:
+                tokens = tokens[:context_length]
             else:
-                tokens= tokens + [self.pad_id]*(context_length-len(tokens))
+                tokens = tokens + [self.pad_id] * (context_length - len(tokens))
             sentence_tokens.append(tokens)
-        return torch.tensor(sentence_tokens)
-    
-    
-    
+        return torch.tensor(sentence_tokens, dtype=torch.long)
+
     def encode(self, text):
         tokens = []
 
@@ -86,23 +104,17 @@ class Tokenizer:
             tokens.pop()
 
         return torch.tensor(tokens, dtype=torch.long)
-    
-    def decode(self, token_ids, remove_special_tokens=True):
 
+    def decode(self, token_ids, remove_special_tokens=True):
         if isinstance(token_ids, torch.Tensor):
             token_ids = token_ids.tolist()
-        
-        # Özel token ID'leri
-        special_ids = {self.pad_id, self.start_id, self.end_id, 
-                      self.unk_id, self.uppercase_id}
-        
+
+        special_ids = {self.pad_id, self.start_id, self.end_id, self.unk_id, self.uppercase_id}
         text = ""
         for token_id in token_ids:
-            # Özel tokenları atla
             if remove_special_tokens and token_id in special_ids:
                 continue
-            
             token_str = self.reverse_vocab.get(token_id, "")
             text += token_str
-        
         return text
+

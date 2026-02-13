@@ -112,7 +112,7 @@
     "ev": 109,
     "okul": 110,
     "hastane": 111,
-    "pazar": 194,
+    "pazar": 112,
     "dükkan": 113,
     "bahçe": 114,
     "orman": 115,
@@ -194,1348 +194,5740 @@
     "perşembe": 191,
     "cuma": 192,
     "cumartesi": 193,
-    "ocak": 195,
-    "şubat": 196,
-    "mart": 197,
-    "nisan": 198,
-    "mayıs": 199,
-    "haziran": 200,
-    "temmuz": 201,
-    "ağustos": 202,
-    "eylül": 203,
-    "ekim": 204,
-    "kasım": 205,
-    "aralık": 206,
-    "sabah": 207,
-    "akşam": 208,
-    "gece": 209,
-    "gündüz": 210,
-    "yıldız": 211,
-    "bulut": 212,
-    "yağmur": 213,
-    "kar": 214,
-    "rüzgar": 215,
-    "hava": 216,
-    "fırtına": 217,
-    "yıldırım": 218,
-    "gökkuşağı": 219,
-    "sis": 220,
-    "kuru": 221,
-    "nemli": 222,
-    "sıvı": 223,
-    "katı": 224,
-    "bilgisayar": 225,
-    "telefon": 226,
-    "yazılım": 227,
-    "donanım": 228,
-    "internet": 229,
-    "web": 230,
-    "veri": 231,
-    "piyano": 232,
-    "gitar": 233,
-    "keman": 234,
-    "davul": 235,
-    "zil": 236,
-    "kalem": 237,
-    "defter": 238,
-    "kitap": 239,
-    "gazete": 240
+    "ocak": 194,
+    "şubat": 195,
+    "mart": 196,
+    "nisan": 197,
+    "mayıs": 198,
+    "haziran": 199,
+    "temmuz": 200,
+    "ağustos": 201,
+    "eylül": 202,
+    "ekim": 203,
+    "kasım": 204,
+    "aralık": 205,
+    "sabah": 206,
+    "akşam": 207,
+    "gece": 208,
+    "gündüz": 209,
+    "yıldız": 210,
+    "bulut": 211,
+    "yağmur": 212,
+    "kar": 213,
+    "rüzgar": 214,
+    "hava": 215,
+    "fırtına": 216,
+    "yıldırım": 217,
+    "gökkuşağı": 218,
+    "sis": 219,
+    "kuru": 220,
+    "nemli": 221,
+    "sıvı": 222,
+    "katı": 223,
+    "bilgisayar": 224,
+    "telefon": 225,
+    "yazılım": 226,
+    "donanım": 227,
+    "internet": 228,
+    "web": 229,
+    "veri": 230,
+    "piyano": 231,
+    "gitar": 232,
+    "keman": 233,
+    "davul": 234,
+    "zil": 235,
+    "kalem": 236,
+    "defter": 237,
+    "kitap": 238,
+    "gazete": 239
   },
   "__YAPIM_EKLERİ__": {
-    "ci": 241,
-    "cı": 291,
-    "cu": 243,
-    "cü": 244,
-    "lik": 245,
-    "lık": 246,
-    "luk": 247,
-    "lük": 248,
-    "lı": 250,
-    "lu": 251,
-    "lü": 252,
-    "sız": 253,
-    "siz": 254,
-    "suz": 255,
-    "süz": 256,
-    "leş": 257,
-    "laş": 258,
-    "luş": 259,
-    "lüş": 260,
-    "dir": 261,
-    "dır": 262,
-    "dur": 263,
-    "dür": 264,
-    "tır": 265,
-    "tir": 269,
-    "tur": 267,
-    "tür": 268,
-    "tıl": 270,
-    "til": 271,
-    "tul": 272,
-    "tül": 273,
-    "dil": 274,
-    "dıl": 275,
-    "dul": 276,
-    "dül": 277,
-    "abil": 278,
-    "ebil": 279,
-    "ibilir": 283,
-    "abilir": 281,
-    "ebilir": 282,
-    "kan": 284,
-    "ken": 285,
-    "kin": 286,
-    "kun": 287,
-    "kın": 288,
-    "ca": 289,
-    "cak": 290,
-    "ça": 292,
-    "çak": 293,
-    "çı": 294,
-    "ka": 295,
-    "kı": 296,
-    "ku": 297,
-    "kü": 298,
-    "me": 299,
-    "mak": 300,
-    "mi": 301,
-    "ş": 302,
-    "taş": 303,
-    "teş": 304,
-    "tış": 305,
-    "tuş": 306,
-    "mal": 307,
-    "mel": 308,
-    "mil": 309,
-    "mul": 310,
-    "mül": 311,
-    "man": 312,
-    "men": 313,
-    "min": 314,
-    "mon": 315,
-    "mun": 316,
-    "mün": 317,
-    "ay": 318,
-    "ey": 319,
-    "ıy": 320,
-    "iy": 321,
-    "uy": 322,
-    "üy": 323,
-    "ar": 324,
-    "er": 325,
-    "ır": 326,
-    "ir": 327,
-    "or": 328,
-    "ör": 329,
-    "ur": 330,
-    "ür": 331,
-    "adır": 332,
-    "edir": 333,
-    "ıdır": 334,
-    "idır": 335,
-    "odur": 336,
-    "ödür": 337,
-    "udur": 338,
-    "üdür": 339,
-    "adırız": 340,
-    "edirler": 341,
-    "ıdırlar": 342,
-    "idirler": 343,
-    "odurlar": 344,
-    "ödürler": 345,
-    "udurlar": 346,
-    "üdürler": 347
+    "ci": 240,
+    "cı": 241,
+    "cu": 242,
+    "cü": 243,
+    "lik": 244,
+    "lık": 245,
+    "luk": 246,
+    "lük": 247,
+    "lı": 248,
+    "lu": 249,
+    "lü": 250,
+    "sız": 251,
+    "siz": 252,
+    "suz": 253,
+    "süz": 254,
+    "leş": 255,
+    "laş": 256,
+    "luş": 257,
+    "lüş": 258,
+    "dir": 259,
+    "dır": 260,
+    "dur": 261,
+    "dür": 262,
+    "tır": 263,
+    "tir": 264,
+    "tur": 265,
+    "tür": 266,
+    "tıl": 267,
+    "til": 268,
+    "tul": 269,
+    "tül": 270,
+    "dil": 271,
+    "dıl": 272,
+    "dul": 273,
+    "dül": 274,
+    "abil": 275,
+    "ebil": 276,
+    "ibilir": 277,
+    "abilir": 278,
+    "ebilir": 279,
+    "kan": 280,
+    "ken": 281,
+    "kin": 282,
+    "kun": 283,
+    "kın": 284,
+    "ca": 285,
+    "cak": 286,
+    "ça": 287,
+    "çak": 288,
+    "çı": 289,
+    "ka": 290,
+    "kı": 291,
+    "ku": 292,
+    "kü": 293,
+    "me": 294,
+    "mak": 295,
+    "mi": 296,
+    "ş": 297,
+    "taş": 298,
+    "teş": 299,
+    "tış": 300,
+    "tuş": 301,
+    "mal": 302,
+    "mel": 303,
+    "mil": 304,
+    "mul": 305,
+    "mül": 306,
+    "man": 307,
+    "men": 308,
+    "min": 309,
+    "mon": 310,
+    "mun": 311,
+    "mün": 312,
+    "ey": 313,
+    "ıy": 314,
+    "iy": 315,
+    "üy": 316,
+    "ar": 317,
+    "er": 318,
+    "ır": 319,
+    "ir": 320,
+    "or": 321,
+    "ör": 322,
+    "ur": 323,
+    "ür": 324,
+    "adır": 325,
+    "edir": 326,
+    "ıdır": 327,
+    "idır": 328,
+    "odur": 329,
+    "ödür": 330,
+    "udur": 331,
+    "üdür": 332,
+    "adırız": 333,
+    "edirler": 334,
+    "ıdırlar": 335,
+    "idirler": 336,
+    "odurlar": 337,
+    "ödürler": 338,
+    "udurlar": 339,
+    "üdürler": 340
   },
   "__ÇEKİM_EKLERİ__": {
-    "di": 348,
-    "dı": 349,
-    "du": 350,
-    "dü": 351,
-    "ti": 352,
-    "tı": 353,
-    "tu": 354,
-    "tü": 355,
-    "miş": 356,
-    "mış": 357,
-    "muş": 358,
-    "müş": 359,
-    "im": 360,
-    "in": 361,
-    "iniz": 362,
-    "ınız": 363,
-    "i": 364,
-    "ı": 365,
-    "u": 366,
-    "ü": 367,
-    "si": 368,
-    "sı": 369,
-    "su": 370,
-    "sü": 371,
-    "ları": 374,
-    "leri": 375,
-    "de": 376,
-    "da": 377,
-    "den": 378,
-    "dan": 379,
-    "ye": 380,
-    "ya": 381,
-    "e": 382,
-    "a": 383,
-    "ile": 384,
-    "le": 385,
-    "la": 386,
-    "mi": 468,
-    "mı": 467,
-    "mu": 469,
-    "mü": 470,
-    "se": 391,
-    "sa": 392,
-    "sin": 393,
-    "sın": 394,
-    "sun": 395,
-    "sün": 396,
-    "sanız": 397,
-    "siniz": 398,
-    "sunuz": 399,
-    "sünüz": 400,
-    "ler": 401,
-    "lar": 402,
-    "ım": 404,
-    "ıyım": 405,
-    "iyim": 406,
-    "uyum": 407,
-    "üyüm": 408,
-    "yım": 409,
-    "yim": 410,
-    "yum": 411,
-    "yüm": 412,
-    "ırız": 413,
-    "iryz": 414,
-    "uruz": 415,
-    "ürüz": 416,
-    "acak": 423,
-    "ecek": 424,
-    "acağım": 419,
-    "eceğim": 420,
-    "acaksın": 421,
-    "eceksin": 422,
-    "acağız": 425,
-    "eceğiz": 426,
-    "acaksınız": 427,
-    "eceksiniz": 428,
-    "acaklar": 429,
-    "ecekler": 430,
-    "ıyor": 443,
-    "iyor": 444,
-    "uyor": 445,
-    "üyor": 446,
-    "ıyorum": 435,
-    "iyorum": 436,
-    "uyorum": 437,
-    "üyorum": 438,
-    "ıyorsun": 439,
-    "iyorsun": 440,
-    "uyorsun": 441,
-    "üyorsun": 442,
-    "ıyoruz": 447,
-    "iyoruz": 448,
-    "uyoruz": 449,
-    "üyoruz": 450,
-    "ıyorsunuz": 451,
-    "iyorsunuz": 452,
-    "uyorsunuz": 453,
-    "üyorsunuz": 454,
-    "ıyorlar": 455,
-    "iyorlar": 456,
-    "uyorlar": 457,
-    "üyorlar": 458,
-    "mıyım": 459,
-    "miyim": 460,
-    "muyum": 461,
-    "müyüm": 462,
-    "mısın": 463,
-    "misin": 464,
-    "musun": 465,
-    "müsün": 466,
-    "mıyız": 471,
-    "miyiz": 472,
-    "muyuz": 473,
-    "müyüz": 474,
-    "mısınız": 475,
-    "misiniz": 476,
-    "musunuz": 477,
-    "müsünüz": 478,
-    "mılar": 479,
-    "miler": 480,
-    "mular": 481,
-    "müler": 482
+    "di": 341,
+    "dı": 342,
+    "du": 343,
+    "dü": 344,
+    "ti": 345,
+    "tı": 346,
+    "tu": 347,
+    "tü": 348,
+    "miş": 349,
+    "mış": 350,
+    "muş": 351,
+    "müş": 352,
+    "im": 353,
+    "in": 354,
+    "iniz": 355,
+    "ınız": 356,
+    "i": 357,
+    "ı": 358,
+    "u": 359,
+    "ü": 360,
+    "si": 361,
+    "sı": 362,
+    "sü": 363,
+    "ları": 364,
+    "leri": 365,
+    "de": 366,
+    "da": 367,
+    "den": 368,
+    "dan": 369,
+    "ye": 370,
+    "ya": 371,
+    "e": 372,
+    "a": 373,
+    "ile": 374,
+    "le": 375,
+    "la": 376,
+    "mı": 377,
+    "mu": 378,
+    "mü": 379,
+    "se": 380,
+    "sa": 381,
+    "sin": 382,
+    "sın": 383,
+    "sun": 384,
+    "sün": 385,
+    "sanız": 386,
+    "siniz": 387,
+    "sunuz": 388,
+    "sünüz": 389,
+    "ler": 390,
+    "lar": 391,
+    "ım": 392,
+    "ıyım": 393,
+    "iyim": 394,
+    "uyum": 395,
+    "üyüm": 396,
+    "yım": 397,
+    "yim": 398,
+    "yum": 399,
+    "yüm": 400,
+    "ırız": 401,
+    "iryz": 402,
+    "uruz": 403,
+    "ürüz": 404,
+    "acak": 405,
+    "ecek": 406,
+    "acağım": 407,
+    "eceğim": 408,
+    "acaksın": 409,
+    "eceksin": 410,
+    "acağız": 411,
+    "eceğiz": 412,
+    "acaksınız": 413,
+    "eceksiniz": 414,
+    "acaklar": 415,
+    "ecekler": 416,
+    "ıyor": 417,
+    "iyor": 418,
+    "uyor": 419,
+    "üyor": 420,
+    "ıyorum": 421,
+    "iyorum": 422,
+    "uyorum": 423,
+    "üyorum": 424,
+    "ıyorsun": 425,
+    "iyorsun": 426,
+    "uyorsun": 427,
+    "üyorsun": 428,
+    "ıyoruz": 429,
+    "iyoruz": 430,
+    "uyoruz": 431,
+    "üyoruz": 432,
+    "ıyorsunuz": 433,
+    "iyorsunuz": 434,
+    "uyorsunuz": 435,
+    "üyorsunuz": 436,
+    "ıyorlar": 437,
+    "iyorlar": 438,
+    "uyorlar": 439,
+    "üyorlar": 440,
+    "mıyım": 441,
+    "miyim": 442,
+    "muyum": 443,
+    "müyüm": 444,
+    "mısın": 445,
+    "misin": 446,
+    "musun": 447,
+    "müsün": 448,
+    "mıyız": 449,
+    "miyiz": 450,
+    "muyuz": 451,
+    "müyüz": 452,
+    "mısınız": 453,
+    "misiniz": 454,
+    "musunuz": 455,
+    "müsünüz": 456,
+    "mılar": 457,
+    "miler": 458,
+    "mular": 459,
+    "müler": 460
   },
   "__HAL_EKLERİ__": {
-    "de": 483,
-    "da": 484,
-    "den": 485,
-    "dan": 486,
-    "ye": 487,
-    "ya": 488,
-    "e": 489,
-    "a": 490,
-    "i": 491,
-    "ı": 492,
-    "u": 493,
-    "ü": 494,
-    "ile": 495,
-    "le": 496,
-    "la": 497,
-    "lik": 498,
-    "lık": 499,
-    "luk": 500,
-    "lük": 501,
-    "oda": 502,
-    "ede": 503,
-    "ıda": 504,
-    "ida": 505,
-    "uda": 506,
-    "üde": 507,
-    "oden": 508,
-    "eden": 509,
-    "ıdan": 510,
-    "idan": 511,
-    "udan": 512,
-    "üden": 513,
-    "oye": 514,
-    "eye": 515,
-    "ıya": 516,
-    "iya": 517,
-    "uya": 518,
-    "üye": 519,
-    "oia": 520,
-    "eia": 521,
-    "ıia": 522,
-    "iia": 523,
-    "uia": 524,
-    "üia": 525,
-    "oyle": 526,
-    "eyle": 527,
-    "ıyla": 528,
-    "iyle": 529,
-    "uyla": 530,
-    "üyle": 531
+    "oda": 461,
+    "ede": 462,
+    "ıda": 463,
+    "ida": 464,
+    "uda": 465,
+    "üde": 466,
+    "oden": 467,
+    "eden": 468,
+    "ıdan": 469,
+    "idan": 470,
+    "udan": 471,
+    "üden": 472,
+    "oye": 473,
+    "eye": 474,
+    "ıya": 475,
+    "iya": 476,
+    "uya": 477,
+    "üye": 478,
+    "oia": 479,
+    "eia": 480,
+    "ıia": 481,
+    "iia": 482,
+    "uia": 483,
+    "üia": 484,
+    "oyle": 485,
+    "eyle": 486,
+    "ıyla": 487,
+    "iyle": 488,
+    "uyla": 489,
+    "üyle": 490
   },
   "__ZAMIR__": {
-    "ben": 532,
-    "sen": 533,
-    "o": 534,
-    "biz": 535,
-    "siz": 536,
-    "onlar": 537,
-    "benim": 538,
-    "senin": 539,
-    "onun": 540,
-    "bizim": 541,
-    "sizin": 542,
-    "onların": 543,
-    "bana": 544,
-    "sana": 545,
-    "ona": 546,
-    "bize": 547,
-    "size": 548,
-    "onlara": 549,
-    "beni": 550,
-    "seni": 551,
-    "onu": 552,
-    "bizi": 553,
-    "sizi": 554,
-    "onları": 555,
-    "bende": 556,
-    "sende": 557,
-    "onda": 558,
-    "bizde": 559,
-    "sizde": 560,
-    "onlarda": 561
+    "ben": 491,
+    "sen": 492,
+    "o": 493,
+    "biz": 494,
+    "onlar": 495,
+    "benim": 496,
+    "senin": 497,
+    "onun": 498,
+    "bizim": 499,
+    "sizin": 500,
+    "onların": 501,
+    "bana": 502,
+    "sana": 503,
+    "ona": 504,
+    "bize": 505,
+    "size": 506,
+    "onlara": 507,
+    "beni": 508,
+    "seni": 509,
+    "onu": 510,
+    "bizi": 511,
+    "sizi": 512,
+    "onları": 513,
+    "bende": 514,
+    "sende": 515,
+    "onda": 516,
+    "bizde": 517,
+    "sizde": 518,
+    "onlarda": 519
   },
   "__BAĞLAÇ_VE_EDAT__": {
-    "ve": 562,
-    "ile": 563,
-    "ancak": 564,
-    "fakat": 565,
-    "lakin": 566,
-    "çünkü": 567,
-    "eğer": 568,
-    "ise": 569,
-    "yani": 570,
-    "böyle": 571,
-    "öyle": 572,
-    "nasıl": 573,
-    "neden": 574,
-    "nereden": 575,
-    "nereye": 576,
-    "ne": 577,
-    "kim": 578,
-    "kimi": 579,
-    "kimse": 580,
-    "hiç": 581,
-    "tüm": 582,
-    "hep": 583,
-    "dahi": 584,
-    "bile": 585,
-    "sadece": 586,
-    "yalnız": 587,
-    "kadar": 588,
-    "gibi": 589,
-    "hakkında": 590,
-    "arasında": 591,
-    "rağmen": 592,
-    "göre": 593,
-    "sonra": 594,
-    "önce": 595,
-    "sırasında": 596,
-    "esnasında": 597,
-    "nitekim": 598,
-    "oysa": 599
+    "ve": 520,
+    "ancak": 521,
+    "fakat": 522,
+    "lakin": 523,
+    "çünkü": 524,
+    "eğer": 525,
+    "ise": 526,
+    "yani": 527,
+    "böyle": 528,
+    "öyle": 529,
+    "nasıl": 530,
+    "neden": 531,
+    "nereden": 532,
+    "nereye": 533,
+    "ne": 534,
+    "kim": 535,
+    "kimi": 536,
+    "kimse": 537,
+    "hiç": 538,
+    "tüm": 539,
+    "hep": 540,
+    "dahi": 541,
+    "bile": 542,
+    "sadece": 543,
+    "yalnız": 544,
+    "kadar": 545,
+    "gibi": 546,
+    "hakkında": 547,
+    "arasında": 548,
+    "rağmen": 549,
+    "göre": 550,
+    "sonra": 551,
+    "önce": 552,
+    "sırasında": 553,
+    "esnasında": 554,
+    "nitekim": 555,
+    "oysa": 556
   },
   "__SIFAT_VE_ZARFLAR__": {
-    "büyük": 600,
-    "küçük": 601,
-    "uzun": 602,
-    "kısa": 603,
-    "geniş": 604,
-    "dar": 605,
-    "yüksek": 606,
-    "alçak": 607,
-    "güzel": 608,
-    "çirkin": 609,
-    "temiz": 610,
-    "kirli": 611,
-    "sıcak": 612,
-    "soğuk": 613,
-    "ağır": 614,
-    "hafif": 615,
-    "sert": 616,
-    "yumuşak": 617,
-    "parlak": 618,
-    "mat": 619,
-    "açık": 620,
-    "koyu": 621,
-    "iyi": 622,
-    "kötü": 623,
-    "doğru": 624,
-    "yanlış": 625,
-    "gerçek": 626,
-    "yalan": 627,
-    "hızlı": 628,
-    "yavaş": 629,
-    "derin": 630,
-    "sığ": 631,
-    "ince": 632,
-    "kalın": 633,
-    "mutlu": 634,
-    "üzgün": 635,
-    "öfkeli": 636,
-    "huzurlu": 637,
-    "korkmuş": 638,
-    "cesur": 639,
-    "akıllı": 640,
-    "aptal": 641,
-    "tembel": 642,
-    "çalışkan": 643,
-    "sabırlı": 644,
-    "sabırsız": 645,
-    "kibar": 646,
-    "kaba": 647,
-    "dürüst": 648,
-    "sahte": 649,
-    "çok": 650,
-    "az": 651,
-    "pek": 652,
-    "biraz": 653,
-    "oldukça": 654,
-    "çoğunlukla": 655,
-    "nadiren": 656,
-    "bazen": 657,
-    "daima": 658,
-    "asla": 659,
-    "henüz": 660,
-    "şimdi": 661,
-    "sonra": 662,
-    "önce": 663,
-    "geç": 664,
-    "erken": 665,
-    "yakın": 666,
-    "uzak": 667,
-    "burada": 668,
-    "orada": 669,
-    "şurada": 670,
-    "nereden": 671,
-    "nereye": 672
+    "sabırlı": 557,
+    "sabırsız": 558,
+    "kibar": 559,
+    "kaba": 560,
+    "pek": 561,
+    "biraz": 562,
+    "oldukça": 563,
+    "çoğunlukla": 564,
+    "nadiren": 565,
+    "bazen": 566,
+    "daima": 567,
+    "asla": 568,
+    "henüz": 569,
+    "şimdi": 570,
+    "geç": 571,
+    "erken": 572,
+    "yakın": 573,
+    "uzak": 574,
+    "burada": 575,
+    "orada": 576,
+    "şurada": 577
   },
   "__NOKTALAMA__": {
-    ".": 673,
-    ",": 674,
-    ";": 675,
-    ":": 676,
-    "\"": 677,
-    "'": 678,
-    "(": 679,
-    ")": 680,
-    "[": 681,
-    "]": 682,
-    "{": 683,
-    "}": 684,
-    "-": 685,
-    "?": 686,
-    "!": 687,
-    "/": 688,
-    "\\": 689,
-    "@": 690,
-    "#": 691,
-    "$": 692,
-    "%": 693,
-    "&": 694,
-    "*": 695,
-    "+": 696,
-    "=": 697,
-    "<": 698,
-    ">": 699,
-    "~": 700,
-    "^": 701,
-    "|": 702,
-    "`": 703,
-    "…": 704,
-    "»": 705,
-    "«": 706,
-    "–": 707,
-    "—": 708,
-    "‚": 709,
-    "l_tırnak_sol": 710,
-    "r_tırnak_sol": 711,
-    "r_tırnak_sag": 712,
-    "№": 713,
-    "©": 714,
-    "®": 715,
-    "™": 716
+    ".": 578,
+    ",": 579,
+    ";": 580,
+    ":": 581,
+    "\"": 582,
+    "'": 583,
+    "(": 584,
+    ")": 585,
+    "[": 586,
+    "]": 587,
+    "{": 588,
+    "}": 589,
+    "-": 590,
+    "?": 591,
+    "!": 592,
+    "/": 593,
+    "\\": 594,
+    "@": 595,
+    "#": 596,
+    "$": 597,
+    "%": 598,
+    "&": 599,
+    "*": 600,
+    "+": 601,
+    "=": 602,
+    "<": 603,
+    ">": 604,
+    "~": 605,
+    "^": 606,
+    "|": 607,
+    "`": 608,
+    "…": 609,
+    "»": 610,
+    "«": 611,
+    "–": 612,
+    "—": 613,
+    "‚": 614,
+    "l_tırnak_sol": 615,
+    "r_tırnak_sol": 616,
+    "r_tırnak_sag": 617,
+    "№": 618,
+    "©": 619,
+    "®": 620,
+    "™": 621
   },
   "__ÖZEL_TOKENLER__": {
-    " ": 717,
-    "\n": 718,
-    "\t": 719,
-    "\r": 720,
-    "<unk>": 721,
-    "<pad>": 722,
-    "<başla>": 723,
-    "<bitiş>": 724,
-    "<boşluk>": 725,
-    "<morfem_ayracı>": 726,
-    "<büyük_harf>": 727
+    " ": 622,
+    "\n": 623,
+    "\t": 624,
+    "\r": 625,
+    "<unk>": 626,
+    "<pad>": 627,
+    "<başla>": 628,
+    "<bitiş>": 629,
+    "<boşluk>": 630,
+    "<morfem_ayracı>": 631,
+    "<büyük_harf>": 632
   },
   "__İSİMLER__": {
-    "insan": 727,
-    "aile": 728,
-    "çocuk": 729,
-    "kız": 730,
-    "oğlan": 731,
-    "erkek": 732,
-    "kadın": 733,
-    "anne": 734,
-    "baba": 735,
-    "kardeş": 736,
-    "abi": 737,
-    "abla": 738,
-    "amca": 739,
-    "teyze": 740,
-    "dede": 741,
-    "nine": 742,
-    "eş": 743,
-    "koca": 744,
-    "gelin": 745,
-    "damat": 746,
-    "yakın": 747,
-    "akraba": 748,
-    "komşu": 749,
-    "arkadaş": 750,
-    "düşman": 751,
-    "öğretmen": 752,
-    "öğrenci": 753,
-    "doktor": 754,
-    "hemşire": 755,
-    "mühendis": 756,
-    "mimar": 1040,
-    "avukat": 758,
-    "polis": 759,
-    "asker": 760,
-    "itfaiyeci": 761,
-    "işçi": 762,
-    "çiftçi": 763,
-    "esnaf": 764,
-    "tüccar": 765,
-    "aşçı": 766,
-    "garson": 767,
-    "otel": 1077,
-    "restoran": 769,
-    "kafe": 770,
-    "bar": 771,
-    "market": 772,
-    "mağaza": 773,
-    "dükkân": 774,
-    "şirket": 775,
-    "fabrika": 776,
-    "işyeri": 777,
-    "ofis": 778,
-    "makam": 779,
-    "daire": 780,
-    "kat": 781,
-    "oda": 782,
-    "salon": 783,
-    "mutfak": 784,
-    "banyo": 785,
-    "tuvalete": 786,
-    "giriş": 787,
-    "çıkış": 788,
-    "penceresi": 789,
-    "kapısı": 790,
-    "anahtarı": 791,
-    "kilit": 792,
-    "cam": 793,
-    "çerçeve": 794,
-    "çatı": 795,
-    "uydu": 796,
-    "anten": 797,
-    "telefon": 798,
-    "tuşu": 799,
-    "ekran": 800,
-    "bilgisayar": 1027,
-    "laptop": 802,
-    "tablet": 803,
-    "fare": 804,
-    "klavye": 805,
-    "monitör": 806,
-    "yazıcı": 807,
-    "scanner": 808,
-    "modem": 809,
-    "router": 810,
-    "server": 811,
-    "veri": 1019,
-    "dosya": 813,
-    "klasör": 814,
-    "disk": 815,
-    "bellek": 816,
-    "hafıza": 817,
-    "işlemci": 818,
-    "anakart": 819,
-    "güç": 820,
-    "kaynağı": 821,
-    "soğutma": 822,
-    "sistemi": 823,
-    "fan": 824,
-    "program": 825,
-    "uygulama": 826,
-    "oyun": 827,
-    "içerik": 828,
-    "sayfa": 829,
-    "web": 830,
-    "site": 831,
-    "link": 832,
-    "url": 833,
-    "email": 834,
-    "mesaj": 835,
-    "sms": 836,
-    "iletişim": 837,
-    "konuşma": 838,
-    "diyalog": 839,
-    "tartışma": 840,
-    "görüş": 841,
-    "fikir": 842,
-    "düşünce": 843,
-    "inanç": 844,
-    "din": 845,
-    "mezhep": 846,
-    "tapınak": 847,
-    "cami": 848,
-    "kilise": 849,
-    "sinagog": 850,
-    "manastır": 851,
-    "hastane": 852,
-    "klinik": 853,
-    "ameliyathane": 854,
-    "laboratuvar": 855,
-    "eczane": 856,
-    "ilaç": 857,
-    "tedavi": 858,
-    "ameliyat": 859,
-    "hastalık": 860,
-    "enfeksiyon": 861,
-    "virüs": 862,
-    "bakteri": 863,
-    "antikor": 864,
-    "aşı": 865,
-    "serum": 866,
-    "enjeksiyon": 867,
-    "iğne": 868,
-    "eldive": 869,
-    "maske": 870,
-    "göz": 871,
-    "kulak": 872,
-    "burun": 873,
-    "ağız": 874,
-    "diş": 875,
-    "dil": 876,
-    "ses": 877,
-    "koku": 878,
-    "tat": 879,
-    "dokunuş": 880,
-    "beyin": 881,
-    "kalp": 882,
-    "ciğer": 883,
-    "karaciğer": 884,
-    "böbrek": 885,
-    "mide": 886,
-    "bağırsak": 887,
-    "kas": 888,
-    "kemik": 889,
-    "eklem": 890,
-    "kan": 891,
-    "nabız": 892,
-    "ateş": 893,
-    "öksürük": 894,
-    "hapşırma": 895,
-    "nezle": 896,
-    "grip": 897,
-    "alerji": 898,
-    "astım": 899,
-    "diyabet": 900,
-    "tansiyonu": 901,
-    "kolesterol": 902,
-    "ağrı": 903,
-    "sızı": 904,
-    "uyuşukluk": 905,
-    "kramp": 906,
-    "burkulma": 907,
-    "kırık": 908,
-    "çıkık": 909,
-    "yara": 910,
-    "kanama": 911,
-    "morarma": 912,
-    "şişlik": 913,
-    "kızarıklık": 914,
-    "kaşıntı": 915,
-    "yanma": 916,
-    "ödem": 917,
-    "ülser": 918,
-    "tümör": 919,
-    "kist": 920,
-    "polip": 921,
-    "taş": 922,
-    "şaşılık": 923,
-    "astigmia": 924,
-    "miyopi": 925,
-    "hipermetropi": 926,
-    "katarak": 927,
-    "glokom": 928,
-    "retinit": 929,
-    "konüktivit": 930,
-    "otit": 931,
-    "sinüzit": 932,
-    "bronşit": 933,
-    "pnömoni": 934,
-    "verem": 935,
-    "emfizem": 936,
-    "plasenta": 937,
-    "kordon": 938,
-    "umbilikal": 939,
-    "doğum": 940,
-    "planlaması": 941,
-    "kontrasepsiyon": 942,
-    "menopoz": 943,
-    "ovulasyon": 944,
-    "menstruasyon": 945,
-    "gebelik": 946,
-    "aborsiyon": 947,
-    "miscarriage": 948,
-    "erektil": 949,
-    "disfonksiyon": 950,
-    "infertilite": 951,
-    "sterilite": 952,
-    "cinsel": 953,
-    "sifiliz": 954,
-    "gonore": 955,
-    "herpes": 956,
-    "hiv": 957,
-    "aids": 958,
-    "klamidya": 959,
-    "üretrit": 960,
-    "prostatit": 961,
-    "epididimit": 962,
-    "orşit": 963,
-    "kolülit": 964,
-    "pelvikilt": 965,
-    "endometrit": 966,
-    "salpenjit": 967,
-    "ooforit": 968,
-    "fibroyad": 969,
-    "leiomiyom": 970,
-    "adenom": 971,
-    "karsinoma": 972,
-    "sarcoma": 973,
-    "melanoma": 974,
-    "sarcoidosis": 975,
-    "lupus": 976,
-    "romatoid": 977,
-    "artrit": 978,
-    "gut": 979,
-    "mononucleus": 980,
-    "measles": 981,
-    "mumps": 982,
-    "rubella": 983,
-    "varicella": 984,
-    "zoster": 985,
-    "scarlet": 986,
-    "fever": 987,
-    "diftteri": 988,
-    "tetanüs": 989,
-    "whooping": 990,
-    "cough": 991,
-    "biyoloji": 992,
-    "botanika": 993,
-    "zoologi": 994,
-    "genetik": 995,
-    "mikrobiyoloji": 996,
-    "kimya": 1024,
-    "fizik": 998,
-    "matematik": 999,
-    "geometri": 1000,
-    "trigonometri": 1001,
-    "cebir": 1002,
-    "analiz": 1003,
-    "istatistik": 1004,
-    "olasılık": 1005,
-    "yazılım": 1007,
-    "donanım": 1008,
-    "ağ": 1009,
-    "internet": 1010,
-    "sitibernet": 1011,
-    "yapay": 1012,
-    "zeka": 1013,
-    "makine": 1014,
-    "öğrenmesi": 1015,
-    "madenciliği": 1017,
-    "algoritmalar": 1018,
-    "yapıları": 1020,
-    "mühendislik": 1021,
-    "elektrik": 1089,
-    "mekanik": 1026,
-    "harita": 1028,
-    "çevre": 1029,
-    "uçak": 1030,
-    "otomotiv": 1031,
-    "gemi": 1032,
-    "tren": 1033,
-    "arki": 1034,
-    "tekt": 1035,
-    "şehir": 1036,
-    "peyzaj": 1085,
-    "iç": 1038,
-    "sanat": 1041,
-    "müzik": 1042,
-    "resim": 1043,
-    "heykeltıraş": 1044,
-    "sahne": 1045,
-    "tiyatro": 1046,
-    "sinema": 1047,
-    "edebiyat": 1048,
-    "şiir": 1049,
-    "roman": 1050,
-    "hikaye": 1051,
-    "masalı": 1052,
-    "efsane": 1053,
-    "mit": 1054,
-    "felsefe": 1055,
-    "mantık": 1056,
-    "etik": 1057,
-    "estetik": 1058,
-    "epistemoloji": 1059,
-    "metafizik": 1060,
-    "teoloji": 1061,
-    "coğrafya": 1062,
-    "tarih": 1063,
-    "arkeoloji": 1064,
-    "sosyoloji": 1065,
-    "antropoloji": 1066,
-    "ekonomi": 1067,
-    "siyaset": 1068,
-    "hukuk": 1069,
-    "eğitim": 1070,
-    "psikoloji": 1071,
-    "ruh": 1072,
-    "sağlık": 1073,
-    "spor": 1074,
-    "rekreasyon": 1075,
-    "turizm": 1078,
-    "aşçılık": 1079,
-    "tarım": 1080,
-    "orman": 1081,
-    "balık": 1082,
-    "hayvancılık": 1083,
-    "hortikültür": 1084,
-    "su": 1086,
-    "yönetimi": 1087,
-    "enerji": 1088,
-    "petrol": 1090,
-    "doğal": 1091,
-    "gaz": 1092,
-    "kömür": 1093,
-    "nükleer": 1094,
-    "güneş": 1095,
-    "rüzgar": 1096,
-    "hidroelektrik": 1097,
-    "jeotermal": 1098,
-    "biyoenerji": 1099,
-    "savunma": 1100
+    "insan": 633,
+    "aile": 634,
+    "çocuk": 635,
+    "kız": 636,
+    "oğlan": 637,
+    "erkek": 638,
+    "kadın": 639,
+    "anne": 640,
+    "baba": 641,
+    "kardeş": 642,
+    "abi": 643,
+    "abla": 644,
+    "amca": 645,
+    "teyze": 646,
+    "dede": 647,
+    "nine": 648,
+    "eş": 649,
+    "koca": 650,
+    "gelin": 651,
+    "damat": 652,
+    "akraba": 653,
+    "komşu": 654,
+    "arkadaş": 655,
+    "düşman": 656,
+    "öğretmen": 657,
+    "öğrenci": 658,
+    "doktor": 659,
+    "hemşire": 660,
+    "mühendis": 661,
+    "mimar": 662,
+    "avukat": 663,
+    "polis": 664,
+    "asker": 665,
+    "itfaiyeci": 666,
+    "işçi": 667,
+    "çiftçi": 668,
+    "esnaf": 669,
+    "tüccar": 670,
+    "aşçı": 671,
+    "garson": 672,
+    "otel": 673,
+    "restoran": 674,
+    "kafe": 675,
+    "bar": 676,
+    "market": 677,
+    "mağaza": 678,
+    "dükkân": 679,
+    "şirket": 680,
+    "fabrika": 681,
+    "işyeri": 682,
+    "ofis": 683,
+    "makam": 684,
+    "daire": 685,
+    "kat": 686,
+    "salon": 687,
+    "mutfak": 688,
+    "banyo": 689,
+    "tuvalete": 690,
+    "giriş": 691,
+    "çıkış": 692,
+    "penceresi": 693,
+    "kapısı": 694,
+    "anahtarı": 695,
+    "kilit": 696,
+    "cam": 697,
+    "çerçeve": 698,
+    "çatı": 699,
+    "uydu": 700,
+    "anten": 701,
+    "tuşu": 702,
+    "ekran": 703,
+    "laptop": 704,
+    "tablet": 705,
+    "fare": 706,
+    "klavye": 707,
+    "monitör": 708,
+    "yazıcı": 709,
+    "scanner": 710,
+    "modem": 711,
+    "router": 712,
+    "server": 713,
+    "dosya": 714,
+    "klasör": 715,
+    "disk": 716,
+    "bellek": 717,
+    "hafıza": 718,
+    "işlemci": 719,
+    "anakart": 720,
+    "güç": 721,
+    "kaynağı": 722,
+    "soğutma": 723,
+    "sistemi": 724,
+    "fan": 725,
+    "program": 726,
+    "uygulama": 727,
+    "içerik": 728,
+    "sayfa": 729,
+    "site": 730,
+    "link": 731,
+    "url": 732,
+    "email": 733,
+    "mesaj": 734,
+    "sms": 735,
+    "iletişim": 736,
+    "konuşma": 737,
+    "diyalog": 738,
+    "tartışma": 739,
+    "görüş": 740,
+    "fikir": 741,
+    "düşünce": 742,
+    "inanç": 743,
+    "din": 744,
+    "mezhep": 745,
+    "tapınak": 746,
+    "cami": 747,
+    "kilise": 748,
+    "sinagog": 749,
+    "manastır": 750,
+    "klinik": 751,
+    "ameliyathane": 752,
+    "laboratuvar": 753,
+    "eczane": 754,
+    "ilaç": 755,
+    "tedavi": 756,
+    "ameliyat": 757,
+    "hastalık": 758,
+    "enfeksiyon": 759,
+    "virüs": 760,
+    "bakteri": 761,
+    "antikor": 762,
+    "aşı": 763,
+    "serum": 764,
+    "enjeksiyon": 765,
+    "iğne": 766,
+    "eldive": 767,
+    "maske": 768,
+    "göz": 769,
+    "kulak": 770,
+    "burun": 771,
+    "ağız": 772,
+    "diş": 773,
+    "koku": 774,
+    "tat": 775,
+    "dokunuş": 776,
+    "beyin": 777,
+    "kalp": 778,
+    "ciğer": 779,
+    "karaciğer": 780,
+    "böbrek": 781,
+    "mide": 782,
+    "bağırsak": 783,
+    "kas": 784,
+    "kemik": 785,
+    "eklem": 786,
+    "nabız": 787,
+    "ateş": 788,
+    "öksürük": 789,
+    "hapşırma": 790,
+    "nezle": 791,
+    "grip": 792,
+    "alerji": 793,
+    "astım": 794,
+    "diyabet": 795,
+    "tansiyonu": 796,
+    "kolesterol": 797,
+    "ağrı": 798,
+    "sızı": 799,
+    "uyuşukluk": 800,
+    "kramp": 801,
+    "burkulma": 802,
+    "kırık": 803,
+    "çıkık": 804,
+    "yara": 805,
+    "kanama": 806,
+    "morarma": 807,
+    "şişlik": 808,
+    "kızarıklık": 809,
+    "kaşıntı": 810,
+    "yanma": 811,
+    "ödem": 812,
+    "ülser": 813,
+    "tümör": 814,
+    "kist": 815,
+    "polip": 816,
+    "şaşılık": 817,
+    "astigmia": 818,
+    "miyopi": 819,
+    "hipermetropi": 820,
+    "katarak": 821,
+    "glokom": 822,
+    "retinit": 823,
+    "konüktivit": 824,
+    "otit": 825,
+    "sinüzit": 826,
+    "bronşit": 827,
+    "pnömoni": 828,
+    "verem": 829,
+    "emfizem": 830,
+    "plasenta": 831,
+    "kordon": 832,
+    "umbilikal": 833,
+    "doğum": 834,
+    "planlaması": 835,
+    "kontrasepsiyon": 836,
+    "menopoz": 837,
+    "ovulasyon": 838,
+    "menstruasyon": 839,
+    "gebelik": 840,
+    "aborsiyon": 841,
+    "miscarriage": 842,
+    "erektil": 843,
+    "disfonksiyon": 844,
+    "infertilite": 845,
+    "sterilite": 846,
+    "cinsel": 847,
+    "sifiliz": 848,
+    "gonore": 849,
+    "herpes": 850,
+    "hiv": 851,
+    "aids": 852,
+    "klamidya": 853,
+    "üretrit": 854,
+    "prostatit": 855,
+    "epididimit": 856,
+    "orşit": 857,
+    "kolülit": 858,
+    "pelvikilt": 859,
+    "endometrit": 860,
+    "salpenjit": 861,
+    "ooforit": 862,
+    "fibroyad": 863,
+    "leiomiyom": 864,
+    "adenom": 865,
+    "karsinoma": 866,
+    "sarcoma": 867,
+    "melanoma": 868,
+    "sarcoidosis": 869,
+    "lupus": 870,
+    "romatoid": 871,
+    "artrit": 872,
+    "gut": 873,
+    "mononucleus": 874,
+    "measles": 875,
+    "mumps": 876,
+    "rubella": 877,
+    "varicella": 878,
+    "zoster": 879,
+    "scarlet": 880,
+    "fever": 881,
+    "diftteri": 882,
+    "tetanüs": 883,
+    "whooping": 884,
+    "cough": 885,
+    "biyoloji": 886,
+    "botanika": 887,
+    "zoologi": 888,
+    "genetik": 889,
+    "mikrobiyoloji": 890,
+    "kimya": 891,
+    "fizik": 892,
+    "matematik": 893,
+    "geometri": 894,
+    "trigonometri": 895,
+    "cebir": 896,
+    "analiz": 897,
+    "istatistik": 898,
+    "olasılık": 899,
+    "ağ": 900,
+    "sitibernet": 901,
+    "zeka": 902,
+    "makine": 903,
+    "öğrenmesi": 904,
+    "madenciliği": 905,
+    "algoritmalar": 906,
+    "yapıları": 907,
+    "mühendislik": 908,
+    "elektrik": 909,
+    "mekanik": 910,
+    "harita": 911,
+    "çevre": 912,
+    "otomotiv": 913,
+    "arki": 914,
+    "tekt": 915,
+    "şehir": 916,
+    "peyzaj": 917,
+    "sanat": 918,
+    "resim": 919,
+    "heykeltıraş": 920,
+    "sahne": 921,
+    "tiyatro": 922,
+    "sinema": 923,
+    "edebiyat": 924,
+    "şiir": 925,
+    "roman": 926,
+    "hikaye": 927,
+    "masalı": 928,
+    "efsane": 929,
+    "mit": 930,
+    "felsefe": 931,
+    "mantık": 932,
+    "etik": 933,
+    "estetik": 934,
+    "epistemoloji": 935,
+    "metafizik": 936,
+    "teoloji": 937,
+    "coğrafya": 938,
+    "tarih": 939,
+    "arkeoloji": 940,
+    "sosyoloji": 941,
+    "antropoloji": 942,
+    "ekonomi": 943,
+    "siyaset": 944,
+    "hukuk": 945,
+    "eğitim": 946,
+    "psikoloji": 947,
+    "ruh": 948,
+    "sağlık": 949,
+    "rekreasyon": 950,
+    "turizm": 951,
+    "aşçılık": 952,
+    "tarım": 953,
+    "hayvancılık": 954,
+    "hortikültür": 955,
+    "yönetimi": 956,
+    "enerji": 957,
+    "petrol": 958,
+    "gaz": 959,
+    "kömür": 960,
+    "nükleer": 961,
+    "güneş": 962,
+    "hidroelektrik": 963,
+    "jeotermal": 964,
+    "biyoenerji": 965,
+    "savunma": 966
   },
   "__FİİLLER__": {
-    "ol": 1101,
-    "tur": 1102,
-    "kalmak": 1103,
-    "gelmek": 1104,
-    "gitmek": 1105,
-    "koymak": 1106,
-    "almak": 1107,
-    "vermek": 1237,
-    "görmek": 1109,
-    "bilmek": 1110,
-    "söylemek": 1134,
-    "sormak": 1112,
-    "cevaplamak": 1113,
-    "düşünmek": 1114,
-    "inanmak": 1115,
-    "umutlamak": 1116,
-    "beklemekmek": 1117,
-    "denemek": 1229,
-    "başlamak": 1119,
-    "bitirmek": 1120,
-    "devam": 1121,
-    "etmek": 1122,
-    "anlamak": 1123,
-    "yapmak": 1124,
-    "çekmek": 1125,
-    "tutmak": 1126,
-    "salmak": 1127,
-    "atmak": 1128,
-    "sürümek": 1129,
-    "giymek": 1130,
-    "çıkarmak": 1131,
-    "çalmak": 1132,
-    "şarkı": 1133,
-    "okumak": 1135,
-    "yazmak": 1136,
-    "silmek": 1137,
-    "temizlemek": 1138,
-    "yıkamak": 1139,
-    "süpürmek": 1140,
-    "çiğnemek": 1141,
-    "yemek": 1142,
-    "içmek": 1143,
-    "koklamak": 1144,
-    "tatmak": 1145,
-    "çalışmak": 1146,
-    "oynamak": 1147,
-    "eğlenmek": 1148,
-    "uyumak": 1149,
-    "uyanmak": 1150,
-    "oturmak": 1151,
-    "kalkamk": 1152,
-    "yüzmek": 1153,
-    "yüzelmek": 1154,
-    "dalmak": 1155,
-    "yürümek": 1156,
-    "atlamak": 1157,
-    "kaçamk": 1158,
-    "saklanmak": 1159,
-    "açamk": 1160,
-    "kapamak": 1161,
-    "kilitlemek": 1162,
-    "aramak": 1163,
-    "bulkamak": 1164,
-    "kaybetmek": 1165,
-    "saklamak": 1166,
-    "gizlemek": 1167,
-    "göstermek": 1168,
-    "kesmek": 1169,
-    "dikmek": 1170,
-    "biçmek": 1171,
-    "boyamak": 1172,
-    "vurma": 1173,
-    "çarpmak": 1174,
-    "tememek": 1175,
-    "itelmek": 1176,
-    "çekelmek": 1177,
-    "sürükleme": 1178,
-    "fırlatmak": 1179,
-    "kaldırmak": 1180,
-    "indirmek": 1181,
-    "yükseltmek": 1182,
-    "alçaltmak": 1183,
-    "eğilmek": 1184,
-    "dönmek": 1185,
-    "çevirmek": 1186,
-    "kıvırmak": 1187,
-    "doğrultmak": 1188,
-    "doldurmak": 1189,
-    "boşaltmak": 1190,
-    "karışmak": 1191,
-    "ayırmak": 1192,
-    "birleştirmek": 1193,
-    "kaynaklamak": 1194,
-    "eritme": 1195,
-    "katılaşmak": 1196,
-    "çözelmek": 1197,
-    "damlama": 1198,
-    "buharlaşmak": 1199,
-    "yoğunlaşmak": 1200,
-    "kristalleşmek": 1201,
-    "filtirlemek": 1202,
-    "süzülmek": 1203,
-    "santrifüjleme": 1204,
-    "elektroliz": 1205,
-    "iyonlaşmak": 1206,
-    "radyoaktifleşmek": 1207,
-    "ışınlanmak": 1225,
-    "flüoresanlaşmak": 1226,
-    "boyammak": 1210,
-    "renklendir": 1211,
-    "parlaklaşmak": 1212,
-    "matlaşmak": 1213,
-    "parlamak": 1214,
-    "kırılmak": 1215,
-    "çatlak": 1216,
-    "yıpranmak": 1217,
-    "paslanmak": 1218,
-    "çürümek": 1219,
-    "fermentasyon": 1220,
-    "reaktetmek": 1221,
-    "sentezlemek": 1222,
-    "bölünmek": 1223,
-    "ayrışmak": 1224,
-    "ekstraksiyon": 1227,
-    "test": 1228,
-    "ölçmek": 1230,
-    "tartmak": 1231,
-    "hesaplamak": 1232,
-    "saymak": 1233,
-    "seçmek": 1234,
-    "tercih": 1235,
-    "karar": 1236,
-    "ulaşmak": 1238,
-    "geçmek": 1239,
-    "ilerlemek": 1240,
-    "geri": 1241,
-    "çekilmek": 1242,
-    "tırmanmak": 1243,
-    "inmek": 1244,
-    "düşmek": 1245,
-    "yükselmek": 1246,
-    "alçalmak": 1247,
-    "bahçelemek": 1248,
-    "tarlamak": 1249
+    "ol": 967,
+    "kalmak": 968,
+    "gelmek": 969,
+    "gitmek": 970,
+    "koymak": 971,
+    "almak": 972,
+    "vermek": 973,
+    "görmek": 974,
+    "bilmek": 975,
+    "söylemek": 976,
+    "sormak": 977,
+    "cevaplamak": 978,
+    "düşünmek": 979,
+    "inanmak": 980,
+    "umutlamak": 981,
+    "beklemekmek": 982,
+    "denemek": 983,
+    "başlamak": 984,
+    "bitirmek": 985,
+    "devam": 986,
+    "etmek": 987,
+    "anlamak": 988,
+    "yapmak": 989,
+    "çekmek": 990,
+    "tutmak": 991,
+    "salmak": 992,
+    "atmak": 993,
+    "sürümek": 994,
+    "giymek": 995,
+    "çıkarmak": 996,
+    "çalmak": 997,
+    "okumak": 998,
+    "yazmak": 999,
+    "silmek": 1000,
+    "temizlemek": 1001,
+    "yıkamak": 1002,
+    "süpürmek": 1003,
+    "çiğnemek": 1004,
+    "içmek": 1005,
+    "koklamak": 1006,
+    "tatmak": 1007,
+    "çalışmak": 1008,
+    "oynamak": 1009,
+    "eğlenmek": 1010,
+    "uyumak": 1011,
+    "uyanmak": 1012,
+    "oturmak": 1013,
+    "kalkamk": 1014,
+    "yüzmek": 1015,
+    "yüzelmek": 1016,
+    "dalmak": 1017,
+    "yürümek": 1018,
+    "atlamak": 1019,
+    "kaçamk": 1020,
+    "saklanmak": 1021,
+    "açamk": 1022,
+    "kapamak": 1023,
+    "kilitlemek": 1024,
+    "aramak": 1025,
+    "bulkamak": 1026,
+    "kaybetmek": 1027,
+    "saklamak": 1028,
+    "gizlemek": 1029,
+    "göstermek": 1030,
+    "kesmek": 1031,
+    "dikmek": 1032,
+    "biçmek": 1033,
+    "boyamak": 1034,
+    "vurma": 1035,
+    "çarpmak": 1036,
+    "tememek": 1037,
+    "itelmek": 1038,
+    "çekelmek": 1039,
+    "sürükleme": 1040,
+    "fırlatmak": 1041,
+    "kaldırmak": 1042,
+    "indirmek": 1043,
+    "yükseltmek": 1044,
+    "alçaltmak": 1045,
+    "eğilmek": 1046,
+    "dönmek": 1047,
+    "çevirmek": 1048,
+    "kıvırmak": 1049,
+    "doğrultmak": 1050,
+    "doldurmak": 1051,
+    "boşaltmak": 1052,
+    "karışmak": 1053,
+    "ayırmak": 1054,
+    "birleştirmek": 1055,
+    "kaynaklamak": 1056,
+    "eritme": 1057,
+    "katılaşmak": 1058,
+    "çözelmek": 1059,
+    "damlama": 1060,
+    "buharlaşmak": 1061,
+    "yoğunlaşmak": 1062,
+    "kristalleşmek": 1063,
+    "filtirlemek": 1064,
+    "süzülmek": 1065,
+    "santrifüjleme": 1066,
+    "elektroliz": 1067,
+    "iyonlaşmak": 1068,
+    "radyoaktifleşmek": 1069,
+    "ışınlanmak": 1070,
+    "flüoresanlaşmak": 1071,
+    "boyammak": 1072,
+    "renklendir": 1073,
+    "parlaklaşmak": 1074,
+    "matlaşmak": 1075,
+    "parlamak": 1076,
+    "kırılmak": 1077,
+    "çatlak": 1078,
+    "yıpranmak": 1079,
+    "paslanmak": 1080,
+    "çürümek": 1081,
+    "fermentasyon": 1082,
+    "reaktetmek": 1083,
+    "sentezlemek": 1084,
+    "bölünmek": 1085,
+    "ayrışmak": 1086,
+    "ekstraksiyon": 1087,
+    "test": 1088,
+    "ölçmek": 1089,
+    "tartmak": 1090,
+    "hesaplamak": 1091,
+    "saymak": 1092,
+    "seçmek": 1093,
+    "tercih": 1094,
+    "karar": 1095,
+    "ulaşmak": 1096,
+    "geçmek": 1097,
+    "ilerlemek": 1098,
+    "geri": 1099,
+    "çekilmek": 1100,
+    "tırmanmak": 1101,
+    "inmek": 1102,
+    "düşmek": 1103,
+    "yükselmek": 1104,
+    "alçalmak": 1105,
+    "bahçelemek": 1106,
+    "tarlamak": 1107
   },
   "sosyal_medya": {
-    "Instagram": 1250,
-    "TikTok": 1251,
-    "viral": 1252,
-    "kontent": 1253,
-    "YouTube": 1254,
-    "channel": 1255,
-    "subscriber": 1256,
-    "Twitter": 1257,
-    "trend": 1258
+    "Instagram": 1108,
+    "TikTok": 1109,
+    "viral": 1110,
+    "kontent": 1111,
+    "YouTube": 1112,
+    "channel": 1113,
+    "subscriber": 1114,
+    "Twitter": 1115,
+    "trend": 1116
   },
   "gıda": {
-    "Espresso": 1259,
-    "barista": 1260,
-    "Sushi": 1261,
-    "restaurant": 1262,
-    "salmon": 1263,
-    "sashimi": 1264,
-    "Latte": 1265,
-    "cappuccino": 1266
+    "Espresso": 1117,
+    "barista": 1118,
+    "Sushi": 1119,
+    "restaurant": 1120,
+    "salmon": 1121,
+    "sashimi": 1122,
+    "Latte": 1123,
+    "cappuccino": 1124
   },
   "sağlık_fitness": {
-    "Yoga": 1267,
-    "pilates": 1268,
-    "fitness": 1269,
-    "rutini": 1270,
-    "Salad": 1271,
-    "smoothie": 1272,
-    "diet": 1273,
-    "plan": 1274,
-    "Kalori": 1275,
-    "counter": 1276,
-    "app": 1277,
-    "workout": 1278
+    "Yoga": 1125,
+    "pilates": 1126,
+    "fitness": 1127,
+    "rutini": 1128,
+    "Salad": 1129,
+    "smoothie": 1130,
+    "diet": 1131,
+    "plan": 1132,
+    "Kalori": 1133,
+    "counter": 1134,
+    "app": 1135,
+    "workout": 1136
   },
   "otomotiv": {
-    "Tesla": 1279,
-    "BMW": 1280,
-    "Mercedes": 1281,
-    "otomobil": 1282,
-    "Horsepower": 1283,
-    "turbo": 1284,
-    "engine": 1285,
-    "performans": 1286,
-    "Hybrid": 1287,
-    "transmission": 1288
+    "Tesla": 1137,
+    "BMW": 1138,
+    "Mercedes": 1139,
+    "otomobil": 1140,
+    "Horsepower": 1141,
+    "turbo": 1142,
+    "engine": 1143,
+    "performans": 1144,
+    "Hybrid": 1145,
+    "transmission": 1146
   },
   "karakterler": {
-    "t": 1289,
-    "n": 1290,
-    "p": 1291,
-    "y": 1292,
-    "f": 1293,
-    "m": 1294,
-    "k": 1295,
-    "h": 1296,
-    "l": 1297,
-    "ö": 1298,
-    "P": 1299,
-    "J": 1300,
-    "v": 1301,
-    "S": 1302,
-    "c": 1303,
-    "r": 1304,
-    "w": 1305,
-    "R": 1306,
-    "V": 1307,
-    "A": 1308,
-    "g": 1309,
-    "M": 1310,
-    "s": 1311,
-    "İ": 1312,
-    "G": 1313,
-    "K": 1314,
-    "T": 1315,
-    "d": 1316,
-    "b": 1317,
-    "z": 1318,
-    "Ç": 1319,
-    "j": 1320,
-    "B": 1321,
-    "C": 1322,
-    "Ö": 1323,
-    "ğ": 1324,
-    "H": 1325,
-    "I": 1375,
-    "W": 1376,
-    "D": 1377,
-    "O": 1378,
-    "N": 1379,
-    "F": 1380,
-    "Q": 1381,
-    "L": 1382,
-    "E": 1383,
-    "q": 1384,
-    "x": 1385,
-    "Y": 1386
+    "t": 1147,
+    "n": 1148,
+    "p": 1149,
+    "y": 1150,
+    "f": 1151,
+    "m": 1152,
+    "k": 1153,
+    "h": 1154,
+    "l": 1155,
+    "ö": 1156,
+    "P": 1157,
+    "J": 1158,
+    "v": 1159,
+    "S": 1160,
+    "c": 1161,
+    "r": 1162,
+    "w": 1163,
+    "R": 1164,
+    "V": 1165,
+    "A": 1166,
+    "g": 1167,
+    "M": 1168,
+    "s": 1169,
+    "İ": 1170,
+    "G": 1171,
+    "K": 1172,
+    "T": 1173,
+    "d": 1174,
+    "b": 1175,
+    "z": 1176,
+    "Ç": 1177,
+    "j": 1178,
+    "B": 1179,
+    "C": 1180,
+    "Ö": 1181,
+    "ğ": 1182,
+    "H": 1183,
+    "I": 1184,
+    "W": 1185,
+    "D": 1186,
+    "O": 1187,
+    "N": 1188,
+    "F": 1189,
+    "Q": 1190,
+    "L": 1191,
+    "E": 1192,
+    "q": 1193,
+    "x": 1194,
+    "Y": 1195
   },
   "eğitim_ve_akademia": {
-    "Python": 1326,
-    "JavaScript": 1327,
-    "React": 1328,
-    "Vue": 1329,
-    "Angular": 1330,
-    "öğrenme": 1331,
-    "neural": 1332,
-    "network": 1333,
-    "kalkülüs": 1334,
-    "integral": 1335,
-    "türev": 1336,
-    "diferansiyel": 1337
+    "Python": 1196,
+    "JavaScript": 1197,
+    "React": 1198,
+    "Vue": 1199,
+    "Angular": 1200,
+    "öğrenme": 1201,
+    "neural": 1202,
+    "network": 1203,
+    "kalkülüs": 1204,
+    "integral": 1205,
+    "türev": 1206,
+    "diferansiyel": 1207
   },
   "turizm_ve_seyahat": {
-    "Galata": 1338,
-    "Topkapı": 1339,
-    "Sarayı": 1340,
-    "Kapadokya": 1341,
-    "balonlar": 1342,
-    "gökyüzü": 1343,
-    "Çeşme": 1344,
-    "Alaçatı": 1345,
-    "kumsal": 1346,
-    "Bangkok": 1347,
-    "taksi": 1348,
-    "yer": 1349
+    "Galata": 1208,
+    "Topkapı": 1209,
+    "Sarayı": 1210,
+    "Kapadokya": 1211,
+    "balonlar": 1212,
+    "gökyüzü": 1213,
+    "Çeşme": 1214,
+    "Alaçatı": 1215,
+    "kumsal": 1216,
+    "Bangkok": 1217,
+    "taksi": 1218,
+    "yer": 1219
   },
   "i̇nsan_kaynakları_ve_yönetim": {
-    "Resume": 1350,
-    "CV": 1351,
-    "interview": 1352,
-    "görüşme": 1353,
-    "başvuru": 1354,
-    "davranış": 1355,
-    "motivasyon": 1356,
-    "liderlik": 1357,
-    "salary": 1358,
-    "maaş": 1359,
-    "HR": 1360,
-    "recruitment": 1361
+    "Resume": 1220,
+    "CV": 1221,
+    "interview": 1222,
+    "görüşme": 1223,
+    "başvuru": 1224,
+    "davranış": 1225,
+    "motivasyon": 1226,
+    "liderlik": 1227,
+    "salary": 1228,
+    "maaş": 1229,
+    "HR": 1230,
+    "recruitment": 1231
   },
   "sanat_ve_tasarım": {
-    "Picasso": 1362,
-    "ressam": 1363,
-    "kubizm": 1364,
-    "müzayaka": 1365,
-    "grafik": 1366,
-    "design": 1367,
-    "logo": 1368,
-    "branding": 1369,
-    "renk": 1370,
-    "teorisi": 1371,
-    "heykeltıraşlık": 1372,
-    "harmoni": 1373,
-    "ritim": 1374
+    "Picasso": 1232,
+    "ressam": 1233,
+    "kubizm": 1234,
+    "müzayaka": 1235,
+    "grafik": 1236,
+    "design": 1237,
+    "logo": 1238,
+    "branding": 1239,
+    "renk": 1240,
+    "teorisi": 1241,
+    "heykeltıraşlık": 1242,
+    "harmoni": 1243,
+    "ritim": 1244
   },
   "teknoloji_yazılım": {
-    "Artificial": 1387,
-    "Intelligence": 1388,
-    "machine": 1389,
-    "learning": 1390,
-    "deep": 1391,
-    "Cloud": 1392,
-    "computing": 1393,
-    "Amazon": 1394,
-    "AWS": 1395,
-    "Azure": 1396,
-    "Docker": 1397,
-    "Cybersecurity": 1398,
-    "blockchain": 1399,
-    "Mobile": 1400,
-    "iOS": 1401,
-    "Android": 1402,
-    "Flutter": 1403,
-    "Database": 1404,
-    "SQL": 1405,
-    "MongoDB": 1406,
-    "API": 1407,
-    "REST": 1408,
-    "GraphQL": 1409,
-    "microservices": 1410
+    "Artificial": 1245,
+    "Intelligence": 1246,
+    "machine": 1247,
+    "learning": 1248,
+    "deep": 1249,
+    "Cloud": 1250,
+    "computing": 1251,
+    "Amazon": 1252,
+    "AWS": 1253,
+    "Azure": 1254,
+    "Docker": 1255,
+    "Cybersecurity": 1256,
+    "blockchain": 1257,
+    "Mobile": 1258,
+    "iOS": 1259,
+    "Android": 1260,
+    "Flutter": 1261,
+    "Database": 1262,
+    "SQL": 1263,
+    "MongoDB": 1264,
+    "API": 1265,
+    "REST": 1266,
+    "GraphQL": 1267,
+    "microservices": 1268
   },
   "sağlık_tıp": {
-    "Telemedicine": 1411,
-    "monitoring": 1412,
-    "Pharmacology": 1413,
-    "medication": 1414,
-    "Cardiology": 1415,
-    "heart": 1416,
-    "disease": 1417,
-    "Neurology": 1418,
-    "brain": 1419,
-    "Parkinson": 1420,
-    "Immunology": 1421,
-    "vaccine": 1422,
-    "Surgery": 1423,
-    "anesthesia": 1424,
-    "rehabilitation": 1425
+    "Telemedicine": 1269,
+    "monitoring": 1270,
+    "Pharmacology": 1271,
+    "medication": 1272,
+    "Cardiology": 1273,
+    "heart": 1274,
+    "disease": 1275,
+    "Neurology": 1276,
+    "brain": 1277,
+    "Parkinson": 1278,
+    "Immunology": 1279,
+    "vaccine": 1280,
+    "Surgery": 1281,
+    "anesthesia": 1282,
+    "rehabilitation": 1283
   },
   "i̇şletme_finans": {
-    "Cryptocurrency": 1426,
-    "Bitcoin": 1427,
-    "Ethereum": 1428,
-    "wallet": 1429,
-    "Stock": 1430,
-    "portfolio": 1431,
-    "dividend": 1432,
-    "investment": 1433,
-    "Banking": 1434,
-    "mortgage": 1435,
-    "Accounting": 1436,
-    "Management": 1437,
-    "Marketing": 1438,
-    "brand": 1439,
-    "campaign": 1440
+    "Cryptocurrency": 1284,
+    "Bitcoin": 1285,
+    "Ethereum": 1286,
+    "wallet": 1287,
+    "Stock": 1288,
+    "portfolio": 1289,
+    "dividend": 1290,
+    "investment": 1291,
+    "Banking": 1292,
+    "mortgage": 1293,
+    "Accounting": 1294,
+    "Management": 1295,
+    "Marketing": 1296,
+    "brand": 1297,
+    "campaign": 1298
   },
   "eğitim_bilim": {
-    "Physics": 1441,
-    "quantum": 1442,
-    "mechanics": 1443,
-    "Chemistry": 1444,
-    "periodic": 1445,
-    "molecule": 1446,
-    "Biology": 1447,
-    "DNA": 1448,
-    "genetics": 1449,
-    "protein": 1450,
-    "Mathematics": 1451,
-    "calculus": 1452,
-    "Astronomy": 1453,
-    "planet": 1454,
-    "Geology": 1455,
-    "fossil": 1456
+    "Physics": 1299,
+    "quantum": 1300,
+    "mechanics": 1301,
+    "Chemistry": 1302,
+    "periodic": 1303,
+    "molecule": 1304,
+    "Biology": 1305,
+    "DNA": 1306,
+    "genetics": 1307,
+    "protein": 1308,
+    "Mathematics": 1309,
+    "calculus": 1310,
+    "Astronomy": 1311,
+    "planet": 1312,
+    "Geology": 1313,
+    "fossil": 1314
   },
   "spor_rekreasyon": {
-    "Football": 1457,
-    "soccer": 1458,
-    "Basketball": 1459,
-    "dribbling": 1460,
-    "shooting": 1461,
-    "Tennis": 1462,
-    "racket": 1463,
-    "Swimming": 1464,
-    "freestyle": 1465,
-    "breaststroke": 1466,
-    "Fitness": 1467,
-    "Outdoor": 1468,
-    "hiking": 1469
+    "Football": 1315,
+    "soccer": 1316,
+    "Basketball": 1317,
+    "dribbling": 1318,
+    "shooting": 1319,
+    "Tennis": 1320,
+    "racket": 1321,
+    "Swimming": 1322,
+    "freestyle": 1323,
+    "breaststroke": 1324,
+    "Fitness": 1325,
+    "Outdoor": 1326,
+    "hiking": 1327
   },
   "sanat_müzik": {
-    "Painting": 1470,
-    "canvas": 1471,
-    "brush": 1472,
-    "watercolor": 1473,
-    "Music": 1474,
-    "composition": 1475,
-    "orchestra": 1476,
-    "Dance": 1477,
-    "ballet": 1478,
-    "choreography": 1479,
-    "Photography": 1480,
-    "camera": 1481,
-    "lens": 1482,
-    "Theater": 1483,
-    "drama": 1484,
-    "playwright": 1485
+    "Painting": 1328,
+    "canvas": 1329,
+    "brush": 1330,
+    "watercolor": 1331,
+    "Music": 1332,
+    "composition": 1333,
+    "orchestra": 1334,
+    "Dance": 1335,
+    "ballet": 1336,
+    "choreography": 1337,
+    "Photography": 1338,
+    "camera": 1339,
+    "lens": 1340,
+    "Theater": 1341,
+    "drama": 1342,
+    "playwright": 1343
   },
   "turizm_coğrafya": {
-    "Europe": 1486,
-    "Paris": 1487,
-    "London": 1488,
-    "Barcelona": 1489,
-    "Switzerland": 1490,
-    "Asia": 1491,
-    "Tokyo": 1492,
-    "Singapore": 1493,
-    "America": 1494,
-    "Africa": 1495,
-    "Safari": 1496,
-    "Egypt": 1497,
-    "pyramids": 1498,
-    "Ocean": 1499,
-    "cruise": 1500
+    "Europe": 1344,
+    "Paris": 1345,
+    "London": 1346,
+    "Barcelona": 1347,
+    "Switzerland": 1348,
+    "Asia": 1349,
+    "Tokyo": 1350,
+    "Singapore": 1351,
+    "America": 1352,
+    "Africa": 1353,
+    "Safari": 1354,
+    "Egypt": 1355,
+    "pyramids": 1356,
+    "Ocean": 1357,
+    "cruise": 1358
   },
   "gıda_yemek_kültürü": {
-    "Italian": 1501,
-    "cuisine": 1502,
-    "pasta": 1503,
-    "pizza": 1504,
-    "Asian": 1505,
-    "sushi": 1506,
-    "ramen": 1507,
-    "Thai": 1508,
-    "curry": 1509,
-    "French": 1510,
-    "pastry": 1511,
-    "chocolate": 1512,
-    "Mexican": 1513,
-    "taco": 1514,
-    "Vegetarian": 1515,
-    "vegan": 1516,
-    "organic": 1517
+    "Italian": 1359,
+    "cuisine": 1360,
+    "pasta": 1361,
+    "pizza": 1362,
+    "Asian": 1363,
+    "sushi": 1364,
+    "ramen": 1365,
+    "Thai": 1366,
+    "curry": 1367,
+    "French": 1368,
+    "pastry": 1369,
+    "chocolate": 1370,
+    "Mexican": 1371,
+    "taco": 1372,
+    "Vegetarian": 1373,
+    "vegan": 1374,
+    "organic": 1375
+  },
+  "ekstra": {
+    "ç": {
+      "id": 1383
+    },
+    "1": {
+      "id": 1384
+    },
+    "8": {
+      "id": 1385
+    },
+    "2": {
+      "id": 1386
+    },
+    "7": {
+      "id": 1387
+    },
+    "3": {
+      "id": 1388
+    },
+    "0": {
+      "id": 1389
+    },
+    "6": {
+      "id": 1390
+    },
+    "X": {
+      "id": 1391
+    },
+    "9": {
+      "id": 1392
+    },
+    "“": {
+      "id": 1393
+    },
+    "U": {
+      "id": 1394
+    },
+    "”": {
+      "id": 1395
+    },
+    "’": {
+      "id": 1396
+    },
+    "Ü": {
+      "id": 1397
+    },
+    "Ş": {
+      "id": 1398
+    },
+    "4": {
+      "id": 1399
+    },
+    "5": {
+      "id": 1400
+    },
+    "î": {
+      "id": 1401
+    },
+    "Z": {
+      "id": 1402
+    },
+    "₮": {
+      "id": 1403
+    },
+    "Â": {
+      "id": 1404
+    },
+    "′": {
+      "id": 1405
+    },
+    "æ": {
+      "id": 1406
+    },
+    "û": {
+      "id": 1407
+    },
+    "é": {
+      "id": 1408
+    },
+    "В": {
+      "id": 1409
+    },
+    "Д": {
+      "id": 1410
+    },
+    "ж": {
+      "id": 1411
+    },
+    "и": {
+      "id": 1412
+    },
+    "у": {
+      "id": 1413
+    },
+    "д": {
+      "id": 1414
+    },
+    "ч": {
+      "id": 1415
+    },
+    "ä": {
+      "id": 1416
+    },
+    "_": {
+      "id": 1417
+    },
+    "ب": {
+      "id": 1418
+    },
+    "ش": {
+      "id": 1419
+    },
+    "ك": {
+      "id": 1420
+    },
+    "ط": {
+      "id": 1421
+    },
+    "ا": {
+      "id": 1422
+    },
+    "ژ": {
+      "id": 1423
+    },
+    "ق": {
+      "id": 1424
+    },
+    "١": {
+      "id": 1425
+    },
+    "٣": {
+      "id": 1426
+    },
+    "٩": {
+      "id": 1427
+    },
+    "š": {
+      "id": 1428
+    },
+    "ć": {
+      "id": 1429
+    },
+    "Đ": {
+      "id": 1430
+    },
+    "đ": {
+      "id": 1431
+    },
+    "ø": {
+      "id": 1432
+    },
+    "²": {
+      "id": 1433
+    },
+    "‘": {
+      "id": 1434
+    },
+    "þ": {
+      "id": 1435
+    },
+    "χ": {
+      "id": 1436
+    },
+    "η": {
+      "id": 1437
+    },
+    "μ": {
+      "id": 1438
+    },
+    "ε": {
+      "id": 1439
+    },
+    "ί": {
+      "id": 1440
+    },
+    "α": {
+      "id": 1441
+    },
+    "ß": {
+      "id": 1442
+    },
+    "°": {
+      "id": 1443
+    },
+    "ὀ": {
+      "id": 1444
+    },
+    "ξ": {
+      "id": 1445
+    },
+    "ύ": {
+      "id": 1446
+    },
+    "ς": {
+      "id": 1447
+    },
+    "→": {
+      "id": 1448
+    },
+    "أ": {
+      "id": 1449
+    },
+    "د": {
+      "id": 1450
+    },
+    "ā": {
+      "id": 1451
+    },
+    "": {
+      "id": 1452
+    },
+    "β": {
+      "id": 1453
+    },
+    "ο": {
+      "id": 1454
+    },
+    "λ": {
+      "id": 1455
+    },
+    "γ": {
+      "id": 1456
+    },
+    "ḗ": {
+      "id": 1457
+    },
+    "ē": {
+      "id": 1458
+    },
+    "Λ": {
+      "id": 1459
+    },
+    "¹": {
+      "id": 1460
+    },
+    "³": {
+      "id": 1461
+    },
+    "á": {
+      "id": 1462
+    },
+    "ħ": {
+      "id": 1463
+    },
+    "ó": {
+      "id": 1464
+    },
+    "ś": {
+      "id": 1465
+    },
+    "ź": {
+      "id": 1466
+    },
+    "ĉ": {
+      "id": 1467
+    },
+    "ĥ": {
+      "id": 1468
+    },
+    "ŝ": {
+      "id": 1469
+    },
+    "ĵ": {
+      "id": 1470
+    },
+    "ĝ": {
+      "id": 1471
+    },
+    "­": {
+      "id": 1472
+    },
+    "ŭ": {
+      "id": 1473
+    },
+    "ʒ": {
+      "id": 1474
+    },
+    "̯": {
+      "id": 1475
+    },
+    "≈": {
+      "id": 1476
+    },
+    "Ĝ": {
+      "id": 1477
+    },
+    "Ĉ": {
+      "id": 1478
+    },
+    "Ĵ": {
+      "id": 1479
+    },
+    "ά": {
+      "id": 1480
+    },
+    "θ": {
+      "id": 1481
+    },
+    "×": {
+      "id": 1482
+    },
+    "ș": {
+      "id": 1483
+    },
+    "π": {
+      "id": 1484
+    },
+    "ń": {
+      "id": 1485
+    },
+    "É": {
+      "id": 1486
+    },
+    "ح": {
+      "id": 1487
+    },
+    "í": {
+      "id": 1488
+    },
+    "è": {
+      "id": 1489
+    },
+    "​": {
+      "id": 1490
+    },
+    "⁄": {
+      "id": 1491
+    },
+    "Ė": {
+      "id": 1492
+    },
+    "Ä": {
+      "id": 1493
+    },
+    "−": {
+      "id": 1494
+    },
+    "ψ": {
+      "id": 1495
+    },
+    "υ": {
+      "id": 1496
+    },
+    "ή": {
+      "id": 1497
+    },
+    "ﻧ": {
+      "id": 1498
+    },
+    "ﺮ": {
+      "id": 1499
+    },
+    "ﺩ": {
+      "id": 1500
+    },
+    "ʻ": {
+      "id": 1501
+    },
+    "ʼ": {
+      "id": 1502
+    },
+    "ω": {
+      "id": 1503
+    },
+    "ρ": {
+      "id": 1504
+    },
+    "φ": {
+      "id": 1505
+    },
+    "σ": {
+      "id": 1506
+    },
+    "τ": {
+      "id": 1507
+    },
+    "ν": {
+      "id": 1508
+    },
+    "ό": {
+      "id": 1509
+    },
+    "ê": {
+      "id": 1510
+    },
+    "ʹ": {
+      "id": 1511
+    },
+    "پ": {
+      "id": 1512
+    },
+    "چ": {
+      "id": 1513
+    },
+    "ڤ": {
+      "id": 1514
+    },
+    "Û": {
+      "id": 1515
+    },
+    "و": {
+      "id": 1516
+    },
+    "گ": {
+      "id": 1517
+    },
+    "خ": {
+      "id": 1518
+    },
+    "ḥ": {
+      "id": 1519
+    },
+    "Ⱨ": {
+      "id": 1520
+    },
+    "Ḩ": {
+      "id": 1521
+    },
+    "Ê": {
+      "id": 1522
+    },
+    "Î": {
+      "id": 1523
+    },
+    "Ķ": {
+      "id": 1524
+    },
+    "Қ": {
+      "id": 1525
+    },
+    "а": {
+      "id": 1526
+    },
+    "с": {
+      "id": 1527
+    },
+    "қ": {
+      "id": 1528
+    },
+    "ы": {
+      "id": 1529
+    },
+    "р": {
+      "id": 1530
+    },
+    "Ⱪ": {
+      "id": 1531
+    },
+    "ⱪ": {
+      "id": 1532
+    },
+    "о": {
+      "id": 1533
+    },
+    "й": {
+      "id": 1534
+    },
+    "Ҡ": {
+      "id": 1535
+    },
+    "л": {
+      "id": 1536
+    },
+    "н": {
+      "id": 1537
+    },
+    "ٯ": {
+      "id": 1538
+    },
+    "ⱨ": {
+      "id": 1539
+    },
+    "ī": {
+      "id": 1540
+    },
+    "ō": {
+      "id": 1541
+    },
+    "ū": {
+      "id": 1542
+    },
+    "آ": {
+      "id": 1543
+    },
+    "ر": {
+      "id": 1544
+    },
+    "ن": {
+      "id": 1545
+    },
+    "ف": {
+      "id": 1546
+    },
+    "ى": {
+      "id": 1547
+    },
+    "ض": {
+      "id": 1548
+    },
+    "Ḥ": {
+      "id": 1549
+    },
+    "И": {
+      "id": 1550
+    },
+    "А": {
+      "id": 1551
+    },
+    "С": {
+      "id": 1552
+    },
+    "м": {
+      "id": 1553
+    },
+    "в": {
+      "id": 1554
+    },
+    "К": {
+      "id": 1555
+    },
+    "Р": {
+      "id": 1556
+    },
+    "Э": {
+      "id": 1557
+    },
+    "ю": {
+      "id": 1558
+    },
+    "б": {
+      "id": 1559
+    },
+    "к": {
+      "id": 1560
+    },
+    "е": {
+      "id": 1561
+    },
+    "т": {
+      "id": 1562
+    },
+    "з": {
+      "id": 1563
+    },
+    "О": {
+      "id": 1564
+    },
+    "З": {
+      "id": 1565
+    },
+    "Ю": {
+      "id": 1566
+    },
+    "п": {
+      "id": 1567
+    },
+    "М": {
+      "id": 1568
+    },
+    "Ц": {
+      "id": 1569
+    },
+    "х": {
+      "id": 1570
+    },
+    "ὐ": {
+      "id": 1571
+    },
+    "ë": {
+      "id": 1572
+    },
+    "Ā": {
+      "id": 1573
+    },
+    "ȧ": {
+      "id": 1574
+    },
+    "ṭ": {
+      "id": 1575
+    },
+    "Ṭ": {
+      "id": 1576
+    },
+    "Ȧ": {
+      "id": 1577
+    },
+    "Ả": {
+      "id": 1578
+    },
+    "ţ": {
+      "id": 1579
+    },
+    "ḩ": {
+      "id": 1580
+    },
+    "ă": {
+      "id": 1581
+    },
+    "ả": {
+      "id": 1582
+    },
+    "Á": {
+      "id": 1583
+    },
+    "‎": {
+      "id": 1584
+    },
+    "€": {
+      "id": 1585
+    },
+    "£": {
+      "id": 1586
+    },
+    "鯰": {
+      "id": 1587
+    },
+    "„": {
+      "id": 1588
+    },
+    "ἶ": {
+      "id": 1589
+    },
+    "κ": {
+      "id": 1590
+    },
+    "ï": {
+      "id": 1591
+    },
+    "ú": {
+      "id": 1592
+    },
+    "₺": {
+      "id": 1593
+    },
+    "Ğ": {
+      "id": 1594
+    },
+    "ل": {
+      "id": 1595
+    },
+    "ț": {
+      "id": 1596
+    },
+    "ő": {
+      "id": 1597
+    },
+    "ư": {
+      "id": 1598
+    },
+    "ơ": {
+      "id": 1599
+    },
+    "ع": {
+      "id": 1600
+    },
+    "ه": {
+      "id": 1601
+    },
+    "ج": {
+      "id": 1602
+    },
+    "ز": {
+      "id": 1603
+    },
+    "ئ": {
+      "id": 1604
+    },
+    "ġ": {
+      "id": 1605
+    },
+    "ʾ": {
+      "id": 1606
+    },
+    "ⴷ": {
+      "id": 1607
+    },
+    "ⵣ": {
+      "id": 1608
+    },
+    "ⴰ": {
+      "id": 1609
+    },
+    "ⵢ": {
+      "id": 1610
+    },
+    "ⴻ": {
+      "id": 1611
+    },
+    "ⵔ": {
+      "id": 1612
+    },
+    "م": {
+      "id": 1613
+    },
+    "ي": {
+      "id": 1614
+    },
+    "ة": {
+      "id": 1615
+    },
+    "ّ": {
+      "id": 1616
+    },
+    "Ν": {
+      "id": 1617
+    },
+    "δ": {
+      "id": 1618
+    },
+    "ι": {
+      "id": 1619
+    },
+    "ت": {
+      "id": 1620
+    },
+    "э": {
+      "id": 1621
+    },
+    "ò": {
+      "id": 1622
+    },
+    "ט": {
+      "id": 1623
+    },
+    "ב": {
+      "id": 1624
+    },
+    "א": {
+      "id": 1625
+    },
+    "ἀ": {
+      "id": 1626
+    },
+    "Š": {
+      "id": 1627
+    },
+    "Ž": {
+      "id": 1628
+    },
+    "ý": {
+      "id": 1629
+    },
+    "ə": {
+      "id": 1630
+    },
+    "ł": {
+      "id": 1631
+    },
+    "ž": {
+      "id": 1632
+    },
+    "č": {
+      "id": 1633
+    },
+    "ě": {
+      "id": 1634
+    },
+    "ã": {
+      "id": 1635
+    },
+    "Å": {
+      "id": 1636
+    },
+    "έ": {
+      "id": 1637
+    },
+    "ώ": {
+      "id": 1638
+    },
+    "à": {
+      "id": 1639
+    },
+    "ñ": {
+      "id": 1640
+    },
+    "ė": {
+      "id": 1641
+    },
+    "‪": {
+      "id": 1642
+    },
+    "Π": {
+      "id": 1643
+    },
+    "𐱃": {
+      "id": 1644
+    },
+    "𐰆": {
+      "id": 1645
+    },
+    "𐰴": {
+      "id": 1646
+    },
+    "𐰕": {
+      "id": 1647
+    },
+    "𐰍": {
+      "id": 1648
+    },
+    "𐰉": {
+      "id": 1649
+    },
+    "𐰑": {
+      "id": 1650
+    },
+    "𐰣": {
+      "id": 1651
+    },
+    "回": {
+      "id": 1652
+    },
+    "鶻": {
+      "id": 1653
+    },
+    "鹘": {
+      "id": 1654
+    },
+    "紇": {
+      "id": 1655
+    },
+    "纥": {
+      "id": 1656
+    },
+    "骨": {
+      "id": 1657
+    },
+    "力": {
+      "id": 1658
+    },
+    "裴": {
+      "id": 1659
+    },
+    "羅": {
+      "id": 1660
+    },
+    "白": {
+      "id": 1661
+    },
+    "眉": {
+      "id": 1662
+    },
+    "可": {
+      "id": 1663
+    },
+    "汗": {
+      "id": 1664
+    },
+    "隴": {
+      "id": 1665
+    },
+    "匐": {
+      "id": 1666
+    },
+    "ی": {
+      "id": 1667
+    },
+    "摩": {
+      "id": 1668
+    },
+    "尼": {
+      "id": 1669
+    },
+    "教": {
+      "id": 1670
+    },
+    "": {
+      "id": 1671
+    },
+    "│": {
+      "id": 1672
+    },
+    "Ý": {
+      "id": 1673
+    },
+    "←": {
+      "id": 1674
+    },
+    "Ō": {
+      "id": 1675
+    },
+    "Ł": {
+      "id": 1676
+    },
+    "ř": {
+      "id": 1677
+    },
+    "Č": {
+      "id": 1678
+    },
+    "ň": {
+      "id": 1679
+    },
+    "Ч": {
+      "id": 1680
+    },
+    "ё": {
+      "id": 1681
+    },
+    "შ": {
+      "id": 1682
+    },
+    "ა": {
+      "id": 1683
+    },
+    "ვ": {
+      "id": 1684
+    },
+    "ი": {
+      "id": 1685
+    },
+    "ზ": {
+      "id": 1686
+    },
+    "ღ": {
+      "id": 1687
+    },
+    "ш": {
+      "id": 1688
+    },
+    "Е": {
+      "id": 1689
+    },
+    "ә": {
+      "id": 1690
+    },
+    "უ": {
+      "id": 1691
+    },
+    "ჩ": {
+      "id": 1692
+    },
+    "Х": {
+      "id": 1693
+    },
+    "Ф": {
+      "id": 1694
+    },
+    "Ӏ": {
+      "id": 1695
+    },
+    "ц": {
+      "id": 1696
+    },
+    "ˈ": {
+      "id": 1697
+    },
+    "ː": {
+      "id": 1698
+    },
+    "ô": {
+      "id": 1699
+    },
+    "´": {
+      "id": 1700
+    },
+    "ì": {
+      "id": 1701
+    },
+    "Μ": {
+      "id": 1702
+    },
+    "Ἐ": {
+      "id": 1703
+    },
+    "ὶ": {
+      "id": 1704
+    },
+    "Δ": {
+      "id": 1705
+    },
+    "ṣ": {
+      "id": 1706
+    },
+    "ص": {
+      "id": 1707
+    },
+    "¿": {
+      "id": 1708
+    },
+    "ɡ": {
+      "id": 1709
+    },
+    "ɫ": {
+      "id": 1710
+    },
+    "Ô": {
+      "id": 1711
+    },
+    "Ļ": {
+      "id": 1712
+    },
+    "ℓ": {
+      "id": 1713
+    },
+    "̗": {
+      "id": 1714
+    },
+    "ۋ": {
+      "id": 1715
+    },
+    "Ə": {
+      "id": 1716
+    },
+    "Æ": {
+      "id": 1717
+    },
+    "ŋ": {
+      "id": 1718
+    },
+    "Ň": {
+      "id": 1719
+    },
+    "Ñ": {
+      "id": 1720
+    },
+    "Ņ": {
+      "id": 1721
+    },
+    "ڭ": {
+      "id": 1722
+    },
+    "Ḽ": {
+      "id": 1723
+    },
+    "ḽ": {
+      "id": 1724
+    },
+    "ڵ": {
+      "id": 1725
+    },
+    "ڶ": {
+      "id": 1726
+    },
+    "ļ": {
+      "id": 1727
+    },
+    "Љ": {
+      "id": 1728
+    },
+    "Ș": {
+      "id": 1729
+    },
+    "ŕ": {
+      "id": 1730
+    },
+    "ĺ": {
+      "id": 1731
+    },
+    "Ծ": {
+      "id": 1732
+    },
+    "Ձ": {
+      "id": 1733
+    },
+    "Ց": {
+      "id": 1734
+    },
+    "ǝ": {
+      "id": 1735
+    },
+    "ḫ": {
+      "id": 1736
+    },
+    "ɛ": {
+      "id": 1737
+    },
+    "ɯ": {
+      "id": 1738
+    },
+    "͡": {
+      "id": 1739
+    },
+    "ʝ": {
+      "id": 1740
+    },
+    "ɣ": {
+      "id": 1741
+    },
+    "ɟ": {
+      "id": 1742
+    },
+    "∘": {
+      "id": 1743
+    },
+    "∃": {
+      "id": 1744
+    },
+    "Ἄ": {
+      "id": 1745
+    },
+    "س": {
+      "id": 1746
+    },
+    "ḳ": {
+      "id": 1747
+    },
+    "火": {
+      "id": 1748
+    },
+    "星": {
+      "id": 1749
+    },
+    "ǒ": {
+      "id": 1750
+    },
+    "‰": {
+      "id": 1751
+    },
+    "µ": {
+      "id": 1752
+    },
+    "ἡ": {
+      "id": 1753
+    },
+    "म": {
+      "id": 1754
+    },
+    "ं": {
+      "id": 1755
+    },
+    "ग": {
+      "id": 1756
+    },
+    "ल": {
+      "id": 1757
+    },
+    "מ": {
+      "id": 1758
+    },
+    "ד": {
+      "id": 1759
+    },
+    "י": {
+      "id": 1760
+    },
+    "ם": {
+      "id": 1761
+    },
+    "≥": {
+      "id": 1762
+    },
+    "≤": {
+      "id": 1763
+    },
+    "Τ": {
+      "id": 1764
+    },
+    "♯": {
+      "id": 1765
+    },
+    "♭": {
+      "id": 1766
+    },
+    "œ": {
+      "id": 1767
+    },
+    "⅓": {
+      "id": 1768
+    },
+    "å": {
+      "id": 1769
+    },
+    "ù": {
+      "id": 1770
+    },
+    "Σ": {
+      "id": 1771
+    },
+    "õ": {
+      "id": 1772
+    },
+    "ű": {
+      "id": 1773
+    },
+    "Ó": {
+      "id": 1774
+    },
+    "½": {
+      "id": 1775
+    },
+    "¾": {
+      "id": 1776
+    },
+    "↑": {
+      "id": 1777
+    },
+    "≠": {
+      "id": 1778
+    },
+    "Ţ": {
+      "id": 1779
+    },
+    "ǧ": {
+      "id": 1780
+    },
+    "ð": {
+      "id": 1781
+    },
+    "ʔ": {
+      "id": 1782
+    },
+    "慰": {
+      "id": 1783
+    },
+    "安": {
+      "id": 1784
+    },
+    "婦": {
+      "id": 1785
+    },
+    "早": {
+      "id": 1786
+    },
+    "湾": {
+      "id": 1787
+    },
+    "干": {
+      "id": 1788
+    },
+    "拓": {
+      "id": 1789
+    },
+    "事": {
+      "id": 1790
+    },
+    "業": {
+      "id": 1791
+    },
+    "元": {
+      "id": 1792
+    },
+    "旦": {
+      "id": 1793
+    },
+    "成": {
+      "id": 1794
+    },
+    "人": {
+      "id": 1795
+    },
+    "の": {
+      "id": 1796
+    },
+    "日": {
+      "id": 1797
+    },
+    "建": {
+      "id": 1798
+    },
+    "国": {
+      "id": 1799
+    },
+    "記": {
+      "id": 1800
+    },
+    "念": {
+      "id": 1801
+    },
+    "紀": {
+      "id": 1802
+    },
+    "節": {
+      "id": 1803
+    },
+    "春": {
+      "id": 1804
+    },
+    "分": {
+      "id": 1805
+    },
+    "昭": {
+      "id": 1806
+    },
+    "和": {
+      "id": 1807
+    },
+    "憲": {
+      "id": 1808
+    },
+    "法": {
+      "id": 1809
+    },
+    "み": {
+      "id": 1810
+    },
+    "ど": {
+      "id": 1811
+    },
+    "り": {
+      "id": 1812
+    },
+    "こ": {
+      "id": 1813
+    },
+    "も": {
+      "id": 1814
+    },
+    "海": {
+      "id": 1815
+    },
+    "敬": {
+      "id": 1816
+    },
+    "老": {
+      "id": 1817
+    },
+    "秋": {
+      "id": 1818
+    },
+    "体": {
+      "id": 1819
+    },
+    "育": {
+      "id": 1820
+    },
+    "文": {
+      "id": 1821
+    },
+    "化": {
+      "id": 1822
+    },
+    "勤": {
+      "id": 1823
+    },
+    "労": {
+      "id": 1824
+    },
+    "感": {
+      "id": 1825
+    },
+    "謝": {
+      "id": 1826
+    },
+    "天": {
+      "id": 1827
+    },
+    "皇": {
+      "id": 1828
+    },
+    "誕": {
+      "id": 1829
+    },
+    "生": {
+      "id": 1830
+    },
+    "雛": {
+      "id": 1831
+    },
+    "祭": {
+      "id": 1832
+    },
+    "桃": {
+      "id": 1833
+    },
+    "句": {
+      "id": 1834
+    },
+    "七": {
+      "id": 1835
+    },
+    "夕": {
+      "id": 1836
+    },
+    "月": {
+      "id": 1837
+    },
+    "見": {
+      "id": 1838
+    },
+    "五": {
+      "id": 1839
+    },
+    "三": {
+      "id": 1840
+    },
+    "大": {
+      "id": 1841
+    },
+    "晦": {
+      "id": 1842
+    },
+    "花": {
+      "id": 1843
+    },
+    "自": {
+      "id": 1844
+    },
+    "衛": {
+      "id": 1845
+    },
+    "隊": {
+      "id": 1846
+    },
+    "陸": {
+      "id": 1847
+    },
+    "軍": {
+      "id": 1848
+    },
+    "奉": {
+      "id": 1849
+    },
+    "会": {
+      "id": 1850
+    },
+    "戦": {
+      "id": 1851
+    },
+    "本": {
+      "id": 1852
+    },
+    "、": {
+      "id": 1853
+    },
+    "対": {
+      "id": 1854
+    },
+    "馬": {
+      "id": 1855
+    },
+    "東": {
+      "id": 1856
+    },
+    "京": {
+      "id": 1857
+    },
+    "空": {
+      "id": 1858
+    },
+    "襲": {
+      "id": 1859
+    },
+    "沖": {
+      "id": 1860
+    },
+    "縄": {
+      "id": 1861
+    },
+    "「": {
+      "id": 1862
+    },
+    "霊": {
+      "id": 1863
+    },
+    "」": {
+      "id": 1864
+    },
+    "広": {
+      "id": 1865
+    },
+    "島": {
+      "id": 1866
+    },
+    "原": {
+      "id": 1867
+    },
+    "爆": {
+      "id": 1868
+    },
+    "長": {
+      "id": 1869
+    },
+    "崎": {
+      "id": 1870
+    },
+    "終": {
+      "id": 1871
+    },
+    "照": {
+      "id": 1872
+    },
+    "神": {
+      "id": 1873
+    },
+    "ż": {
+      "id": 1874
+    },
+    "±": {
+      "id": 1875
+    },
+    "ů": {
+      "id": 1876
+    },
+    "ֲ": {
+      "id": 1877
+    },
+    "ר": {
+      "id": 1878
+    },
+    "ָ": {
+      "id": 1879
+    },
+    "Մ": {
+      "id": 1880
+    },
+    "ա": {
+      "id": 1881
+    },
+    "ս": {
+      "id": 1882
+    },
+    "ի": {
+      "id": 1883
+    },
+    "Ἀ": {
+      "id": 1884
+    },
+    "ῖ": {
+      "id": 1885
+    },
+    "Þ": {
+      "id": 1886
+    },
+    "ễ": {
+      "id": 1887
+    },
+    "ọ": {
+      "id": 1888
+    },
+    "ę": {
+      "id": 1889
+    },
+    "Ī": {
+      "id": 1890
+    },
+    "Л": {
+      "id": 1891
+    },
+    "я": {
+      "id": 1892
+    },
+    "ь": {
+      "id": 1893
+    },
+    "Ш": {
+      "id": 1894
+    },
+    "П": {
+      "id": 1895
+    },
+    "Т": {
+      "id": 1896
+    },
+    "г": {
+      "id": 1897
+    },
+    "ũ": {
+      "id": 1898
+    },
+    "ĩ": {
+      "id": 1899
+    },
+    "ạ": {
+      "id": 1900
+    },
+    "ÿ": {
+      "id": 1901
+    },
+    "ệ": {
+      "id": 1902
+    },
+    "ấ": {
+      "id": 1903
+    },
+    "Ż": {
+      "id": 1904
+    },
+    "Ć": {
+      "id": 1905
+    },
+    "ǃ": {
+      "id": 1906
+    },
+    "ď": {
+      "id": 1907
+    },
+    "́": {
+      "id": 1908
+    },
+    "ф": {
+      "id": 1909
+    },
+    "Ț": {
+      "id": 1910
+    },
+    "ņ": {
+      "id": 1911
+    },
+    "Ø": {
+      "id": 1912
+    },
+    "Ś": {
+      "id": 1913
+    },
+    "ľ": {
+      "id": 1914
+    },
+    "Ģ": {
+      "id": 1915
+    },
+    "Í": {
+      "id": 1916
+    },
+    "ą": {
+      "id": 1917
+    },
+    "ť": {
+      "id": 1918
+    },
+    "Ċ": {
+      "id": 1919
+    },
+    "Ľ": {
+      "id": 1920
+    },
+    "À": {
+      "id": 1921
+    },
+    "ү": {
+      "id": 1922
+    },
+    "ồ": {
+      "id": 1923
+    },
+    "•": {
+      "id": 1924
+    },
+    "ظ": {
+      "id": 1925
+    },
+    "כ": {
+      "id": 1926
+    },
+    "ז": {
+      "id": 1927
+    },
+    "ל": {
+      "id": 1928
+    },
+    "ס": {
+      "id": 1929
+    },
+    "ʽ": {
+      "id": 1930
+    },
+    "ǎ": {
+      "id": 1931
+    },
+    "ĕ": {
+      "id": 1932
+    },
+    "都": {
+      "id": 1933
+    },
+    "多": {
+      "id": 1934
+    },
+    "地": {
+      "id": 1935
+    },
+    "域": {
+      "id": 1936
+    },
+    "特": {
+      "id": 1937
+    },
+    "別": {
+      "id": 1938
+    },
+    "区": {
+      "id": 1939
+    },
+    "市": {
+      "id": 1940
+    },
+    "町": {
+      "id": 1941
+    },
+    "村": {
+      "id": 1942
+    },
+    "府": {
+      "id": 1943
+    },
+    "º": {
+      "id": 1944
+    },
+    "¥": {
+      "id": 1945
+    },
+    "₦": {
+      "id": 1946
+    },
+    "₤": {
+      "id": 1947
+    },
+    "ῆ": {
+      "id": 1948
+    },
+    "غ": {
+      "id": 1949
+    },
+    "ۍ": {
+      "id": 1950
+    },
+    "ַ": {
+      "id": 1951
+    },
+    "ח": {
+      "id": 1952
+    },
+    "ְ": {
+      "id": 1953
+    },
+    "ֶ": {
+      "id": 1954
+    },
+    "ּ": {
+      "id": 1955
+    },
+    "≡": {
+      "id": 1956
+    },
+    "ו": {
+      "id": 1957
+    },
+    "ה": {
+      "id": 1958
+    },
+    "פ": {
+      "id": 1959
+    },
+    "ģ": {
+      "id": 1960
+    },
+    "ứ": {
+      "id": 1961
+    },
+    "ầ": {
+      "id": 1962
+    },
+    "ỗ": {
+      "id": 1963
+    },
+    "ờ": {
+      "id": 1964
+    },
+    "¡": {
+      "id": 1965
+    },
+    "∂": {
+      "id": 1966
+    },
+    "∇": {
+      "id": 1967
+    },
+    "⊕": {
+      "id": 1968
+    },
+    "ء": {
+      "id": 1969
+    },
+    "Õ": {
+      "id": 1970
+    },
+    "ъ": {
+      "id": 1971
+    },
+    "Φ": {
+      "id": 1972
+    },
+    "Γ": {
+      "id": 1973
+    },
+    "ʃ": {
+      "id": 1974
+    },
+    "ʰ": {
+      "id": 1975
+    },
+    "Χ": {
+      "id": 1976
+    },
+    "ẕ": {
+      "id": 1977
+    },
+    "ذ": {
+      "id": 1978
+    },
+    "ۆ": {
+      "id": 1979
+    },
+    "ک": {
+      "id": 1980
+    },
+    "ķ": {
+      "id": 1981
+    },
+    "↓": {
+      "id": 1982
+    },
+    "ᛏ": {
+      "id": 1983
+    },
+    "ᛅ": {
+      "id": 1984
+    },
+    "ᚾ": {
+      "id": 1985
+    },
+    "ᛘ": {
+      "id": 1986
+    },
+    "ᚢ": {
+      "id": 1987
+    },
+    "ᚱ": {
+      "id": 1988
+    },
+    "ᚴ": {
+      "id": 1989
+    },
+    "ɒ": {
+      "id": 1990
+    },
+    "ɽ": {
+      "id": 1991
+    },
+    "道": {
+      "id": 1992
+    },
+    "孔": {
+      "id": 1993
+    },
+    "子": {
+      "id": 1994
+    },
+    "硫": {
+      "id": 1995
+    },
+    "黄": {
+      "id": 1996
+    },
+    "い": {
+      "id": 1997
+    },
+    "¢": {
+      "id": 1998
+    },
+    "ἐ": {
+      "id": 1999
+    },
+    "": {
+      "id": 2000
+    },
+    "√": {
+      "id": 2001
+    },
+    "ὴ": {
+      "id": 2002
+    },
+    "ὺ": {
+      "id": 2003
+    },
+    "Ă": {
+      "id": 2004
+    },
+    "Ĕ": {
+      "id": 2005
+    },
+    "Ĭ": {
+      "id": 2006
+    },
+    "Ŏ": {
+      "id": 2007
+    },
+    "Ŭ": {
+      "id": 2008
+    },
+    "Ť": {
+      "id": 2009
+    },
+    "Ď": {
+      "id": 2010
+    },
+    "ث": {
+      "id": 2011
+    },
+    "Ҫ": {
+      "id": 2012
+    },
+    "Ҙ": {
+      "id": 2013
+    },
+    "Ḑ": {
+      "id": 2014
+    },
+    "Ӡ": {
+      "id": 2015
+    },
+    "Ṡ": {
+      "id": 2016
+    },
+    "Ḋ": {
+      "id": 2017
+    },
+    "ṡ": {
+      "id": 2018
+    },
+    "ḋ": {
+      "id": 2019
+    },
+    "Ṫ": {
+      "id": 2020
+    },
+    "ṫ": {
+      "id": 2021
+    },
+    "Ҳ": {
+      "id": 2022
+    },
+    "Є": {
+      "id": 2023
+    },
+    "Ë": {
+      "id": 2024
+    },
+    "Ё": {
+      "id": 2025
+    },
+    "Ź": {
+      "id": 2026
+    },
+    "Ŕ": {
+      "id": 2027
+    },
+    "Ĺ": {
+      "id": 2028
+    },
+    "Ń": {
+      "id": 2029
+    },
+    "Ḱ": {
+      "id": 2030
+    },
+    "Ẃ": {
+      "id": 2031
+    },
+    "Ḿ": {
+      "id": 2032
+    },
+    "Ṕ": {
+      "id": 2033
+    },
+    "ḱ": {
+      "id": 2034
+    },
+    "Ú": {
+      "id": 2035
+    },
+    "ˋ": {
+      "id": 2036
+    },
+    "̀": {
+      "id": 2037
+    },
+    "̃": {
+      "id": 2038
+    },
+    "̂": {
+      "id": 2039
+    },
+    "̄": {
+      "id": 2040
+    },
+    "̈": {
+      "id": 2041
+    },
+    "̌": {
+      "id": 2042
+    },
+    "̊": {
+      "id": 2043
+    },
+    "̛": {
+      "id": 2044
+    },
+    "̇": {
+      "id": 2045
+    },
+    "̍": {
+      "id": 2046
+    },
+    "̩": {
+      "id": 2047
+    },
+    "̦": {
+      "id": 2048
+    },
+    "̧": {
+      "id": 2049
+    },
+    "̨": {
+      "id": 2050
+    },
+    "̱": {
+      "id": 2051
+    },
+    "̰": {
+      "id": 2052
+    },
+    "̭": {
+      "id": 2053
+    },
+    "ज": {
+      "id": 2054
+    },
+    "ै": {
+      "id": 2055
+    },
+    "न": {
+      "id": 2056
+    },
+    "ध": {
+      "id": 2057
+    },
+    "र": {
+      "id": 2058
+    },
+    "्": {
+      "id": 2059
+    },
+    "श": {
+      "id": 2060
+    },
+    "ण": {
+      "id": 2061
+    },
+    "व": {
+      "id": 2062
+    },
+    "त": {
+      "id": 2063
+    },
+    "ा": {
+      "id": 2064
+    },
+    "क": {
+      "id": 2065
+    },
+    "स": {
+      "id": 2066
+    },
+    "घ": {
+      "id": 2067
+    },
+    "ु": {
+      "id": 2068
+    },
+    "ऋ": {
+      "id": 2069
+    },
+    "ष": {
+      "id": 2070
+    },
+    "भ": {
+      "id": 2071
+    },
+    "ि": {
+      "id": 2072
+    },
+    "ह": {
+      "id": 2073
+    },
+    "ी": {
+      "id": 2074
+    },
+    "ζ": {
+      "id": 2075
+    },
+    "·": {
+      "id": 2076
+    },
+    "Α": {
+      "id": 2077
+    },
+    "რ": {
+      "id": 2078
+    },
+    "თ": {
+      "id": 2079
+    },
+    "ნ": {
+      "id": 2080
+    },
+    "ს": {
+      "id": 2081
+    },
+    "Ճ": {
+      "id": 2082
+    },
+    "պ": {
+      "id": 2083
+    },
+    "ղ": {
+      "id": 2084
+    },
+    "ջ": {
+      "id": 2085
+    },
+    "ո": {
+      "id": 2086
+    },
+    "ւ": {
+      "id": 2087
+    },
+    "ր": {
+      "id": 2088
+    },
+    "ტ": {
+      "id": 2089
+    },
+    "ჰ": {
+      "id": 2090
+    },
+    "ە": {
+      "id": 2091
+    },
+    "Ρ": {
+      "id": 2092
+    },
+    "ῦ": {
+      "id": 2093
+    },
+    "ῥ": {
+      "id": 2094
+    },
+    "ე": {
+      "id": 2095
+    },
+    "Ղ": {
+      "id": 2096
+    },
+    "Կ": {
+      "id": 2097
+    },
+    "Κ": {
+      "id": 2098
+    },
+    "‟": {
+      "id": 2099
+    },
+    "Ε": {
+      "id": 2100
+    },
+    "ﬁ": {
+      "id": 2101
+    },
+    "ﬂ": {
+      "id": 2102
+    },
+    "Β": {
+      "id": 2103
+    },
+    "Բ": {
+      "id": 2104
+    },
+    "բ": {
+      "id": 2105
+    },
+    "ե": {
+      "id": 2106
+    },
+    "դ": {
+      "id": 2107
+    },
+    "Б": {
+      "id": 2108
+    },
+    "ფ": {
+      "id": 2109
+    },
+    "მ": {
+      "id": 2110
+    },
+    "फ": {
+      "id": 2111
+    },
+    "़": {
+      "id": 2112
+    },
+    "य": {
+      "id": 2113
+    },
+    "ɔ": {
+      "id": 2114
+    },
+    "‡": {
+      "id": 2115
+    },
+    "₹": {
+      "id": 2116
+    },
+    "ṇ": {
+      "id": 2117
+    },
+    "ŵ": {
+      "id": 2118
+    },
+    "ދ": {
+      "id": 2119
+    },
+    "ި": {
+      "id": 2120
+    },
+    "ވ": {
+      "id": 2121
+    },
+    "ެ": {
+      "id": 2122
+    },
+    "ހ": {
+      "id": 2123
+    },
+    "ރ": {
+      "id": 2124
+    },
+    "ާ": {
+      "id": 2125
+    },
+    "އ": {
+      "id": 2126
+    },
+    "ް": {
+      "id": 2127
+    },
+    "ޖ": {
+      "id": 2128
+    },
+    "ċ": {
+      "id": 2129
+    },
+    "Ħ": {
+      "id": 2130
+    },
+    "Ġ": {
+      "id": 2131
+    },
+    "ǁ": {
+      "id": 2132
+    },
+    "ɓ": {
+      "id": 2133
+    },
+    "ɪ": {
+      "id": 2134
+    },
+    "ˌ": {
+      "id": 2135
+    },
+    "˚": {
+      "id": 2136
+    },
+    "厨": {
+      "id": 2137
+    },
+    "房": {
+      "id": 2138
+    },
+    "台": {
+      "id": 2139
+    },
+    "所": {
+      "id": 2140
+    },
+    "か": {
+      "id": 2141
+    },
+    "ま": {
+      "id": 2142
+    },
+    "ὑ": {
+      "id": 2143
+    },
+    "∝": {
+      "id": 2144
+    },
+    "ხ": {
+      "id": 2145
+    },
+    "ო": {
+      "id": 2146
+    },
+    "პ": {
+      "id": 2147
+    },
+    "ჯ": {
+      "id": 2148
+    },
+    "щ": {
+      "id": 2149
+    },
+    "У": {
+      "id": 2150
+    },
+    "Н": {
+      "id": 2151
+    },
+    "Ж": {
+      "id": 2152
+    },
+    "Ι": {
+      "id": 2153
+    },
+    "ϊ": {
+      "id": 2154
+    },
+    "ִ": {
+      "id": 2155
+    },
+    "ק": {
+      "id": 2156
+    },
+    "ע": {
+      "id": 2157
+    },
+    "צ": {
+      "id": 2158
+    },
+    "ת": {
+      "id": 2159
+    },
+    "ן": {
+      "id": 2160
+    },
+    "Ὄ": {
+      "id": 2161
+    },
+    "ŧ": {
+      "id": 2162
+    },
+    "Ἑ": {
+      "id": 2163
+    },
+    "ؤ": {
+      "id": 2164
+    },
+    "إ": {
+      "id": 2165
+    },
+    "𐤮": {
+      "id": 2166
+    },
+    "𐤱": {
+      "id": 2167
+    },
+    "𐤠": {
+      "id": 2168
+    },
+    "𐤭": {
+      "id": 2169
+    },
+    "𐤣": {
+      "id": 2170
+    },
+    "ȳ": {
+      "id": 2171
+    },
+    "ἄ": {
+      "id": 2172
+    },
+    "ῡ": {
+      "id": 2173
+    },
+    "ἴ": {
+      "id": 2174
+    },
+    "ἢ": {
+      "id": 2175
+    },
+    "ῑ": {
+      "id": 2176
+    },
+    "ῶ": {
+      "id": 2177
+    },
+    "ḕ": {
+      "id": 2178
+    },
+    "ῃ": {
+      "id": 2179
+    },
+    "ὲ": {
+      "id": 2180
+    },
+    "ᾖ": {
+      "id": 2181
+    },
+    "ἵ": {
+      "id": 2182
+    },
+    "ṓ": {
+      "id": 2183
+    },
+    "津": {
+      "id": 2184
+    },
+    "波": {
+      "id": 2185
+    },
+    "つ": {
+      "id": 2186
+    },
+    "な": {
+      "id": 2187
+    },
+    "キ": {
+      "id": 2188
+    },
+    "ヤ": {
+      "id": 2189
+    },
+    "ノ": {
+      "id": 2190
+    },
+    "ン": {
+      "id": 2191
+    },
+    "株": {
+      "id": 2192
+    },
+    "式": {
+      "id": 2193
+    },
+    "社": {
+      "id": 2194
+    },
+    "Θ": {
+      "id": 2195
+    },
+    "Ά": {
+      "id": 2196
+    },
+    "Ο": {
+      "id": 2197
+    },
+    "Ψ": {
+      "id": 2198
+    },
+    "§": {
+      "id": 2199
+    },
+    "ʊ": {
+      "id": 2200
+    },
+    "ֹ": {
+      "id": 2201
+    },
+    "ש": {
+      "id": 2202
+    },
+    "ֵ": {
+      "id": 2203
+    },
+    "ׁ": {
+      "id": 2204
+    },
+    "Ἔ": {
+      "id": 2205
+    },
+    "נ": {
+      "id": 2206
+    },
+    "Վ": {
+      "id": 2207
+    },
+    "ն": {
+      "id": 2208
+    },
+    "կ": {
+      "id": 2209
+    },
+    "ց": {
+      "id": 2210
+    },
+    "״": {
+      "id": 2211
+    },
+    "ך": {
+      "id": 2212
+    },
+    "ϑ": {
+      "id": 2213
+    },
+    "ʿ": {
+      "id": 2214
+    },
+    "●": {
+      "id": 2215
+    },
+    "Ἰ": {
+      "id": 2216
+    },
+    "ˁ": {
+      "id": 2217
+    },
+    "ṅ": {
+      "id": 2218
+    },
+    "द": {
+      "id": 2219
+    },
+    "ख": {
+      "id": 2220
+    },
+    "ः": {
+      "id": 2221
+    },
+    "緣": {
+      "id": 2222
+    },
+    "起": {
+      "id": 2223
+    },
+    "ṃ": {
+      "id": 2224
+    },
+    "Ṣ": {
+      "id": 2225
+    },
+    "ḍ": {
+      "id": 2226
+    },
+    "ṛ": {
+      "id": 2227
+    },
+    "禅": {
+      "id": 2228
+    },
+    "臨": {
+      "id": 2229
+    },
+    "済": {
+      "id": 2230
+    },
+    "宗": {
+      "id": 2231
+    },
+    "曹": {
+      "id": 2232
+    },
+    "洞": {
+      "id": 2233
+    },
+    "公": {
+      "id": 2234
+    },
+    "案": {
+      "id": 2235
+    },
+    "ậ": {
+      "id": 2236
+    },
+    "訶": {
+      "id": 2237
+    },
+    "般": {
+      "id": 2238
+    },
+    "若": {
+      "id": 2239
+    },
+    "蜜": {
+      "id": 2240
+    },
+    "心": {
+      "id": 2241
+    },
+    "經": {
+      "id": 2242
+    },
+    "ⵍ": {
+      "id": 2243
+    },
+    "ⵎ": {
+      "id": 2244
+    },
+    "ⵖ": {
+      "id": 2245
+    },
+    "ⵉ": {
+      "id": 2246
+    },
+    "ⴱ": {
+      "id": 2247
+    },
+    "ⵜ": {
+      "id": 2248
+    },
+    "ⴳ": {
+      "id": 2249
+    },
+    "ⵏ": {
+      "id": 2250
+    },
+    "⁰": {
+      "id": 2251
+    },
+    "Ս": {
+      "id": 2252
+    },
+    "ḏ": {
+      "id": 2253
+    },
+    "ǘ": {
+      "id": 2254
+    },
+    "ὔ": {
+      "id": 2255
+    },
+    "Ē": {
+      "id": 2256
+    },
+    "ﻫ": {
+      "id": 2257
+    },
+    "ﺎ": {
+      "id": 2258
+    },
+    "𒅴": {
+      "id": 2259
+    },
+    "𒄀": {
+      "id": 2260
+    },
+    "𒂠": {
+      "id": 2261
+    },
+    "𒋗": {
+      "id": 2262
+    },
+    "𒈨": {
+      "id": 2263
+    },
+    "𒊒": {
+      "id": 2264
+    },
+    "𒊕": {
+      "id": 2265
+    },
+    "𒈪": {
+      "id": 2266
+    },
+    "𒂵": {
+      "id": 2267
+    },
+    "跋": {
+      "id": 2268
+    },
+    "拔": {
+      "id": 2269
+    },
+    "氏": {
+      "id": 2270
+    },
+    "鮮": {
+      "id": 2271
+    },
+    "卑": {
+      "id": 2272
+    },
+    "中": {
+      "id": 2273
+    },
+    "國": {
+      "id": 2274
+    },
+    "夏": {
+      "id": 2275
+    },
+    "漢": {
+      "id": 2276
+    },
+    "族": {
+      "id": 2277
+    },
+    "華": {
+      "id": 2278
+    },
+    "唐": {
+      "id": 2279
+    },
+    "朝": {
+      "id": 2280
+    },
+    "代": {
+      "id": 2281
+    },
+    "猗": {
+      "id": 2282
+    },
+    "盧": {
+      "id": 2283
+    },
+    "▪": {
+      "id": 2284
+    },
+    "︎": {
+      "id": 2285
+    },
+    "Ј": {
+      "id": 2286
+    },
+    "ј": {
+      "id": 2287
+    },
+    "警": {
+      "id": 2288
+    },
+    "視": {
+      "id": 2289
+    },
+    "庁": {
+      "id": 2290
+    },
+    "武": {
+      "id": 2291
+    },
+    "術": {
+      "id": 2292
+    },
+    "ų": {
+      "id": 2293
+    },
+    "َ": {
+      "id": 2294
+    },
+    "ْ": {
+      "id": 2295
+    },
+    "ʌ": {
+      "id": 2296
+    },
+    "ɾ": {
+      "id": 2297
+    },
+    "ʲ": {
+      "id": 2298
+    },
+    "ʷ": {
+      "id": 2299
+    },
+    "ʈ": {
+      "id": 2300
+    },
+    "ɖ": {
+      "id": 2301
+    },
+    "̪": {
+      "id": 2302
+    },
+    "⟨": {
+      "id": 2303
+    },
+    "⟩": {
+      "id": 2304
+    },
+    "Հ": {
+      "id": 2305
+    },
+    "յ": {
+      "id": 2306
+    },
+    "ք": {
+      "id": 2307
+    },
+    "մ": {
+      "id": 2308
+    },
+    "զ": {
+      "id": 2309
+    },
+    "Խ": {
+      "id": 2310
+    },
+    "ճ": {
+      "id": 2311
+    },
+    "տ": {
+      "id": 2312
+    },
+    "թ": {
+      "id": 2313
+    },
+    "վ": {
+      "id": 2314
+    },
+    "գ": {
+      "id": 2315
+    },
+    "ծ": {
+      "id": 2316
+    },
+    "ը": {
+      "id": 2317
+    },
+    "է": {
+      "id": 2318
+    },
+    "լ": {
+      "id": 2319
+    },
+    "հ": {
+      "id": 2320
+    },
+    "փ": {
+      "id": 2321
+    },
+    "ժ": {
+      "id": 2322
+    },
+    "շ": {
+      "id": 2323
+    },
+    "ռ": {
+      "id": 2324
+    },
+    "Զ": {
+      "id": 2325
+    },
+    "Ḍ": {
+      "id": 2326
+    },
+    "円": {
+      "id": 2327
+    },
+    "卓": {
+      "id": 2328
+    },
+    "騎": {
+      "id": 2329
+    },
+    "士": {
+      "id": 2330
+    },
+    "物": {
+      "id": 2331
+    },
+    "語": {
+      "id": 2332
+    },
+    "燃": {
+      "id": 2333
+    },
+    "え": {
+      "id": 2334
+    },
+    "ろ": {
+      "id": 2335
+    },
+    "ア": {
+      "id": 2336
+    },
+    "ー": {
+      "id": 2337
+    },
+    "サ": {
+      "id": 2338
+    },
+    "÷": {
+      "id": 2339
+    },
+    "∗": {
+      "id": 2340
+    },
+    "Ί": {
+      "id": 2341
+    },
+    "𒌷": {
+      "id": 2342
+    },
+    "𒃾": {
+      "id": 2343
+    },
+    "𒇻": {
+      "id": 2344
+    },
+    "𒊭": {
+      "id": 2345
+    },
+    "𒋫": {
+      "id": 2346
+    },
+    "𒄿": {
+      "id": 2347
+    },
+    "Ὅ": {
+      "id": 2348
+    },
+    "ẽ": {
+      "id": 2349
+    },
+    "ُ": {
+      "id": 2350
+    },
+    "ٱ": {
+      "id": 2351
+    },
+    "ِ": {
+      "id": 2352
+    },
+    "ө": {
+      "id": 2353
+    },
+    "ѳ": {
+      "id": 2354
+    },
+    "¼": {
+      "id": 2355
+    },
+    "□": {
+      "id": 2356
+    },
+    "ᾴ": {
+      "id": 2357
+    },
+    "ἔ": {
+      "id": 2358
+    },
+    "Ξ": {
+      "id": 2359
+    },
+    "Υ": {
+      "id": 2360
+    },
+    "ɑ": {
+      "id": 2361
+    },
+    "ʁ": {
+      "id": 2362
+    },
+    "𒀀": {
+      "id": 2363
+    },
+    "𒆷": {
+      "id": 2364
+    },
+    "𒅆": {
+      "id": 2365
+    },
+    "𒅀": {
+      "id": 2366
+    },
+    "і": {
+      "id": 2367
+    },
+    "ғ": {
+      "id": 2368
+    },
+    "ң": {
+      "id": 2369
+    },
+    "ұ": {
+      "id": 2370
+    },
+    "һ": {
+      "id": 2371
+    },
+    "Й": {
+      "id": 2372
+    },
+    "Ь": {
+      "id": 2373
+    },
+    "Ы": {
+      "id": 2374
+    },
+    "Ө": {
+      "id": 2375
+    },
+    "―": {
+      "id": 2376
+    },
+    "ـ": {
+      "id": 2377
+    },
+    "Ἡ": {
+      "id": 2378
+    },
+    "Ա": {
+      "id": 2379
+    },
+    "չ": {
+      "id": 2380
+    },
+    "ἰ": {
+      "id": 2381
+    },
+    "ὕ": {
+      "id": 2382
+    },
+    "ὰ": {
+      "id": 2383
+    },
+    "ῷ": {
+      "id": 2384
+    },
+    "ἱ": {
+      "id": 2385
+    },
+    "ῴ": {
+      "id": 2386
+    },
+    "Ἠ": {
+      "id": 2387
+    },
+    "Ῥ": {
+      "id": 2388
+    },
+    "ὸ": {
+      "id": 2389
+    },
+    "𐰺": {
+      "id": 2390
+    },
+    "∶": {
+      "id": 2391
+    },
+    "𐰖": {
+      "id": 2392
+    },
+    "𐰔": {
+      "id": 2393
+    },
+    "𐰞": {
+      "id": 2394
+    },
+    "𐰃": {
+      "id": 2395
+    },
+    "⋅": {
+      "id": 2396
+    },
+    "∣": {
+      "id": 2397
+    },
+    "ϒ": {
+      "id": 2398
+    },
+    "Ḳ": {
+      "id": 2399
+    },
+    "ከ": {
+      "id": 2400
+    },
+    "ፋ": {
+      "id": 2401
+    },
+    "†": {
+      "id": 2402
+    },
+    "𐱅": {
+      "id": 2403
+    },
+    "𐰇": {
+      "id": 2404
+    },
+    "𐰼": {
+      "id": 2405
+    },
+    "𐰜": {
+      "id": 2406
+    },
+    "𐰚": {
+      "id": 2407
+    },
+    "突": {
+      "id": 2408
+    },
+    "厥": {
+      "id": 2409
+    },
+    "ĭ": {
+      "id": 2410
+    },
+    "ɐ": {
+      "id": 2411
+    },
+    "雜": {
+      "id": 2412
+    },
+    "胡": {
+      "id": 2413
+    },
+    "杂": {
+      "id": 2414
+    },
+    "鍛": {
+      "id": 2415
+    },
+    "奴": {
+      "id": 2416
+    },
+    "陳": {
+      "id": 2417
+    },
+    "豐": {
+      "id": 2418
+    },
+    "祥": {
+      "id": 2419
+    },
+    "余": {
+      "id": 2420
+    },
+    "英": {
+      "id": 2421
+    },
+    "時": {
+      "id": 2422
+    },
+    "《": {
+      "id": 2423
+    },
+    "通": {
+      "id": 2424
+    },
+    "史": {
+      "id": 2425
+    },
+    "》": {
+      "id": 2426
+    },
+    "南": {
+      "id": 2427
+    },
+    "圖": {
+      "id": 2428
+    },
+    "書": {
+      "id": 2429
+    },
+    "出": {
+      "id": 2430
+    },
+    "版": {
+      "id": 2431
+    },
+    "股": {
+      "id": 2432
+    },
+    "份": {
+      "id": 2433
+    },
+    "有": {
+      "id": 2434
+    },
+    "限": {
+      "id": 2435
+    },
+    "司": {
+      "id": 2436
+    },
+    "勒": {
+      "id": 2437
+    },
+    "設": {
+      "id": 2438
+    },
+    "葉": {
+      "id": 2439
+    },
+    "護": {
+      "id": 2440
+    },
+    "屈": {
+      "id": 2441
+    },
+    "律": {
+      "id": 2442
+    },
+    "啜": {
+      "id": 2443
+    },
+    "阿": {
+      "id": 2444
+    },
+    "俟": {
+      "id": 2445
+    },
+    "利": {
+      "id": 2446
+    },
+    "發": {
+      "id": 2447
+    },
+    "吐": {
+      "id": 2448
+    },
+    "屯": {
+      "id": 2449
+    },
+    "斤": {
+      "id": 2450
+    },
+    "閻": {
+      "id": 2451
+    },
+    "洪": {
+      "id": 2452
+    },
+    "達": {
+      "id": 2453
+    },
+    "頡": {
+      "id": 2454
+    },
+    "幹": {
+      "id": 2455
+    },
+    "忽": {
+      "id": 2456
+    },
+    "里": {
+      "id": 2457
+    },
+    "那": {
+      "id": 2458
+    },
+    "～": {
+      "id": 2459
+    },
+    "定": {
+      "id": 2460
+    },
+    "楊": {
+      "id": 2461
+    },
+    "ἤ": {
+      "id": 2462
+    },
+    "∧": {
+      "id": 2463
+    },
+    "∨": {
+      "id": 2464
+    },
+    "⇒": {
+      "id": 2465
+    },
+    "⇔": {
+      "id": 2466
+    },
+    "∞": {
+      "id": 2467
+    },
+    "ſ": {
+      "id": 2468
+    },
+    "∫": {
+      "id": 2469
+    },
+    "ʙ": {
+      "id": 2470
+    },
+    "‐": {
+      "id": 2471
+    },
+    "ἑ": {
+      "id": 2472
+    },
+    "₄": {
+      "id": 2473
+    },
+    "₂": {
+      "id": 2474
+    },
+    "Г": {
+      "id": 2475
+    },
+    "↔": {
+      "id": 2476
+    },
+    "ϱ": {
+      "id": 2477
+    },
+    "Œ": {
+      "id": 2478
+    },
+    "₽": {
+      "id": 2479
+    },
+    "Ե": {
+      "id": 2480
+    },
+    "և": {
+      "id": 2481
+    },
+    "ﺭ": {
+      "id": 2482
+    },
+    "ﺍ": {
+      "id": 2483
+    },
+    "ﻭ": {
+      "id": 2484
+    },
+    "ﻦ": {
+      "id": 2485
+    },
+    "Պ": {
+      "id": 2486
+    },
+    "ḃ": {
+      "id": 2487
+    },
+    "ª": {
+      "id": 2488
+    },
+    "伊": {
+      "id": 2489
+    },
+    "宁": {
+      "id": 2490
+    },
+    "第": {
+      "id": 2491
+    },
+    "学": {
+      "id": 2492
+    },
+    "괘": {
+      "id": 2493
+    },
+    "卦": {
+      "id": 2494
+    },
+    "한": {
+      "id": 2495
+    },
+    "국": {
+      "id": 2496
+    },
+    "남": {
+      "id": 2497
+    },
+    "대": {
+      "id": 2498
+    },
+    "민": {
+      "id": 2499
+    },
+    "임": {
+      "id": 2500
+    },
+    "시": {
+      "id": 2501
+    },
+    "정": {
+      "id": 2502
+    },
+    "부": {
+      "id": 2503
+    },
+    "韓": {
+      "id": 2504
+    },
+    "民": {
+      "id": 2505
+    },
+    "̝": {
+      "id": 2506
+    },
+    "ɦ": {
+      "id": 2507
+    },
+    "̠": {
+      "id": 2508
+    },
+    "̚": {
+      "id": 2509
+    },
+    "₩": {
+      "id": 2510
+    },
+    "ŏ": {
+      "id": 2511
+    },
+    "단": {
+      "id": 2512
+    },
+    "군": {
+      "id": 2513
+    },
+    "왕": {
+      "id": 2514
+    },
+    "검": {
+      "id": 2515
+    },
+    "檀": {
+      "id": 2516
+    },
+    "君": {
+      "id": 2517
+    },
+    "王": {
+      "id": 2518
+    },
+    "儉": {
+      "id": 2519
+    },
+    "기": {
+      "id": 2520
+    },
+    "자": {
+      "id": 2521
+    },
+    "조": {
+      "id": 2522
+    },
+    "선": {
+      "id": 2523
+    },
+    "箕": {
+      "id": 2524
+    },
+    "위": {
+      "id": 2525
+    },
+    "만": {
+      "id": 2526
+    },
+    "滿": {
+      "id": 2527
+    },
+    "樂": {
+      "id": 2528
+    },
+    "浪": {
+      "id": 2529
+    },
+    "郡": {
+      "id": 2530
+    },
+    "乐": {
+      "id": 2531
+    },
+    "고": {
+      "id": 2532
+    },
+    "구": {
+      "id": 2533
+    },
+    "려": {
+      "id": 2534
+    },
+    "高": {
+      "id": 2535
+    },
+    "麗": {
+      "id": 2536
+    },
+    "백": {
+      "id": 2537
+    },
+    "제": {
+      "id": 2538
+    },
+    "百": {
+      "id": 2539
+    },
+    "濟": {
+      "id": 2540
+    },
+    "가": {
+      "id": 2541
+    },
+    "야": {
+      "id": 2542
+    },
+    "加": {
+      "id": 2543
+    },
+    "耶": {
+      "id": 2544
+    },
+    "伽": {
+      "id": 2545
+    },
+    "倻": {
+      "id": 2546
+    },
+    "신": {
+      "id": 2547
+    },
+    "라": {
+      "id": 2548
+    },
+    "新": {
+      "id": 2549
+    },
+    "을": {
+      "id": 2550
+    },
+    "미": {
+      "id": 2551
+    },
+    "사": {
+      "id": 2552
+    },
+    "변": {
+      "id": 2553
+    },
+    "乙": {
+      "id": 2554
+    },
+    "未": {
+      "id": 2555
+    },
+    "變": {
+      "id": 2556
+    },
+    "이": {
+      "id": 2557
+    },
+    "주": {
+      "id": 2558
+    },
+    "회": {
+      "id": 2559
+    },
+    "李": {
+      "id": 2560
+    },
+    "周": {
+      "id": 2561
+    },
+    "會": {
+      "id": 2562
+    },
+    "박": {
+      "id": 2563
+    },
+    "朴": {
+      "id": 2564
+    },
+    "銑": {
+      "id": 2565
+    },
+    "윤": {
+      "id": 2566
+    },
+    "석": {
+      "id": 2567
+    },
+    "우": {
+      "id": 2568
+    },
+    "尹": {
+      "id": 2569
+    },
+    "錫": {
+      "id": 2570
+    },
+    "禹": {
+      "id": 2571
+    },
+    "浦": {
+      "id": 2572
+    },
+    "梧": {
+      "id": 2573
+    },
+    "楼": {
+      "id": 2574
+    },
+    "楠": {
+      "id": 2575
+    },
+    "瀬": {
+      "id": 2576
+    },
+    "幸": {
+      "id": 2577
+    },
+    "彦": {
+      "id": 2578
+    },
+    "謙": {
+      "id": 2579
+    },
+    "蔵": {
+      "id": 2580
+    },
+    "아": {
+      "id": 2581
+    },
+    "관": {
+      "id": 2582
+    },
+    "파": {
+      "id": 2583
+    },
+    "천": {
+      "id": 2584
+    },
+    "露": {
+      "id": 2585
+    },
+    "館": {
+      "id": 2586
+    },
+    "播": {
+      "id": 2587
+    },
+    "遷": {
+      "id": 2588
+    },
+    "의": {
+      "id": 2589
+    },
+    "인": {
+      "id": 2590
+    },
+    "공": {
+      "id": 2591
+    },
+    "화": {
+      "id": 2592
+    },
+    "主": {
+      "id": 2593
+    },
+    "義": {
+      "id": 2594
+    },
+    "共": {
+      "id": 2595
+    },
+    "ἧ": {
+      "id": 2596
+    },
+    "ᾰ": {
+      "id": 2597
+    },
+    "̥": {
+      "id": 2598
+    },
+    "ृ": {
+      "id": 2599
+    },
+    "ẖ": {
+      "id": 2600
+    },
+    "♠": {
+      "id": 2601
+    },
+    "♥": {
+      "id": 2602
+    },
+    "♦": {
+      "id": 2603
+    },
+    "♣": {
+      "id": 2604
+    },
+    "ձ": {
+      "id": 2605
+    },
+    "Լ": {
+      "id": 2606
+    },
+    "‏": {
+      "id": 2607
+    },
+    "Ω": {
+      "id": 2608
+    },
+    "″": {
+      "id": 2609
+    },
+    "ლ": {
+      "id": 2610
+    },
+    "კ": {
+      "id": 2611
+    },
+    "წ": {
+      "id": 2612
+    },
+    "ჟ": {
+      "id": 2613
+    },
+    "🚲": {
+      "id": 2614
+    },
+    "ἥ": {
+      "id": 2615
+    },
+    "ǫ": {
+      "id": 2616
+    },
+    "ﺫ": {
+      "id": 2617
+    },
+    "ﻛ": {
+      "id": 2618
+    },
+    "𒍑": {
+      "id": 2619
+    },
+    "∅": {
+      "id": 2620
+    },
+    "ὦ": {
+      "id": 2621
+    },
+    "Η": {
+      "id": 2622
+    },
+    "ል": {
+      "id": 2623
+    },
+    "ጅ": {
+      "id": 2624
+    },
+    "ራ": {
+      "id": 2625
+    },
+    "ስ": {
+      "id": 2626
+    },
+    "ተ": {
+      "id": 2627
+    },
+    "ፈ": {
+      "id": 2628
+    },
+    "ሪ": {
+      "id": 2629
+    },
+    "መ": {
+      "id": 2630
+    },
+    "ኰ": {
+      "id": 2631
+    },
+    "ን": {
+      "id": 2632
+    },
+    "મ": {
+      "id": 2633
+    },
+    "ો": {
+      "id": 2634
+    },
+    "હ": {
+      "id": 2635
+    },
+    "ન": {
+      "id": 2636
+    },
+    "દ": {
+      "id": 2637
+    },
+    "ા": {
+      "id": 2638
+    },
+    "સ": {
+      "id": 2639
+    },
+    "ક": {
+      "id": 2640
+    },
+    "ર": {
+      "id": 2641
+    },
+    "ચ": {
+      "id": 2642
+    },
+    "ં": {
+      "id": 2643
+    },
+    "ગ": {
+      "id": 2644
+    },
+    "ધ": {
+      "id": 2645
+    },
+    "ી": {
+      "id": 2646
+    },
+    "બ": {
+      "id": 2647
+    },
+    "પ": {
+      "id": 2648
+    },
+    "ુ": {
+      "id": 2649
+    },
+    "े": {
+      "id": 2650
+    },
+    "ौ": {
+      "id": 2651
+    },
+    "ׂ": {
+      "id": 2652
+    },
+    "ٍ": {
+      "id": 2653
+    },
+    "囲": {
+      "id": 2654
+    },
+    "碁": {
+      "id": 2655
+    },
+    "圍": {
+      "id": 2656
+    },
+    "棋": {
+      "id": 2657
+    },
+    "围": {
+      "id": 2658
+    },
+    "바": {
+      "id": 2659
+    },
+    "둑": {
+      "id": 2660
+    },
+    "¬": {
+      "id": 2661
+    },
+    "დ": {
+      "id": 2662
+    },
+    "ǩ": {
+      "id": 2663
+    },
+    "₁": {
+      "id": 2664
+    },
+    "ბ": {
+      "id": 2665
+    },
+    "ძ": {
+      "id": 2666
+    },
+    "გ": {
+      "id": 2667
+    },
+    "ც": {
+      "id": 2668
+    },
+    "ܒ": {
+      "id": 2669
+    },
+    "ܹ": {
+      "id": 2670
+    },
+    "ܝ": {
+      "id": 2671
+    },
+    "ܬ": {
+      "id": 2672
+    },
+    "ܼ": {
+      "id": 2673
+    },
+    "ܢ": {
+      "id": 2674
+    },
+    "ܲ": {
+      "id": 2675
+    },
+    "ܗ": {
+      "id": 2676
+    },
+    "ܪ": {
+      "id": 2677
+    },
+    "⋯": {
+      "id": 2678
+    },
+    "च": {
+      "id": 2679
+    },
+    "华": {
+      "id": 2680
+    },
+    "ǐ": {
+      "id": 2681
+    },
+    "ὁ": {
+      "id": 2682
+    },
+    "ὼ": {
+      "id": 2683
+    },
+    "イ": {
+      "id": 2684
+    },
+    "ス": {
+      "id": 2685
+    },
+    "ケ": {
+      "id": 2686
+    },
+    "デ": {
+      "id": 2687
+    },
+    "ル": {
+      "id": 2688
+    },
+    "ქ": {
+      "id": 2689
+    },
+    "𐭥": {
+      "id": 2690
+    },
+    "𐭮": {
+      "id": 2691
+    },
+    "𐭢": {
+      "id": 2692
+    },
+    "𐭣": {
+      "id": 2693
+    },
+    "𐭤": {
+      "id": 2694
+    },
+    "전": {
+      "id": 2695
+    },
+    "쟁": {
+      "id": 2696
+    },
+    "육": {
+      "id": 2697
+    },
+    "오": {
+      "id": 2698
+    },
+    "해": {
+      "id": 2699
+    },
+    "방": {
+      "id": 2700
+    },
+    "志": {
+      "id": 2701
+    },
+    "愿": {
+      "id": 2702
+    },
+    "军": {
+      "id": 2703
+    },
+    "Ð": {
+      "id": 2704
+    },
+    "Ẓ": {
+      "id": 2705
+    },
+    "ג": {
+      "id": 2706
+    },
+    "☿": {
+      "id": 2707
+    },
+    "♀": {
+      "id": 2708
+    },
+    "🜨": {
+      "id": 2709
+    },
+    "♂": {
+      "id": 2710
+    },
+    "♃": {
+      "id": 2711
+    },
+    "♄": {
+      "id": 2712
+    },
+    "⛢": {
+      "id": 2713
+    },
+    "♆": {
+      "id": 2714
+    },
+    "☉": {
+      "id": 2715
+    },
+    "ܩ": {
+      "id": 2716
+    },
+    "ܘ": {
+      "id": 2717
+    },
+    "ܐ": {
+      "id": 2718
+    },
+    "杏": {
+      "id": 2719
+    },
+    "壇": {
+      "id": 2720
+    },
+    "董": {
+      "id": 2721
+    },
+    "林": {
+      "id": 2722
+    },
+    "手": {
+      "id": 2723
+    },
+    "ソ": {
+      "id": 2724
+    },
+    "ニ": {
+      "id": 2725
+    },
+    "・": {
+      "id": 2726
+    },
+    "グ": {
+      "id": 2727
+    },
+    "プ": {
+      "id": 2728
+    },
+    "信": {
+      "id": 2729
+    },
+    "工": {
+      "id": 2730
+    },
+    "ッ": {
+      "id": 2731
+    },
+    "ち": {
+      "id": 2732
+    },
+    "ゃ": {
+      "id": 2733
+    },
+    "ん": {
+      "id": 2734
+    },
+    "∈": {
+      "id": 2735
+    },
+    "𒉺": {
+      "id": 2736
+    },
+    "紅": {
+      "id": 2737
+    },
+    "梁": {
+      "id": 2738
+    },
+    "號": {
+      "id": 2739
+    },
+    "美": {
+      "id": 2740
+    },
+    "洲": {
+      "id": 2741
+    },
+    "豹": {
+      "id": 2742
+    },
+    "菊": {
+      "id": 2743
+    },
+    "豆": {
+      "id": 2744
+    },
+    "燈": {
+      "id": 2745
+    },
+    "籠": {
+      "id": 2746
+    },
+    "掛": {
+      "id": 2747
+    },
+    "打": {
+      "id": 2748
+    },
+    "官": {
+      "id": 2749
+    },
+    "活": {
+      "id": 2750
+    },
+    "着": {
+      "id": 2751
+    },
+    "搖": {
+      "id": 2752
+    },
+    "呀": {
+      "id": 2753
+    },
+    "﹐": {
+      "id": 2754
+    },
+    "到": {
+      "id": 2755
+    },
+    "外": {
+      "id": 2756
+    },
+    "婆": {
+      "id": 2757
+    },
+    "橋": {
+      "id": 2758
+    },
+    "話": {
+      "id": 2759
+    },
+    "好": {
+      "id": 2760
+    },
+    "說": {
+      "id": 2761
+    },
+    "我": {
+      "id": 2762
+    },
+    "的": {
+      "id": 2763
+    },
+    "父": {
+      "id": 2764
+    },
+    "亲": {
+      "id": 2765
+    },
+    "母": {
+      "id": 2766
+    },
+    "一": {
+      "id": 2767
+    },
+    "个": {
+      "id": 2768
+    },
+    "不": {
+      "id": 2769
+    },
+    "能": {
+      "id": 2770
+    },
+    "少": {
+      "id": 2771
+    },
+    "福": {
+      "id": 2772
+    },
+    "时": {
+      "id": 2773
+    },
+    "光": {
+      "id": 2774
+    },
+    "雄": {
+      "id": 2775
+    },
+    "十": {
+      "id": 2776
+    },
+    "面": {
+      "id": 2777
+    },
+    "埋": {
+      "id": 2778
+    },
+    "伏": {
+      "id": 2779
+    },
+    "├": {
+      "id": 2780
+    },
+    "─": {
+      "id": 2781
+    },
+    "└": {
+      "id": 2782
+    },
+    "ǔ": {
+      "id": 2783
+    },
+    "ˀ": {
+      "id": 2784
+    },
+    "Ì": {
+      "id": 2785
+    },
+    "Ř": {
+      "id": 2786
+    },
+    "Ƣ": {
+      "id": 2787
+    },
+    "ڨ": {
+      "id": 2788
+    },
+    "ˆ": {
+      "id": 2789
+    },
+    "˘": {
+      "id": 2790
+    },
+    "ۇ": {
+      "id": 2791
+    },
+    "ẓ": {
+      "id": 2792
+    },
+    "Έ": {
+      "id": 2793
+    },
+    "ٔ": {
+      "id": 2794
+    },
+    "ﻔ": {
+      "id": 2795
+    },
+    "ﺖ": {
+      "id": 2796
+    },
+    "ﻤ": {
+      "id": 2797
+    },
+    "ﻌ": {
+      "id": 2798
+    },
+    "Ǿ": {
+      "id": 2799
+    },
+    "ǿ": {
+      "id": 2800
+    },
+    "¸": {
+      "id": 2801
+    },
+    "Ό": {
+      "id": 2802
+    },
+    "ो": {
+      "id": 2803
+    },
+    "水": {
+      "id": 2804
+    },
+    "물": {
+      "id": 2805
+    },
+    "位": {
+      "id": 2806
+    },
+    "수": {
+      "id": 2807
+    },
+    "ཆ": {
+      "id": 2808
+    },
+    "ུ": {
+      "id": 2809
+    },
+    "།": {
+      "id": 2810
+    },
+    "�": {
+      "id": 2811
+    },
+    "邱": {
+      "id": 2812
+    },
+    "廣": {
+      "id": 2813
+    },
+    "중": {
+      "id": 2814
+    },
+    "區": {
+      "id": 2815
+    },
+    "동": {
+      "id": 2816
+    },
+    "서": {
+      "id": 2817
+    },
+    "西": {
+      "id": 2818
+    },
+    "북": {
+      "id": 2819
+    },
+    "北": {
+      "id": 2820
+    },
+    "성": {
+      "id": 2821
+    },
+    "壽": {
+      "id": 2822
+    },
+    "城": {
+      "id": 2823
+    },
+    "달": {
+      "id": 2824
+    },
+    "刀": {
+      "id": 2825
+    },
+    "た": {
+      "id": 2826
+    },
+    "鞘": {
+      "id": 2827
+    },
+    "鍔": {
+      "id": 2828
+    },
+    "鹿": {
+      "id": 2829
+    },
+    "太": {
+      "id": 2830
+    },
+    "蕨": {
+      "id": 2831
+    },
+    "寇": {
+      "id": 2832
+    },
+    "ら": {
+      "id": 2833
+    },
+    "す": {
+      "id": 2834
+    },
+    "く": {
+      "id": 2835
+    },
+    "撓": {
+      "id": 2836
+    },
+    "膨": {
+      "id": 2837
+    },
+    "れ": {
+      "id": 2838
+    },
+    "切": {
+      "id": 2839
+    },
+    "込": {
+      "id": 2840
+    },
+    "め": {
+      "id": 2841
+    },
+    "金": {
+      "id": 2842
+    },
+    "は": {
+      "id": 2843
+    },
+    "ぎ": {
+      "id": 2844
+    },
+    "刃": {
+      "id": 2845
+    },
+    "毀": {
+      "id": 2846
+    },
+    "じ": {
+      "id": 2847
+    },
+    "匂": {
+      "id": 2848
+    },
+    "影": {
+      "id": 2849
+    },
+    "し": {
+      "id": 2850
+    },
+    "て": {
+      "id": 2851
+    },
+    "疲": {
+      "id": 2852
+    },
+    "ٰ": {
+      "id": 2853
+    },
+    "प": {
+      "id": 2854
+    },
+    "ब": {
+      "id": 2855
+    },
+    "ू": {
+      "id": 2856
+    },
+    "⅔": {
+      "id": 2857
+    },
+    "‭": {
+      "id": 2858
+    },
+    "‬": {
+      "id": 2859
+    },
+    "₾": {
+      "id": 2860
+    },
+    "ٌ": {
+      "id": 2861
+    },
+    "ƶ": {
+      "id": 2862
+    },
+    "∩": {
+      "id": 2863
+    },
+    "È": {
+      "id": 2864
+    },
+    "ѕ": {
+      "id": 2865
+    },
+    "ʀ": {
+      "id": 2866
+    },
+    "😀": {
+      "id": 2867
+    },
+    "ף": {
+      "id": 2868
+    },
+    "ቀ": {
+      "id": 2869
+    },
+    "ይ": {
+      "id": 2870
+    },
+    "ሕ": {
+      "id": 2871
+    },
+    "ባ": {
+      "id": 2872
+    },
+    "ዓ": {
+      "id": 2873
+    },
+    "ሳ": {
+      "id": 2874
+    },
+    "ብ": {
+      "id": 2875
+    },
+    "ር": {
+      "id": 2876
+    },
+    "ጊ": {
+      "id": 2877
+    },
+    "ጎ": {
+      "id": 2878
+    },
+    "ም": {
+      "id": 2879
+    },
+    "ጽ": {
+      "id": 2880
+    },
+    "ዋ": {
+      "id": 2881
+    }
   }
 }
