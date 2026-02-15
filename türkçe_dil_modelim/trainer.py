@@ -1,5 +1,5 @@
 import torch
-import torch.optim import optim
+import torch.optim as optim
 import torch.nn as nn
 
 class Trainer:
