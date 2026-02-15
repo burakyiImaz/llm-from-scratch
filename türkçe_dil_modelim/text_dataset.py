@@ -74,3 +74,13 @@ def save_chunk_batches(token_ids_chunk, context_length, stride, batch_size, save
         torch.save({"input": x, "target": y}, batch_file)
         files.append(batch_file)
     return files
+
+def load_encoded_file(file_path):
+    all_tokens=[]
+
+    with open(file_path,"r",encoding="utf-8") as f:
+        for line in f:
+            line_tokens= [int(tok) for tok in line.strip().split()]
+            all_tokens.extend(line_tokens)
+
+        return all_tokens
