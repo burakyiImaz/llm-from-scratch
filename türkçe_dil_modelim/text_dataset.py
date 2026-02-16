@@ -1,9 +1,8 @@
 import torch
 from torch.utils.data import Dataset, DataLoader
-from türkçe_dil_modelim.tokenizer import Tokenizer
 from pathlib import Path
 
-# TextDataset
+
 class TextDataset(Dataset):
     def __init__(self, token_ids, context_length, stride):
         super().__init__()
@@ -25,9 +24,23 @@ class TextDataset(Dataset):
 
     def __getitem__(self, idx):
         return self.inputs[idx], self.targets[idx]
-    
 
-    #  RAM Dostu Batch Kaydetme Fonksiyonu
+    # ---------------------------
+    # Static Utility Functions
+    # ---------------------------
+
+    @staticmethod
+    def load_encoded_file(file_path):
+        all_tokens = []
+
+        with open(file_path, "r", encoding="utf-8") as f:
+            for line in f:
+                line_tokens = [int(tok) for tok in line.strip().split()]
+                all_tokens.extend(line_tokens)
+
+        return all_tokens
+
+    @staticmethod
     def process_and_save_batches(
         file_path,
         tokenizer,
@@ -35,7 +48,7 @@ class TextDataset(Dataset):
         stride=1,
         batch_size=64,
         save_dir="wikipedia_batches",
-        chunk_size=5000   # Kaç satırdan sonra batch oluşturulacak
+        chunk_size=5000
     ):
         save_dir = Path(save_dir)
         save_dir.mkdir(exist_ok=True)
@@ -48,39 +61,53 @@ class TextDataset(Dataset):
                 tokens = tokenizer.encode(line)
                 chunk_tokens.extend(tokens.tolist())
 
-                # Her chunk_size satırda bir batch oluştur ve kaydet
                 if (line_idx + 1) % chunk_size == 0:
-                    print(f"{line_idx+1} satır işlendi, vocab boyutu: {tokenizer.get_vocab_size()}")
-                    batch_files.extend(save_chunk_batches(chunk_tokens, context_length, stride, batch_size, save_dir, line_idx))
-                    chunk_tokens = []  # RAM'i boşalt
+                    print(f"{line_idx+1} satır işlendi")
+                    batch_files.extend(
+                        TextDataset.save_chunk_batches(
+                            chunk_tokens,
+                            context_length,
+                            stride,
+                            batch_size,
+                            save_dir,
+                            line_idx
+                        )
+                    )
+                    chunk_tokens = []
 
-            # Son kalan chunk'ı kaydet
-            if len(chunk_tokens) > context_length:
-                batch_files.extend(save_chunk_batches(chunk_tokens, context_length, stride, batch_size, save_dir, line_idx))
+        if len(chunk_tokens) > context_length:
+            batch_files.extend(
+                TextDataset.save_chunk_batches(
+                    chunk_tokens,
+                    context_length,
+                    stride,
+                    batch_size,
+                    save_dir,
+                    line_idx
+                )
+            )
 
-        # Tokenizer güncel vocab dosyasını kaydet
         tokenizer.save_vocab()
         print(f"Tüm batchler kaydedildi: {len(batch_files)} dosya")
         return batch_files
 
-    #  Chunk'ı batch olarak kaydetme yardımcı fonksiyonu
-def save_chunk_batches(token_ids_chunk, context_length, stride, batch_size, save_dir, line_idx):
-    dataset = TextDataset(token_ids_chunk, context_length, stride)
-    loader = DataLoader(dataset, batch_size=batch_size, shuffle=True)
-    files = []
+    @staticmethod
+    def save_chunk_batches(
+        token_ids_chunk,
+        context_length,
+        stride,
+        batch_size,
+        save_dir,
+        line_idx
+    ):
+        dataset = TextDataset(token_ids_chunk, context_length, stride)
+        loader = DataLoader(dataset, batch_size=batch_size, shuffle=True)
 
-    for batch_idx, (x, y) in enumerate(loader):
-        batch_file = save_dir / f"batch_{line_idx}_{batch_idx}.pt"
-        torch.save({"input": x, "target": y}, batch_file)
-        files.append(batch_file)
-    return files
+        files = []
 
-def load_encoded_file(file_path):
-    all_tokens=[]
+        for batch_idx, (x, y) in enumerate(loader):
+            batch_file = save_dir / f"batch_{line_idx}_{batch_idx}.pt"
+            torch.save({"input": x, "target": y}, batch_file)
+            files.append(batch_file)
 
-    with open(file_path,"r",encoding="utf-8") as f:
-        for line in f:
-            line_tokens= [int(tok) for tok in line.strip().split()]
-            all_tokens.extend(line_tokens)
-
-        return all_tokens
+        return files
