@@ -1,6 +1,7 @@
 import torch
-import torch.optim as optim
 import torch.nn as nn
+import torch.optim as optim
+
 
 class Trainer:
     def __init__(
@@ -13,57 +14,66 @@ class Trainer:
         grad_clip=1.0,
         save_path="turkce_llm.pt"
     ):
-        self.model= model.to(device)
-        self.dataloader=dataloader
-        self.device= device
-        self.lr= lr 
-        self.epochs= epochs
-        self.grad_clip= grad_clip
-        self.save_path= save_path
+        self.device = device
+        self.model = model.to(self.device)
+        self.dataloader = dataloader
+        self.epochs = epochs
+        self.grad_clip = grad_clip
+        self.save_path = save_path
 
-        self.optim= optim.AdamW(self.model.parameters(),lr=lr)
-        self.loss_fn= nn.CrossEntropyLoss()
+        self.optimizer = optim.AdamW(self.model.parameters(), lr=lr)
+        self.loss_fn = nn.CrossEntropyLoss()
 
-    def train_one_epoch(self,epoch):
-        
+    def train_one_epoch(self, epoch):
+
         self.model.train()
-        total_loss= 0
+        total_loss = 0.0
 
-        for step, (x,y) in enumerate(self.dataloader):
-            x= x.to(device)
-            y= y.to(device)
+        for step, (x, y) in enumerate(self.dataloader):
+
+            x = x.to(self.device)
+            y = y.to(self.device)
 
             logits = self.model(x)  # (B, T, V)
             B, T, V = logits.shape
 
             loss = self.loss_fn(
-                logits.view(B*T, V),
-                y.view(B*T)
+                logits.view(B * T, V),
+                y.view(B * T)
             )
 
-            # Backprop
             self.optimizer.zero_grad()
             loss.backward()
 
-            torch.nn.utils.clip_grad_norm_(self.model.parameters(), self.grad_clip)
+            torch.nn.utils.clip_grad_norm_(
+                self.model.parameters(),
+                self.grad_clip
+            )
 
             self.optimizer.step()
 
             total_loss += loss.item()
 
             if step % 100 == 0:
-                print(f"Epoch {epoch} | Step {step} | Loss: {loss.item():.4f}")
+                print(
+                    f"Epoch {epoch+1} | "
+                    f"Step {step}/{len(self.dataloader)} | "
+                    f"Loss: {loss.item():.4f}"
+                )
 
         avg_loss = total_loss / len(self.dataloader)
         return avg_loss
-    
+
     def train(self):
+
+        print(" Training başladı...\n")
+
         for epoch in range(self.epochs):
             avg_loss = self.train_one_epoch(epoch)
-            print(f"\n Epoch {epoch} Ortalama Loss: {avg_loss:.4f}\n")
+            print(f"\n Epoch {epoch+1} Ortalama Loss: {avg_loss:.4f}\n")
 
         self.save_model()
 
     def save_model(self):
         torch.save(self.model.state_dict(), self.save_path)
-        print(f"Model kaydedildi: {self.save_path}")
+        print(f" Model kaydedildi: {self.save_path}")
