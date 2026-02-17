@@ -64,6 +64,16 @@ class Trainer:
         avg_loss = total_loss / len(self.dataloader)
         return avg_loss
 
+    def save_checkpoint(self, epoch, step):
+        path = f"checkpoints/model_epoch{epoch}_step{step}.pt"
+        torch.save({
+            "model_state_dict": self.model.state_dict(),
+            "optimizer_state_dict": self.optimizer.state_dict(),
+            "epoch": epoch,
+            "step": step
+        }, path)
+        print(f"Model kaydedildi: {path}")
+
     def train(self):
 
         print(" Training başladı...\n")
