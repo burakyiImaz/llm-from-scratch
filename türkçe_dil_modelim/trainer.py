@@ -62,7 +62,6 @@ class Trainer:
 
             total_loss += loss.item()
 
-            # 🔥 Step bazlı checkpoint
             global_step = epoch * len(self.dataloader) + step
 
             if global_step % self.save_every == 0 and global_step > 0:
