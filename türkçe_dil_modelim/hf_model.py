@@ -22,5 +22,23 @@ class CasualLM(PreTrainedModel):
 
         self.post_init() # HF weight için önemli
 
-    def forward(self, input_ids):
-        return self.model(input_ids)
+    def forward(self, input_ids, labels=None):
+
+        hidden_states = self.model(input_ids)
+        logits = self.lm_head(hidden_states)
+
+        loss = None
+        if labels is not None:
+            shift_logits = logits[:, :-1, :].contiguous()
+            shift_labels = labels[:, 1:].contiguous()
+
+            loss_fct = nn.CrossEntropyLoss()
+            loss = loss_fct(
+                shift_logits.view(-1, self.config.vocab_size),
+                shift_labels.view(-1)
+            )
+
+        return {
+            "loss": loss,
+            "logits": logits
+        }
