@@ -80,51 +80,46 @@ class Model(nn.Module):
 
         return filtered_logits
 
-    def generate(self, x, max_new_tokens: int, stop_token=".", temperature: float = 1.0, top_k: int =None, top_p: float=1.0):
+    def generate(
+        self,
+        input_ids,
+        max_new_tokens=20,
+        temperature=1.0,
+        top_k=None,
+        top_p=1.0
+    ):
 
-        
-        if x.dim() == 1:
-            x = x.unsqueeze(0)  # (1, seq_len)
+        if input_ids.dim() == 1:
+            input_ids = input_ids.unsqueeze(0)
 
-        tokens = x[0].tolist()
-
-        # stop token id (örn: ".")
-        stop_token_id = "."
-        if hasattr(self, "tokenizer"):
-            stop_token_id = self.tokenizer.vocab.get(stop_token, None)
+        tokens = input_ids[0].tolist()
 
         for _ in range(max_new_tokens):
-
-            if len(tokens) > 32:
-                break
 
             logits = self.forward(
                 torch.tensor([tokens], device=self.device)
             )
-            last_logits = logits[0, -1, :] #sadece son token logitsi
-            
-            
-            if temperature!= 0:
-                last_logits= last_logits/temperature
-            
-            if top_k is not None:
-                values, indices = torch.topk(last_logits,top_k)
-                filtered_logits= torch.full_like(last_logits,-float("inf"))
-                filtered_logits.scatter_(0,indices,values) # önce logitleri sıfırladık sonra top_k ye uygun indice ve değerleri 0 yerine yazdık
-                last_logits= filtered_logits
-            
-            if top_p>0 and top_p<1:
-                last_logits= self.top_p_filtering(last_logits,top_p)
 
+            last_logits = logits[0, -1, :]
+
+            # temperature
+            if temperature > 0:
+                last_logits = last_logits / temperature
+
+            # top_k
+            if top_k is not None:
+                values, indices = torch.topk(last_logits, top_k)
+                filtered = torch.full_like(last_logits, -float("inf"))
+                filtered.scatter_(0, indices, values)
+                last_logits = filtered
+
+            # top_p
+            if 0 < top_p < 1:
+                last_logits = self.top_p_filtering(last_logits, top_p)
 
             probs = torch.softmax(last_logits, dim=-1)
-            
-
             next_token = torch.multinomial(probs, num_samples=1).item()
 
             tokens.append(next_token)
 
-            if stop_token_id is not None and next_token == stop_token_id:
-                break
-
-        return tokens
+        return torch.tensor(tokens)
