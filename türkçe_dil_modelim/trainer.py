@@ -1,48 +1,57 @@
 import torch
 import torch.nn as nn
 import torch.optim as optim
-import os
 import math
+import os
 
 
 class Trainer:
+
     def __init__(
         self,
         model,
         train_loader,
-        val_loader=None,
+        val_loader,
+        test_loader,
         device="cpu",
         lr=3e-4,
-        epochs=5,
+        weight_decay=0.01,
+        epochs=20,
+        warmup_steps=500,
         grad_clip=1.0,
-        save_path="turkce_llm.pt",
-        checkpoint_dir="checkpoints",
-        early_stopping_patience=3
+        save_dir="training_outputs"
     ):
 
         self.device = device
-        self.model = model.to(self.device)
+        self.model = model.to(device)
+
         self.train_loader = train_loader
         self.val_loader = val_loader
+        self.test_loader = test_loader
+
         self.epochs = epochs
         self.grad_clip = grad_clip
-        self.save_path = save_path
-        self.checkpoint_dir = checkpoint_dir
-        self.early_stopping_patience = early_stopping_patience
+        self.warmup_steps = warmup_steps
 
-        self.optimizer = optim.AdamW(self.model.parameters(), lr=lr)
+        os.makedirs(save_dir, exist_ok=True)
+        self.save_dir = save_dir
+
+        self.optimizer = optim.AdamW(
+            self.model.parameters(),
+            lr=lr,
+            weight_decay=weight_decay
+        )
+
+        total_steps = len(train_loader) * epochs
+
         self.scheduler = optim.lr_scheduler.CosineAnnealingLR(
-            self.optimizer, T_max=epochs
+            self.optimizer,
+            T_max=total_steps
         )
 
         self.loss_fn = nn.CrossEntropyLoss()
 
-        self.scaler = torch.cuda.amp.GradScaler() if device == "cuda" else None
-
-        os.makedirs(self.checkpoint_dir, exist_ok=True)
-
         self.best_val_loss = float("inf")
-        self.early_stop_counter = 0
 
 
     def compute_loss(self, logits, targets):
@@ -53,10 +62,10 @@ class Trainer:
         )
 
 
-    def train_one_epoch(self, epoch):
+    def train_epoch(self, epoch):
 
         self.model.train()
-        total_loss = 0.0
+        total_loss = 0
 
         for step, (x, y) in enumerate(self.train_loader):
 
@@ -65,52 +74,38 @@ class Trainer:
 
             self.optimizer.zero_grad()
 
-            if self.scaler:
-                with torch.cuda.amp.autocast():
-                    logits = self.model(x)
-                    loss = self.compute_loss(logits, y)
+            logits = self.model(x)
+            loss = self.compute_loss(logits, y)
 
-                self.scaler.scale(loss).backward()
-                torch.nn.utils.clip_grad_norm_(
-                    self.model.parameters(),
-                    self.grad_clip
-                )
-                self.scaler.step(self.optimizer)
-                self.scaler.update()
-            else:
-                logits = self.model(x)
-                loss = self.compute_loss(logits, y)
-                loss.backward()
-                torch.nn.utils.clip_grad_norm_(
-                    self.model.parameters(),
-                    self.grad_clip
-                )
-                self.optimizer.step()
+            loss.backward()
+
+            torch.nn.utils.clip_grad_norm_(
+                self.model.parameters(),
+                self.grad_clip
+            )
+
+            self.optimizer.step()
+            self.scheduler.step()
 
             total_loss += loss.item()
 
-            if step % 100 == 0:
+            if step % 200 == 0:
                 print(
                     f"Epoch {epoch+1} | "
                     f"Step {step}/{len(self.train_loader)} | "
-                    f"Loss: {loss.item():.4f}"
+                    f"Loss {loss.item():.4f}"
                 )
 
-        avg_loss = total_loss / len(self.train_loader)
-        return avg_loss
+        return total_loss / len(self.train_loader)
 
 
-
-    def evaluate(self):
-
-        if self.val_loader is None:
-            return None
+    def evaluate(self, loader):
 
         self.model.eval()
-        total_loss = 0.0
+        total_loss = 0
 
         with torch.no_grad():
-            for x, y in self.val_loader:
+            for x, y in loader:
                 x = x.to(self.device)
                 y = y.to(self.device)
 
@@ -118,50 +113,42 @@ class Trainer:
                 loss = self.compute_loss(logits, y)
                 total_loss += loss.item()
 
-        avg_loss = total_loss / len(self.val_loader)
+        avg_loss = total_loss / len(loader)
         perplexity = math.exp(avg_loss)
 
         return avg_loss, perplexity
 
 
-
-    def save_model(self):
-        torch.save(self.model.state_dict(), self.save_path)
-        print(f"\nFinal model kaydedildi: {self.save_path}")
-
+    def save_checkpoint(self, name):
+        path = os.path.join(self.save_dir, name)
+        torch.save(self.model.state_dict(), path)
+        print(f"Model kaydedildi: {path}")
 
 
     def train(self):
 
-        print("Training başladı...\n")
+        print("Training başladı\n")
 
         for epoch in range(self.epochs):
 
-            train_loss = self.train_one_epoch(epoch)
-            self.scheduler.step()
+            train_loss = self.train_epoch(epoch)
+            val_loss, val_ppl = self.evaluate(self.val_loader)
 
-            print(f"\nEpoch {epoch+1} Train Loss: {train_loss:.4f}")
+            print(f"\nEpoch {epoch+1}")
+            print(f"Train Loss: {train_loss:.4f}")
+            print(f"Val Loss: {val_loss:.4f}")
+            print(f"Val Perplexity: {val_ppl:.2f}\n")
 
-            if self.val_loader:
-                result = self.evaluate()
-                if result is not None:
-                    val_loss, perplexity = result
+            # Best model kaydet
+            if val_loss < self.best_val_loss:
+                self.best_val_loss = val_loss
+                self.save_checkpoint("best_model.pt")
 
-                    print(
-                        f"Validation Loss: {val_loss:.4f} | "
-                        f"Perplexity: {perplexity:.2f}\n"
-                    )
+        # Final test evaluation
+        test_loss, test_ppl = self.evaluate(self.test_loader)
 
-                # Early stopping
-                if val_loss < self.best_val_loss:
-                    self.best_val_loss = val_loss
-                    self.early_stop_counter = 0
-                    self.save_model()
-                else:
-                    self.early_stop_counter += 1
+        print("\nFinal Test Sonuçları")
+        print(f"Test Loss: {test_loss:.4f}")
+        print(f"Test Perplexity: {test_ppl:.2f}")
 
-                    if self.early_stop_counter >= self.early_stopping_patience:
-                        print("Early stopping tetiklendi.")
-                        break
-            else:
-                self.save_model()
+        self.save_checkpoint("last_model.pt")
