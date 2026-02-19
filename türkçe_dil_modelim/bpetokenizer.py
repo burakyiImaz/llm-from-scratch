@@ -2,13 +2,13 @@ import json
 import re
 import unicodedata
 from collections import Counter, defaultdict
-from tqdm import tqdm
 
 
 class TurkishBPETokenizer:
     def __init__(self, vocab_size=32000):
         self.vocab_size = vocab_size
         self.vocab = {}
+        self.reverse_vocab = {}
         self.merges = []
         self.special_tokens = ["<pad>", "<unk>", "<bos>", "<eos>"]
 
@@ -23,33 +23,49 @@ class TurkishBPETokenizer:
 
     def train(self, file_path):
         print("Metin okunuyor...")
+
         with open(file_path, "r", encoding="utf-8") as f:
             text = f.read()
 
         text = self.normalize(text)
         words = re.findall(r"\S+", text)
 
-        # karakter seviyesinde başlat
         corpus = [list(word) + ["</w>"] for word in words]
-
         vocab = Counter(tuple(word) for word in corpus)
 
         print("BPE eğitimi başlıyor...")
 
-        while len(self.vocab) < self.vocab_size:
+        # başlangıç token seti (karakterler)
+        tokens = set()
+        for word in vocab:
+            for t in word:
+                tokens.add(t)
+
+        base_vocab_size = len(tokens) + len(self.special_tokens)
+        merges_needed = self.vocab_size - base_vocab_size
+
+        if merges_needed <= 0:
+            raise ValueError("Vocab size çok küçük!")
+
+        for i in range(merges_needed):
+
             pairs = self.get_stats(vocab)
             if not pairs:
                 break
 
             best = max(pairs, key=pairs.get)
             self.merges.append(best)
+
             vocab = self.merge_vocab(best, vocab)
 
-            if len(self.merges) % 100 == 0:
-                print(f"Merge sayısı: {len(self.merges)}")
+            if (i + 1) % 500 == 0:
+                print(f"Merge: {i+1}/{merges_needed}")
 
         self.build_vocab(vocab)
+
         print("Eğitim tamamlandı.")
+        print("Toplam vocab:", len(self.vocab))
+
 
     def get_stats(self, vocab):
         pairs = defaultdict(int)
@@ -57,6 +73,7 @@ class TurkishBPETokenizer:
             for i in range(len(word) - 1):
                 pairs[(word[i], word[i+1])] += freq
         return pairs
+
 
     def merge_vocab(self, pair, vocab):
         new_vocab = {}
@@ -66,9 +83,10 @@ class TurkishBPETokenizer:
         for word, freq in vocab.items():
             word_str = " ".join(word)
             new_word = pattern.sub("".join(pair), word_str)
-            new_vocab[tuple(new_word.split(" "))] = freq
+            new_vocab[tuple(new_word.split())] = freq
 
         return new_vocab
+
 
     def build_vocab(self, vocab):
         tokens = set()
@@ -82,13 +100,16 @@ class TurkishBPETokenizer:
         self.reverse_vocab = {i: tok for tok, i in self.vocab.items()}
 
 
-    def encode(self, text):
+
+    def encode(self, text, add_special_tokens=False):
         text = self.normalize(text)
         words = re.findall(r"\S+", text)
 
-        tokens = []
+        output_tokens = []
+
         for word in words:
             word_tokens = list(word) + ["</w>"]
+
             for pair in self.merges:
                 i = 0
                 while i < len(word_tokens) - 1:
@@ -96,27 +117,54 @@ class TurkishBPETokenizer:
                         word_tokens[i:i+2] = ["".join(pair)]
                     else:
                         i += 1
-            tokens.extend(word_tokens)
 
-        return [self.vocab.get(t, self.vocab["<unk>"]) for t in tokens]
+            output_tokens.extend(word_tokens)
+
+        ids = [self.vocab.get(t, self.vocab["<unk>"]) for t in output_tokens]
+
+        if add_special_tokens:
+            ids = [self.vocab["<bos>"]] + ids + [self.vocab["<eos>"]]
+
+        return ids
 
 
 
-    def decode(self, ids):
-        tokens = [self.reverse_vocab[i] for i in ids]
+    def decode(self, ids, skip_special_tokens=True):
+
+        tokens = []
+        for i in ids:
+            tok = self.reverse_vocab.get(i, "<unk>")
+            if skip_special_tokens and tok in self.special_tokens:
+                continue
+            tokens.append(tok)
+
         text = "".join(tokens)
-        return text.replace("</w>", " ")
+        text = text.replace("</w>", " ")
 
+        return text.strip()
 
-
+    # -------------------------------------------------
+    # SAVE
+    # -------------------------------------------------
     def save_tokenizer_json(self, path):
+
         tokenizer_json = {
+            "version": "1.0",
             "model": {
-                "type": "BPE",
+                "type": "custom_bpe",
+                "vocab_size": len(self.vocab),
                 "vocab": self.vocab,
                 "merges": [" ".join(pair) for pair in self.merges]
             },
-            "special_tokens": self.special_tokens
+            "normalization": {
+                "type": "NFKC+lowercase"
+            },
+            "special_tokens": {
+                "pad_token": "<pad>",
+                "unk_token": "<unk>",
+                "bos_token": "<bos>",
+                "eos_token": "<eos>"
+            }
         }
 
         with open(path, "w", encoding="utf-8") as f:
