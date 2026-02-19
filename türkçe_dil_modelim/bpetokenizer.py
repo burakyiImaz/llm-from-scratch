@@ -75,17 +75,27 @@ class TurkishBPETokenizer:
         return pairs
 
 
+
+    
     def merge_vocab(self, pair, vocab):
         new_vocab = {}
-        bigram = re.escape(" ".join(pair))
-        pattern = re.compile(r'(?<!\S)' + bigram + r'(?!\S)')
 
         for word, freq in vocab.items():
-            word_str = " ".join(word)
-            new_word = pattern.sub("".join(pair), word_str)
-            new_vocab[tuple(new_word.split())] = freq
+            new_word = []
+            i = 0
+
+            while i < len(word):
+                if i < len(word) - 1 and (word[i], word[i+1]) == pair:
+                    new_word.append(word[i] + word[i+1])
+                    i += 2
+                else:
+                    new_word.append(word[i])
+                    i += 1
+
+            new_vocab[tuple(new_word)] = freq
 
         return new_vocab
+
 
 
     def build_vocab(self, vocab):
