@@ -22,14 +22,17 @@ class Tokenizer:
         current_id = 0
 
         # JSON kategorilerini sırayla yükle
-        for category, tokens in vocab_data.items():
-            self.vocab_categories[category] = {}
-            for token in tokens.keys():
-                if token not in self.vocab:
-                    self.vocab[token] = current_id
-                    self.reverse_vocab[current_id] = token
-                    self.vocab_categories[category][token] = current_id
-                    current_id += 1
+        if "model" in vocab_data and "vocab" in vocab_data["model"]:
+            vocab_dict = vocab_data["model"]["vocab"]
+            self.vocab_categories["main"] = {}
+            for token, token_id in vocab_dict.items():
+                self.vocab[token] = token_id
+                self.reverse_vocab[token_id] = token
+                self.vocab_categories["main"][token] = token_id
+            current_id = max(vocab_dict.values()) + 1
+        else:
+            current_id = 0
+
 
         self.next_token_id = current_id
 
