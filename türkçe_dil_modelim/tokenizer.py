@@ -36,14 +36,13 @@ class Tokenizer:
 
         self.next_token_id = current_id
 
-        # Özel token ID'leri (varsayılmış vocab içinde olmalı)
-        self.pad_id = self.vocab["<pad>"]  
-        self.unk_id = self.vocab["<unk>"]
-        self.start_id = self.vocab["<başla>"]
-        self.end_id = self.vocab["<bitiş>"]
-        self.uppercase_id = self.vocab["<büyük_harf>"]
-        self.space_id = self.vocab[" "]
-
+        special = vocab_data.get("special_tokens", {})
+        self.pad_id = self.vocab.get(special.get("pad_token", "<pad>"), self.next_token_id)
+        self.unk_id = self.vocab.get(special.get("unk_token", "<unk>"), self.next_token_id)
+        self.start_id = self.vocab.get(special.get("bos_token", "<bos>"), self.next_token_id)
+        self.end_id = self.vocab.get(special.get("eos_token", "<eos>"), self.next_token_id)
+        self.uppercase_id = self.vocab.get("<büyük_harf>", self.unk_id)
+        self.space_id = self.vocab.get(" ", self.unk_id)
 
     def _add_special_token(self, token):
         """Yeni özel token ekler"""
