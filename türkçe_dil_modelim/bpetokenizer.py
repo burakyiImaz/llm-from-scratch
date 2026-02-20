@@ -180,3 +180,49 @@ class TurkishBPETokenizer:
             json.dump(tokenizer_json, f, ensure_ascii=False, indent=2)
 
         print("tokenizer.json oluşturuldu.")
+
+    def save_hf_compatible(self, path):
+        hf_json = {
+            "version": "1.0",
+            "truncation": None,
+            "padding": None,
+            "added_tokens": [
+                {
+                    "id": self.vocab[token],
+                    "content": token,
+                    "special": True
+                }
+                for token in self.special_tokens
+            ],
+            "normalizer": {
+                "type": "Sequence",
+                "normalizers": [
+                    {"type": "NFKC"},
+                    {"type": "Lowercase"}
+                ]
+            },
+            "pre_tokenizer": {
+                "type": "Whitespace"
+            },
+            "decoder": {
+                "type": "ByteLevel",
+                "add_prefix_space": False,
+                "trim_offsets": True
+            },
+            "model": {
+                "type": "BPE",
+                "dropout": None,
+                "unk_token": "<unk>",
+                "continuing_subword_prefix": "",
+                "end_of_word_suffix": "",
+                "fuse_unk": False,
+                "byte_fallback": False,
+                "vocab": self.vocab,
+                "merges": [" ".join(pair) for pair in self.merges]
+            }
+        }
+
+        with open(path, "w", encoding="utf-8") as f:
+            json.dump(hf_json, f, ensure_ascii=False, indent=2)
+
+        print("HF uyumlu tokenizer.json oluşturuldu.")
