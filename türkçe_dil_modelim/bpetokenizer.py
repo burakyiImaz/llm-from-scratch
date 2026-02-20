@@ -153,9 +153,8 @@ class TurkishBPETokenizer:
 
         return text.strip()
 
-    # -------------------------------------------------
-    # SAVE
-    # -------------------------------------------------
+
+
     def save_tokenizer_json(self, path):
 
         tokenizer_json = {
