@@ -180,3 +180,19 @@ class TurkishBPETokenizer:
             json.dump(tokenizer_json, f, ensure_ascii=False, indent=2)
 
         print("tokenizer.json oluşturuldu.")
+
+    def load_tokenizer_json(self,path):
+
+        with open(path,"r",encoding="utf-8") as f:
+            data= json.load(f)
+
+        self.vocab = data["model"]["vocab"]
+        self.reverse_vocab = {int(v): k for k, v in self.vocab.items()}
+        self.merges = [tuple(m.split()) for m in data["model"]["merges"]]
+
+        self.unk_id = self.vocab["<unk>"]
+        self.pad_id = self.vocab["<pad>"]
+        self.bos_id = self.vocab["<bos>"]
+        self.eos_id = self.vocab["<eos>"]
+
+        print("Tokenizer başarıyla yüklendi.")
