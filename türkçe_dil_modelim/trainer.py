@@ -16,10 +16,11 @@ class Trainer:
         device="cpu",
         lr=3e-4,
         weight_decay=0.01,
-        epochs=20,
+        epochs=10,
         warmup_steps=500,
         grad_clip=1.0,
-        save_dir="training_outputs"
+        save_dir="training_outputs",
+        early_stopping_patience=3
     ):
 
         self.device = device
@@ -32,6 +33,7 @@ class Trainer:
         self.epochs = epochs
         self.grad_clip = grad_clip
         self.warmup_steps = warmup_steps
+        self.early_stopping_patience = early_stopping_patience
 
         os.makedirs(save_dir, exist_ok=True)
         self.save_dir = save_dir
@@ -42,23 +44,35 @@ class Trainer:
             weight_decay=weight_decay
         )
 
-        total_steps = len(train_loader) * epochs
+        self.total_steps = len(train_loader) * epochs
+        self.global_step = 0
 
-        self.scheduler = optim.lr_scheduler.CosineAnnealingLR(
-            self.optimizer,
-            T_max=total_steps
-        )
-
+        self.base_lr = lr
         self.loss_fn = nn.CrossEntropyLoss()
 
         self.best_val_loss = float("inf")
+        self.early_stop_counter = 0
+
+
+
+    def update_learning_rate(self):
+        if self.global_step < self.warmup_steps:
+            lr = self.base_lr * self.global_step / self.warmup_steps
+        else:
+            progress = (self.global_step - self.warmup_steps) / max(
+                1, self.total_steps - self.warmup_steps
+            )
+            lr = 0.5 * self.base_lr * (1 + math.cos(math.pi * progress))
+
+        for param_group in self.optimizer.param_groups:
+            param_group["lr"] = lr
 
 
     def compute_loss(self, logits, targets):
         B, T, V = logits.shape
         return self.loss_fn(
-            logits.view(B * T, V),
-            targets.view(B * T)
+            logits.reshape(B * T, V),
+            targets.reshape(B * T)
         )
 
 
@@ -74,8 +88,10 @@ class Trainer:
 
             self.optimizer.zero_grad()
 
-            logits = self.model(x)
-            loss = self.compute_loss(logits, y)
+
+            with torch.autocast(device_type=self.device, dtype=torch.float16, enabled=self.device=="mps"):
+                logits = self.model(x)
+                loss = self.compute_loss(logits, y)
 
             loss.backward()
 
@@ -85,7 +101,9 @@ class Trainer:
             )
 
             self.optimizer.step()
-            self.scheduler.step()
+
+            self.global_step += 1
+            self.update_learning_rate()
 
             total_loss += loss.item()
 
@@ -114,15 +132,27 @@ class Trainer:
                 total_loss += loss.item()
 
         avg_loss = total_loss / len(loader)
-        perplexity = math.exp(avg_loss)
+        perplexity = float(torch.exp(torch.tensor(avg_loss)))
 
         return avg_loss, perplexity
 
 
     def save_checkpoint(self, name):
         path = os.path.join(self.save_dir, name)
-        torch.save(self.model.state_dict(), path)
+        torch.save({
+            "model_state_dict": self.model.state_dict(),
+            "optimizer_state_dict": self.optimizer.state_dict(),
+            "global_step": self.global_step
+        }, path)
         print(f"Model kaydedildi: {path}")
+
+
+    def load_checkpoint(self, path):
+        checkpoint = torch.load(path, map_location=self.device)
+        self.model.load_state_dict(checkpoint["model_state_dict"])
+        self.optimizer.load_state_dict(checkpoint["optimizer_state_dict"])
+        self.global_step = checkpoint["global_step"]
+        print("Checkpoint yüklendi.")
 
 
     def train(self):
@@ -139,12 +169,20 @@ class Trainer:
             print(f"Val Loss: {val_loss:.4f}")
             print(f"Val Perplexity: {val_ppl:.2f}\n")
 
-            # Best model kaydet
+            # Best model
             if val_loss < self.best_val_loss:
                 self.best_val_loss = val_loss
                 self.save_checkpoint("best_model.pt")
+                self.early_stop_counter = 0
+            else:
+                self.early_stop_counter += 1
 
-        # Final test evaluation
+            # Early stopping
+            if self.early_stop_counter >= self.early_stopping_patience:
+                print("Early stopping tetiklendi.")
+                break
+
+        # Final test
         test_loss, test_ppl = self.evaluate(self.test_loader)
 
         print("\nFinal Test Sonuçları")
