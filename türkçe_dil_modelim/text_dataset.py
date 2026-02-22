@@ -13,4 +13,16 @@ class TextDataset(Dataset):
         self.stride= stride
 
 
-        self
+        self.length= (len(self.data)-context_length)// stride
+
+    def __len__(self):
+        return self.length
+    
+    def __getitem__(self, idx):
+        start= idx*self.stride
+        end= start + self.context_length
+
+        x= self.data[start:end]
+        y= self.data[start+1:end+1]
+
+        return x, y
