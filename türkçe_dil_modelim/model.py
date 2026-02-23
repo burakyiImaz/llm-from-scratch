@@ -41,14 +41,13 @@ class Model(nn.Module):
         self.to(device)
 
     def forward(self, x):
-        # ---- shape güvenliği ----
+
         if x.dim() == 1:
             x = x.unsqueeze(0)
 
-        # ---- dtype güvenliği ----
         x = x.long().to(self.device)
 
-        # ---- embedding index güvenliği (debug amaçlı) ----
+
         if torch.any(x >= self.embedding.num_embeddings):
             raise ValueError(
                 f"Token id vocab dışı! "
