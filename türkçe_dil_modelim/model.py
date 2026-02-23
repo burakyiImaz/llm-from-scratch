@@ -88,38 +88,45 @@ class Model(nn.Module):
         top_k=None,
         top_p=1.0
     ):
+        self.eval()
+
+        if isinstance(input_ids, list):
+            input_ids = torch.tensor(input_ids, dtype=torch.long)
 
         if input_ids.dim() == 1:
             input_ids = input_ids.unsqueeze(0)
 
-        tokens = input_ids[0].tolist()
+        input_ids = input_ids.to(self.device)
 
-        for _ in range(max_new_tokens):
+        with torch.no_grad():
 
-            logits = self.forward(
-                torch.tensor([tokens], device=self.device)
-            )
+            for _ in range(max_new_tokens):
 
-            last_logits = logits[0, -1, :]
+                if input_ids.size(1) > 24:
+                    input_ids = input_ids[:, -24:]
 
-            # temperature
-            if temperature > 0:
-                last_logits = last_logits / temperature
+                logits = self.forward(input_ids)
 
-            # top_k
-            if top_k is not None:
-                values, indices = torch.topk(last_logits, top_k)
-                filtered = torch.full_like(last_logits, -float("inf"))
-                filtered.scatter_(0, indices, values)
-                last_logits = filtered
+                last_logits = logits[:, -1, :].squeeze(0)
 
-            # top_p
-            if 0 < top_p < 1:
-                last_logits = self.top_p_filtering(last_logits, top_p)
+                if temperature > 0:
+                    last_logits = last_logits / temperature
 
-            probs = torch.softmax(last_logits, dim=-1)
-            next_token = torch.multinomial(probs, num_samples=1).item()
+                if top_k is not None:
+                    values, indices = torch.topk(last_logits, top_k)
+                    filtered = torch.full_like(last_logits, -float("inf"))
+                    filtered.scatter_(0, indices, values)
+                    last_logits = filtered
 
-            tokens.append(next_token)
+                if 0 < top_p < 1:
+                    last_logits = self.top_p_filtering(last_logits, top_p)
 
-        return torch.tensor(tokens)
+                probs = torch.softmax(last_logits, dim=-1)
+
+                next_token = torch.multinomial(probs, num_samples=1)
+
+                input_ids = torch.cat(
+                    [input_ids, next_token.unsqueeze(0)], dim=1
+                )
+
+        return input_ids.squeeze(0)
