@@ -248,3 +248,23 @@ class Trainer:
         print(f"Test Perplexity: {test_ppl:.2f}")
 
         self.save_checkpoint("last_model.pt", epoch)
+
+        """
+        
+        LLM'lerde kabaca şu ilişki gözlenir:
+            Loss≈a∗N^(−α)+b
+
+        Burada:
+
+        N = model parametre sayısı
+
+        α ≈ 0.05 – 0.1 civarı
+
+        Yani:
+        Parametre artışı → loss düşüşü var
+        Ama diminishing returns var.
+
+        Ama daha kritik olan şu:
+
+        Model büyüdükçe data da büyümeli.
+                """
