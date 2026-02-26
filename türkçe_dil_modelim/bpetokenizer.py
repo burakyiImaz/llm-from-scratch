@@ -5,19 +5,23 @@ from collections import Counter, defaultdict
 
 
 class TurkishBPETokenizer:
-    def __init__(self, vocab_size=32000):
+    def __init__(self, vocab_size=24000):
         self.vocab_size = vocab_size
         self.vocab = {}
         self.reverse_vocab = {}
         self.merges = []
+        self.merge_ranks = {}   # encode hızlandırma için
         self.special_tokens = ["<pad>", "<unk>", "<bos>", "<eos>"]
+
+        self.pattern = re.compile(r"\w+|[^\w\s]", re.UNICODE)
+
 
 
 
     def normalize(self, text):
         text = unicodedata.normalize("NFKC", text)
-        text = text.lower()
-        return text
+        return text.lower()
+
 
 
     def train(self, file_path):
@@ -27,18 +31,16 @@ class TurkishBPETokenizer:
             text = f.read()
 
         text = self.normalize(text)
-        words = re.findall(r"\S+", text)
+        words = self.pattern.findall(text)
 
-        corpus = [list(word) + ["</w>"] for word in words]
-        vocab = Counter(tuple(word) for word in corpus)
+        corpus = [tuple(list(word) + ["</w>"]) for word in words]
+        vocab = Counter(corpus)
 
         print("BPE eğitimi başlıyor...")
 
-        # başlangıç token seti (karakterler)
         tokens = set()
         for word in vocab:
-            for t in word:
-                tokens.add(t)
+            tokens.update(word)
 
         base_vocab_size = len(tokens) + len(self.special_tokens)
         merges_needed = self.vocab_size - base_vocab_size
@@ -61,6 +63,7 @@ class TurkishBPETokenizer:
                 print(f"Merge: {i+1}/{merges_needed}")
 
         self.build_vocab(vocab)
+        self.build_merge_ranks()
 
         print("Eğitim tamamlandı.")
         print("Toplam vocab:", len(self.vocab))
@@ -68,28 +71,39 @@ class TurkishBPETokenizer:
 
     def get_stats(self, vocab):
         pairs = defaultdict(int)
+
         for word, freq in vocab.items():
-            for i in range(len(word) - 1):
-                pairs[(word[i], word[i+1])] += freq
+            prev_char = word[0]
+            for char in word[1:]:
+                pairs[(prev_char, char)] += freq
+                prev_char = char
+
         return pairs
+
 
 
     def merge_vocab(self, pair, vocab):
         new_vocab = {}
+
+        bigram = pair
+        replacement = "".join(pair)
 
         for word, freq in vocab.items():
             new_word = []
             i = 0
 
             while i < len(word):
-                if i < len(word) - 1 and (word[i], word[i+1]) == pair:
-                    new_word.append(word[i] + word[i+1])
+                if i < len(word) - 1 and (word[i], word[i+1]) == bigram:
+                    new_word.append(replacement)
                     i += 2
                 else:
                     new_word.append(word[i])
                     i += 1
 
-            new_vocab[tuple(new_word)] = freq
+            new_word = tuple(new_word)
+
+            # BUG FIX: freq overwrite engellendi
+            new_vocab[new_word] = new_vocab.get(new_word, 0) + freq
 
         return new_vocab
 
@@ -97,10 +111,10 @@ class TurkishBPETokenizer:
     def build_vocab(self, vocab):
         tokens = set()
         for word in vocab:
-            for token in word:
-                tokens.add(token)
+            tokens.update(word)
 
         all_tokens = self.special_tokens + sorted(tokens)
+
         self.vocab = {tok: i for i, tok in enumerate(all_tokens)}
         self.reverse_vocab = {i: tok for tok, i in self.vocab.items()}
 
@@ -110,23 +124,39 @@ class TurkishBPETokenizer:
         self.eos_id = self.vocab["<eos>"]
 
 
+    def build_merge_ranks(self):
+        self.merge_ranks = {pair: i for i, pair in enumerate(self.merges)}
+
 
     def encode(self, text, add_special_tokens=False):
         text = self.normalize(text)
-        words = re.findall(r"\S+", text)
+        words = self.pattern.findall(text)
 
         output_tokens = []
 
         for word in words:
             word_tokens = list(word) + ["</w>"]
 
-            for pair in self.merges:
-                i = 0
-                while i < len(word_tokens) - 1:
-                    if (word_tokens[i], word_tokens[i+1]) == pair:
-                        word_tokens[i:i+2] = ["".join(pair)]
-                    else:
-                        i += 1
+            while True:
+                pairs = [(word_tokens[i], word_tokens[i+1])
+                         for i in range(len(word_tokens)-1)]
+
+                ranked = [
+                    (self.merge_ranks.get(pair, float("inf")), pair, i)
+                    for i, pair in enumerate(pairs)
+                ]
+
+                if not ranked:
+                    break
+
+                best_rank, best_pair, best_index = min(ranked)
+
+                if best_rank == float("inf"):
+                    break
+
+                word_tokens[best_index:best_index+2] = [
+                    "".join(best_pair)
+                ]
 
             output_tokens.extend(word_tokens)
 
@@ -138,10 +168,9 @@ class TurkishBPETokenizer:
         return ids
 
 
-
     def decode(self, ids, skip_special_tokens=True):
-
         tokens = []
+
         for i in ids:
             tok = self.reverse_vocab.get(i, "<unk>")
             if skip_special_tokens and tok in self.special_tokens:
@@ -154,9 +183,7 @@ class TurkishBPETokenizer:
         return text.strip()
 
 
-
     def save_tokenizer_json(self, path):
-
         tokenizer_json = {
             "version": "1.0",
             "model": {
@@ -181,14 +208,15 @@ class TurkishBPETokenizer:
 
         print("tokenizer.json oluşturuldu.")
 
-    def load_tokenizer_json(self,path):
-
-        with open(path,"r",encoding="utf-8") as f:
-            data= json.load(f)
+    def load_tokenizer_json(self, path):
+        with open(path, "r", encoding="utf-8") as f:
+            data = json.load(f)
 
         self.vocab = data["model"]["vocab"]
         self.reverse_vocab = {int(v): k for k, v in self.vocab.items()}
         self.merges = [tuple(m.split()) for m in data["model"]["merges"]]
+
+        self.build_merge_ranks()
 
         self.unk_id = self.vocab["<unk>"]
         self.pad_id = self.vocab["<pad>"]
