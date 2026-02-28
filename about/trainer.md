@@ -187,8 +187,6 @@ Açıklama:
 
 - $\mathcal{L}_{\mathrm{val}, t}$ → t. epoch’daki validation loss  
 - $\mathcal{L}_{\mathrm{best\_val}}$ → şimdiye kadar görülen en iyi validation loss  
-- `\Rightarrow` → matematiksel "sonuç olarak" ifadesi  
-- `\text{stop training}` → açıklayıcı metin, KaTeX/GitHub uyumlu
 ---
 
 # 11. Scaling Law
