@@ -175,15 +175,13 @@ g \leftarrow \frac{g}{s}
 $$
 
 ---
-
 # 10. Early Stopping
 
 Eğer p epoch boyunca validation loss iyileşmezse:
 
 $$
-\text{val\_loss}_t \ge \text{best\_val\_loss} \implies \text{training stop}
+\text{val\_loss}_t \ge \text{best\_val\_loss} \;\; \Rightarrow \;\; \text{training stop}
 $$
-
 ---
 
 # 11. Scaling Law
