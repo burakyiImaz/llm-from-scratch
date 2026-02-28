@@ -180,8 +180,15 @@ $$
 Eğer $p$ epoch boyunca validation loss iyileşmezse:
 
 $$
-\mathcal{L}_{\mathrm{val}, t} \ge \mathcal{L}_{\mathrm{best\_val}} \;\;\Rightarrow\;\; \text{training stop}
+\mathcal{L}_{\mathrm{val}, t} \ge \mathcal{L}_{\mathrm{best\_val}} \;\;\Rightarrow\;\; \text{stop training}
 $$
+
+Açıklama:
+
+- $\mathcal{L}_{\mathrm{val}, t}$ → t. epoch’daki validation loss  
+- $\mathcal{L}_{\mathrm{best\_val}}$ → şimdiye kadar görülen en iyi validation loss  
+- `\Rightarrow` → matematiksel "sonuç olarak" ifadesi  
+- `\text{stop training}` → açıklayıcı metin, KaTeX/GitHub uyumlu
 ---
 
 # 11. Scaling Law
