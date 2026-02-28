@@ -1,66 +1,54 @@
 
 ---
 
-# LLM Trainer – Matematiksel ve Teknik Açıklama
+# LLM Trainer – Matematiksel ve Algoritmik Açıklama
 
-Bu proje PyTorch tabanlı bir Large Language Model (LLM) eğitim altyapısıdır. Trainer sınıfı aşağıdaki mekanizmaları içerir:
+Bu doküman, PyTorch tabanlı LLM Trainer sınıfının matematiksel temellerini açıklar.
+Bu README yalnızca eğitim mekanizmasına (Trainer) odaklanmaktadır.
 
-* AdamW optimizer
-* Warmup + Cosine Annealing learning rate schedule
-* Gradient clipping
-* Gradient accumulation
-* Automatic Mixed Precision (AMP)
-* Early stopping
-* Perplexity hesaplama
-* Checkpoint kaydetme ve yükleme
-
-Bu doküman, sistemin matematiksel temelini detaylı olarak açıklar.
+Model mimarisi, kernel optimizasyonu ve ileri seviye hesaplama iyileştirmeleri ilerleyen aşamalarda ayrı dokümante edilecektir.
 
 ---
 
-# 1. Amaç Fonksiyonu: Next Token Prediction
+# 1. Problem Tanımı: Otoregresif Dil Modelleme
 
-Bir dil modeli verilen bir token dizisi için koşullu olasılığı öğrenir.
-
-Verilen dizi:
+Bir dil modeli aşağıdaki diziyi gözlemler:
 
 $$
-x = (x_1, x_2, ..., x_T)
+x = (x_1, x_2, \ldots, x_T)
 $$
 
-Modelin amacı:
+Model zincir kuralını kullanarak tüm dizinin olasılığını şöyle ayrıştırır:
 
 $$
-P(x_t \mid x_{<t})
+P(x) = \prod_{t=1}^{T} P(x_t \mid x_{<t})
 $$
 
-olasılığını modellemektir.
+Burada:
 
-Toplam log-likelihood:
+$$
+x_{<t} = (x_1, \ldots, x_{t-1})
+$$
+
+Trainer’ın optimize ettiği amaç, bu olasılığı maksimize etmektir.
+
+---
+
+# 2. Maksimum Olabilirlik (MLE)
+
+Log alırsak:
 
 $$
 \log P(x) = \sum_{t=1}^{T} \log P(x_t \mid x_{<t})
 $$
 
-Model negatif log-likelihood’i minimize eder.
-
----
-
-## 1.1 Cross Entropy Loss
-
-Trainer’da kullanılan kayıp fonksiyonu:
-
-```
-nn.CrossEntropyLoss()
-```
-
-Matematiksel olarak:
+Negatif log-likelihood minimize edilir:
 
 $$
 \mathcal{L} = - \sum_{t=1}^{T} \log P_\theta(x_t \mid x_{<t})
 $$
 
-Batch boyutu dahil edildiğinde:
+Batch boyutu dahil edilirse:
 
 $$
 \mathcal{L} =
@@ -71,76 +59,130 @@ $$
   \log P_\theta(x_{b,t})
   $$
 
-Bu Maximum Likelihood Estimation (MLE) optimizasyonudur.
+Bu doğrudan Cross Entropy loss’tur.
 
 ---
 
-# 2. Perplexity
+# 3. Cross Entropy’nin Softmax ile İlişkisi
 
-Perplexity şu şekilde hesaplanır:
+Model logits üretir:
 
 $$
-\text{Perplexity} = e^{\mathcal{L}}
+z_{t,i}
 $$
 
-Yorum:
+Softmax:
 
-* Perplexity = 1 → model mükemmel
-* Düşük perplexity → daha iyi model
-* Yüksek perplexity → daha fazla belirsizlik
+$$
+P_\theta(x_t = i) =
+\frac{e^{z_{t,i}}}
+{\sum_{j=1}^{V} e^{z_{t,j}}}
+$$
+
+Burada:
+
+* $V$ = vocabulary size
+
+Cross entropy tek token için:
+
+$$
+\ell_t = - \log P_\theta(x_t)
+$$
+
+Batch ve zaman boyunca ortalama:
+
+$$
+\mathcal{L} =
+
+* \frac{1}{B T}
+  \sum_{b,t}
+  \log
+  \frac{
+  e^{z_{b,t,y_{b,t}}}
+  }{
+  \sum_{j=1}^{V} e^{z_{b,t,j}}
+  }
+  $$
 
 ---
 
-# 3. Learning Rate Schedule
+# 4. Perplexity
 
-## 3.1 Warmup Fazı
+Perplexity şu şekilde tanımlanır:
+
+$$
+\text{PPL} = \exp(\mathcal{L})
+$$
+
+Bu şu anlama gelir:
+
+Eğer model her token için eşit olasılık dağıtsa:
+
+$$
+P = \frac{1}{K}
+$$
+
+o zaman:
+
+$$
+\text{PPL} = K
+$$
+
+Yani perplexity modelin ortalama belirsizlik derecesidir.
+
+---
+
+# 5. Learning Rate Schedule
+
+Trainer iki aşamalı schedule kullanır.
+
+## 5.1 Warmup
 
 İlk $W$ adımda learning rate lineer artar:
 
 $$
-\text{lr}_t =
-\text{base_lr} \cdot \frac{t}{W}
+\text{lr}(t) =
+\text{lr}_{base}
+\cdot
+\frac{t}{W}
 $$
 
-Amaç:
-
-* Başlangıç instabilitesini azaltmak
-* Büyük gradient patlamasını önlemek
+Bu sayede başlangıçta ani büyük parametre sıçramaları engellenir.
 
 ---
 
-## 3.2 Cosine Annealing
+## 5.2 Cosine Annealing
 
 Warmup sonrası:
 
 $$
-\text{progress} =
-\frac{t - W}{T - W}
+p =
+\frac{t - W}
+{T - W}
 $$
 
 Learning rate:
 
 $$
-\text{lr}_t =
+\text{lr}(t) =
 \frac{1}{2}
-\text{base_lr}
+\text{lr}_{base}
 \left(
-1 + \cos(\pi \cdot \text{progress})
+1 + \cos(\pi p)
 \right)
 $$
 
-Bu schedule:
+Bu fonksiyon:
 
-* Eğitimin başında büyük adımlar
-* Sonda küçük ve hassas güncellemeler
+* Başta yüksek
+* Ortada yumuşak düşüş
+* Sonda küçük adımlar
 
-sağlar.
+üretir.
 
 ---
 
-# 4. AdamW Optimizasyonu
-
-Adam algoritması moment tahmini yapar.
+# 6. AdamW Optimizasyonu
 
 Gradient:
 
@@ -160,7 +202,7 @@ $$
 v_t = \beta_2 v_{t-1} + (1 - \beta_2) g_t^2
 $$
 
-Bias correction:
+Bias düzeltmesi:
 
 $$
 \hat{m}_t = \frac{m_t}{1 - \beta_1^t}
@@ -175,54 +217,67 @@ Parametre güncellemesi:
 $$
 \theta_{t+1} =
 \theta_t -
-\eta \frac{\hat{m}_t}{\sqrt{\hat{v}_t} + \epsilon}
+\eta
+\frac{\hat{m}_t}
+{\sqrt{\hat{v}_t} + \epsilon}
 $$
 
 AdamW’de weight decay ayrı uygulanır:
 
 $$
-\theta_{t+1} =
-\theta_{t+1} -
-\eta \lambda \theta_t
+\theta_{t+1}
+============
+
+## \theta_{t+1}
+
+\eta
+\lambda
+\theta_t
 $$
 
-Bu klasik L2 regularization’dan farklıdır.
+Bu klasik L2 regularization’dan matematiksel olarak farklıdır çünkü decay gradient’e değil doğrudan parametreye uygulanır.
 
 ---
 
-# 5. Gradient Clipping
+# 7. Gradient Clipping
 
-Eğer gradient normu eşikten büyükse:
+Gradient normu:
 
 $$
-|g|_2 > c
+| g |_2 =
+\sqrt{
+\sum_i g_i^2
+}
 $$
 
-yeniden ölçeklenir:
+Eğer:
+
+$$
+| g |_2 > c
+$$
+
+ise yeniden ölçeklenir:
 
 $$
 g \leftarrow
-g \cdot \frac{c}{|g|_2}
+g
+\cdot
+\frac{c}{| g |_2}
 $$
 
-Amaç:
-
-* Gradient explosion önlemek
-* Eğitim stabilitesini artırmak
+Bu, özellikle Transformer mimarilerinde gradient explosion’ı engeller.
 
 ---
 
-# 6. Gradient Accumulation
+# 8. Gradient Accumulation
 
-Gerçek batch size:
+Memory kısıtında büyük batch simülasyonu yapılır.
+
+Toplam effective batch:
 
 $$
-\text{effective batch size} =
-\text{batch size} \times
-k
+B_{eff} = B \times k
 $$
-
-Burada $k$ accumulation step sayısıdır.
 
 Loss şu şekilde ölçeklenir:
 
@@ -231,86 +286,108 @@ $$
 \frac{\mathcal{L}}{k}
 $$
 
-Bu, büyük batch etkisini bellek sınırı olmadan sağlar.
+Backprop sonrası k adımda bir optimizer step yapılır.
 
 ---
 
-# 7. Automatic Mixed Precision (AMP)
+# 9. Automatic Mixed Precision (AMP)
 
-FP16 ve FP32 birlikte kullanılır.
-
-Loss ölçeklenir:
+FP16 kullanımı için loss ölçeklenir:
 
 $$
 \mathcal{L}_{scaled} =
-\mathcal{L} \cdot s
+\mathcal{L}
+\cdot
+s
 $$
 
-Backprop sonrası:
+Backward sonrası:
 
 $$
-g \leftarrow \frac{g}{s}
+g \leftarrow
+\frac{g}{s}
 $$
 
-Overflow varsa ölçek otomatik düşürülür.
+Eğer overflow oluşursa ölçek faktörü otomatik düşürülür.
+
+Bu:
+
+* Daha az bellek
+* Daha hızlı eğitim
+
+sağlar.
 
 ---
 
-# 8. Early Stopping
+# 10. Early Stopping
 
-Eğer validation loss $p$ epoch boyunca iyileşmezse:
+Eğer $p$ epoch boyunca:
 
 $$
-\text{val_loss}_t \ge \text{best_val_loss}
+\text{val_loss}_{t}
+\ge
+\text{best_val_loss}
 $$
 
-eğitim durdurulur.
+durumu devam ederse eğitim sonlandırılır.
 
-Bu overfitting’i önler.
+Amaç:
+
+* Overfitting önlemek
+* Hesaplama maliyetini azaltmak
 
 ---
 
-# 9. LLM Scaling Law
+# 11. Scaling Law
 
-Literatürde gözlenen yaklaşık ilişki:
+Literatürde yaklaşık ilişki:
 
 $$
-\mathcal{L}(N) =
-a N^{-\alpha} + b
+\mathcal{L}(N)
+==============
+
+a N^{-\alpha}
++
+b
 $$
 
 Burada:
 
 * $N$ parametre sayısı
-* $\alpha \approx 0.05 - 0.1$
+* $\alpha$ yaklaşık 0.05 ile 0.1 arası
 
-Bu şunu gösterir:
+Bu ilişki şunu gösterir:
 
-* Parametre artışı → loss azalır
-* Ancak diminishing returns vardır
+Parametre artışı loss’u düşürür fakat getirisi giderek azalır.
 
-Ayrıca model büyüdükçe veri de büyümelidir.
+Veri miktarı da kritik öneme sahiptir.
 
 Yaklaşık optimal oran:
 
 $$
-\text{token sayısı} \approx 10 - 20 \times \text{parametre sayısı}
+\text{token sayısı}
+\approx
+10
+\text{ ile }
+20
+\times
+\text{parametre sayısı}
 $$
 
 ---
 
-# 10. Eğitim Akışı
+# 12. Gelecek Çalışmalar
 
-1. Forward pass
-2. Cross entropy hesaplama
-3. Gradient scaling
-4. Backpropagation
-5. Gradient clipping
-6. Optimizer step
-7. Learning rate update
-8. Validation
-9. Early stopping kontrolü
-10. Checkpoint kaydetme
+Bu README yalnızca Trainer mekanizmasını kapsamaktadır.
+
+İlerleyen aşamalarda:
+
+* Custom CUDA kernel optimizasyonu
+* Memory efficient attention
+* Fused optimizer step
+* Kernel-level hız iyileştirmeleri
+* Compute-optimal scaling stratejileri
+
+ayrı ve detaylı şekilde dokümante edilecektir.
 
 ---
-
