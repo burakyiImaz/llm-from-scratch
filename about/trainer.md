@@ -1,7 +1,7 @@
 
 ---
 
-# 🧠 LLM Trainer – Matematiksel Açıklamalı Eğitim Altyapısı
+# LLM Trainer – Matematiksel Açıklamalı Eğitim Altyapısı
 
 Bu proje, PyTorch tabanlı bir **Large Language Model (LLM)** eğitim altyapısıdır.
 Trainer sınıfı aşağıdaki gelişmiş özellikleri içerir:
@@ -19,7 +19,7 @@ Bu dokümanda sistemin **matematiksel temelleri detaylı şekilde açıklanmakta
 
 ---
 
-# 1️⃣ Modelin Optimize Ettiği Amaç Fonksiyonu
+# 1️ Modelin Optimize Ettiği Amaç Fonksiyonu
 
 LLM'ler temel olarak **next-token prediction** problemi çözer.
 
@@ -70,7 +70,7 @@ yapmaktadır.
 
 ---
 
-# 2️⃣ Perplexity
+# 2️ Perplexity
 
 Evaluation sırasında hesaplanan metrik:
 
@@ -95,13 +95,13 @@ Perplexity şunu ifade eder:
 
 ---
 
-# 3️⃣ Learning Rate Schedule
+# 3️ Learning Rate Schedule
 
 Trainer'da iki aşamalı schedule vardır:
 
 ---
 
-## 🔥 Warmup Phase
+##  Warmup Phase
 
 İlk ( W ) adımda learning rate lineer artar:
 
@@ -143,7 +143,7 @@ Bu:
 
 ---
 
-# 4️⃣ AdamW Optimizasyonu
+# 4️ AdamW Optimizasyonu
 
 Kullanılan optimizer:
 
@@ -191,7 +191,7 @@ Bu klasik L2 regularization’dan farklıdır.
 
 ---
 
-# 5️⃣ Gradient Clipping
+# 5️ Gradient Clipping
 
 Kod:
 
@@ -219,7 +219,7 @@ Amaç:
 
 ---
 
-# 6️⃣ Gradient Accumulation
+# 6️ Gradient Accumulation
 
 Batch çok büyük olduğunda memory yetmeyebilir.
 
@@ -247,7 +247,7 @@ Bu sayede:
 
 ---
 
-# 7️⃣ Automatic Mixed Precision (AMP)
+# 7️ Automatic Mixed Precision (AMP)
 
 FP32 yerine:
 
@@ -275,7 +275,7 @@ Overflow varsa scaler otomatik düşürülür.
 
 ---
 
-# 8️⃣ Early Stopping
+# 8️ Early Stopping
 
 Eğer:
 
@@ -298,7 +298,7 @@ Amaç:
 
 ---
 
-# 9️⃣ Scaling Law (LLM'lerde Temel İlişki)
+# 9️ Scaling Law (LLM'lerde Temel İlişki)
 
 LLM literatüründe yaklaşık şu ilişki gözlenir:
 
@@ -329,7 +329,7 @@ Genelde önerilen oran:
 
 ---
 
-# 🔟 Genel Eğitim Akışı
+# 10 Genel Eğitim Akışı
 
 1. Forward pass
 2. Cross entropy hesapla
@@ -344,7 +344,7 @@ Genelde önerilen oran:
 
 ---
 
-# 🚀 Sonuç
+#  Sonuç
 
 Bu Trainer:
 
