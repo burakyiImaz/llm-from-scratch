@@ -180,7 +180,7 @@ $$
 Eğer p epoch boyunca validation loss iyileşmezse:
 
 $$
-\text{val\_loss}_t \ge \text{best\_val\_loss} \;\; \Rightarrow \;\; \text{training stop}
+\mathrm{val\_loss}_t \ge \mathrm{best\_val\_loss} \;\Rightarrow\; \text{training stop}
 $$
 ---
 
