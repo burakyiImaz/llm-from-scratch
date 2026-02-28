@@ -1,10 +1,9 @@
 
 ---
 
-# LLM Trainer – Matematiksel Açıklamalı Eğitim Altyapısı
+# LLM Trainer – Matematiksel ve Teknik Açıklama
 
-Bu proje, PyTorch tabanlı bir **Large Language Model (LLM)** eğitim altyapısıdır.
-Trainer sınıfı aşağıdaki gelişmiş özellikleri içerir:
+Bu proje PyTorch tabanlı bir Large Language Model (LLM) eğitim altyapısıdır. Trainer sınıfı aşağıdaki mekanizmaları içerir:
 
 * AdamW optimizer
 * Warmup + Cosine Annealing learning rate schedule
@@ -13,326 +12,297 @@ Trainer sınıfı aşağıdaki gelişmiş özellikleri içerir:
 * Automatic Mixed Precision (AMP)
 * Early stopping
 * Perplexity hesaplama
-* Checkpoint kaydetme / yükleme
+* Checkpoint kaydetme ve yükleme
 
-Bu dokümanda sistemin **matematiksel temelleri detaylı şekilde açıklanmaktadır.**
+Bu doküman, sistemin matematiksel temelini detaylı olarak açıklar.
 
 ---
 
-# 1️ Modelin Optimize Ettiği Amaç Fonksiyonu
+# 1. Amaç Fonksiyonu: Next Token Prediction
 
-LLM'ler temel olarak **next-token prediction** problemi çözer.
+Bir dil modeli verilen bir token dizisi için koşullu olasılığı öğrenir.
 
-Verilen bir token dizisi:
+Verilen dizi:
 
-[
+$$
 x = (x_1, x_2, ..., x_T)
-]
+$$
 
 Modelin amacı:
 
-[
+$$
 P(x_t \mid x_{<t})
-]
+$$
 
 olasılığını modellemektir.
 
+Toplam log-likelihood:
+
+$$
+\log P(x) = \sum_{t=1}^{T} \log P(x_t \mid x_{<t})
+$$
+
+Model negatif log-likelihood’i minimize eder.
+
 ---
 
-## Cross Entropy Loss
+## 1.1 Cross Entropy Loss
 
-Trainer'da kullanılan loss:
+Trainer’da kullanılan kayıp fonksiyonu:
 
-```python
-self.loss_fn = nn.CrossEntropyLoss()
+```
+nn.CrossEntropyLoss()
 ```
 
 Matematiksel olarak:
 
-[
+$$
 \mathcal{L} = - \sum_{t=1}^{T} \log P_\theta(x_t \mid x_{<t})
-]
+$$
 
-Batch boyutunu da dahil edersek:
+Batch boyutu dahil edildiğinde:
 
-[
-\mathcal{L} = - \frac{1}{B T}
-\sum_{b=1}^{B} \sum_{t=1}^{T}
-\log P_\theta(x_{b,t})
-]
+$$
+\mathcal{L} =
 
-Bu loss:
+* \frac{1}{B T}
+  \sum_{b=1}^{B}
+  \sum_{t=1}^{T}
+  \log P_\theta(x_{b,t})
+  $$
 
-* Log-likelihood maximization
-* Maximum likelihood estimation (MLE)
-
-yapmaktadır.
+Bu Maximum Likelihood Estimation (MLE) optimizasyonudur.
 
 ---
 
-# 2️ Perplexity
+# 2. Perplexity
 
-Evaluation sırasında hesaplanan metrik:
+Perplexity şu şekilde hesaplanır:
 
-```python
-perplexity = math.exp(avg_loss)
-```
-
-Matematiksel olarak:
-
-[
+$$
 \text{Perplexity} = e^{\mathcal{L}}
-]
+$$
 
-Perplexity şunu ifade eder:
+Yorum:
 
-> Model ortalama olarak bir token için kaç olası seçenek arasında kararsız kalıyor?
-
-Örneğin:
-
-* PPL = 10 → model ortalama 10 seçenek arasında kararsız
-* PPL = 2 → çok iyi model
+* Perplexity = 1 → model mükemmel
+* Düşük perplexity → daha iyi model
+* Yüksek perplexity → daha fazla belirsizlik
 
 ---
 
-# 3️ Learning Rate Schedule
+# 3. Learning Rate Schedule
 
-Trainer'da iki aşamalı schedule vardır:
+## 3.1 Warmup Fazı
 
----
+İlk $W$ adımda learning rate lineer artar:
 
-##  Warmup Phase
-
-İlk ( W ) adımda learning rate lineer artar:
-
-[
+$$
 \text{lr}_t =
-\text{base_lr} \cdot
-\frac{t}{W}
-]
+\text{base_lr} \cdot \frac{t}{W}
+$$
 
 Amaç:
 
-* Başlangıçta büyük gradient patlamasını önlemek
-* Stabil başlangıç sağlamak
+* Başlangıç instabilitesini azaltmak
+* Büyük gradient patlamasını önlemek
 
 ---
 
-## 🌊 Cosine Annealing Phase
+## 3.2 Cosine Annealing
 
 Warmup sonrası:
 
-[
+$$
 \text{progress} =
 \frac{t - W}{T - W}
-]
+$$
 
-[
+Learning rate:
+
+$$
 \text{lr}_t =
 \frac{1}{2}
 \text{base_lr}
 \left(
 1 + \cos(\pi \cdot \text{progress})
 \right)
-]
+$$
 
-Bu:
+Bu schedule:
 
-* Learning rate'i yavaşça azaltır
-* Eğitimin sonuna doğru ince ayar yapar
+* Eğitimin başında büyük adımlar
+* Sonda küçük ve hassas güncellemeler
+
+sağlar.
 
 ---
 
-# 4️ AdamW Optimizasyonu
+# 4. AdamW Optimizasyonu
 
-Kullanılan optimizer:
+Adam algoritması moment tahmini yapar.
 
-```python
-optim.AdamW(...)
-```
+Gradient:
 
-Adam güncellemesi:
+$$
+g_t = \nabla_\theta \mathcal{L}
+$$
 
-[
+Birinci moment:
+
+$$
 m_t = \beta_1 m_{t-1} + (1 - \beta_1) g_t
-]
+$$
 
-[
+İkinci moment:
+
+$$
 v_t = \beta_2 v_{t-1} + (1 - \beta_2) g_t^2
-]
+$$
 
 Bias correction:
 
-[
+$$
 \hat{m}_t = \frac{m_t}{1 - \beta_1^t}
-]
+$$
 
-[
+$$
 \hat{v}_t = \frac{v_t}{1 - \beta_2^t}
-]
+$$
 
 Parametre güncellemesi:
 
-[
+$$
 \theta_{t+1} =
 \theta_t -
 \eta \frac{\hat{m}_t}{\sqrt{\hat{v}_t} + \epsilon}
-]
+$$
 
-AdamW'de weight decay ayrı uygulanır:
+AdamW’de weight decay ayrı uygulanır:
 
-[
+$$
 \theta_{t+1} =
 \theta_{t+1} -
 \eta \lambda \theta_t
-]
+$$
 
 Bu klasik L2 regularization’dan farklıdır.
 
 ---
 
-# 5️ Gradient Clipping
+# 5. Gradient Clipping
 
-Kod:
+Eğer gradient normu eşikten büyükse:
 
-```python
-torch.nn.utils.clip_grad_norm_(...)
-```
-
-Eğer:
-
-[
+$$
 |g|_2 > c
-]
+$$
 
-ise:
+yeniden ölçeklenir:
 
-[
+$$
 g \leftarrow
 g \cdot \frac{c}{|g|_2}
-]
+$$
 
 Amaç:
 
 * Gradient explosion önlemek
-* Stabil training
+* Eğitim stabilitesini artırmak
 
 ---
 
-# 6️ Gradient Accumulation
+# 6. Gradient Accumulation
 
-Batch çok büyük olduğunda memory yetmeyebilir.
+Gerçek batch size:
 
-Trainer:
-
-[
+$$
 \text{effective batch size} =
 \text{batch size} \times
-\text{gradient accumulation steps}
-]
+k
+$$
+
+Burada $k$ accumulation step sayısıdır.
 
 Loss şu şekilde ölçeklenir:
 
-[
+$$
 \mathcal{L}_{scaled} =
 \frac{\mathcal{L}}{k}
-]
+$$
 
-k = accumulation steps
-
-Bu sayede:
-
-* Daha büyük batch etkisi
-* Daha stabil gradient
+Bu, büyük batch etkisini bellek sınırı olmadan sağlar.
 
 ---
 
-# 7️ Automatic Mixed Precision (AMP)
+# 7. Automatic Mixed Precision (AMP)
 
-FP32 yerine:
+FP16 ve FP32 birlikte kullanılır.
 
-* FP16 + FP32 karışık kullanılır
+Loss ölçeklenir:
 
-Bu:
-
-* Bellek tüketimini azaltır
-* Eğitimi hızlandırır
-
-Gradient scaler:
-
-[
+$$
 \mathcal{L}_{scaled} =
 \mathcal{L} \cdot s
-]
+$$
 
 Backprop sonrası:
 
-[
+$$
 g \leftarrow \frac{g}{s}
-]
+$$
 
-Overflow varsa scaler otomatik düşürülür.
-
----
-
-# 8️ Early Stopping
-
-Eğer:
-
-[
-\text{val_loss}_{t}
-\ge
-\text{best_val_loss}
-]
-
-durumu ( p ) epoch boyunca devam ederse:
-
-[
-\text{training stop}
-]
-
-Amaç:
-
-* Overfitting önlemek
-* Gereksiz hesaplama engellemek
+Overflow varsa ölçek otomatik düşürülür.
 
 ---
 
-# 9️ Scaling Law (LLM'lerde Temel İlişki)
+# 8. Early Stopping
 
-LLM literatüründe yaklaşık şu ilişki gözlenir:
+Eğer validation loss $p$ epoch boyunca iyileşmezse:
 
-[
+$$
+\text{val_loss}_t \ge \text{best_val_loss}
+$$
+
+eğitim durdurulur.
+
+Bu overfitting’i önler.
+
+---
+
+# 9. LLM Scaling Law
+
+Literatürde gözlenen yaklaşık ilişki:
+
+$$
 \mathcal{L}(N) =
 a N^{-\alpha} + b
-]
+$$
 
 Burada:
 
-* ( N ) = parametre sayısı
-* ( \alpha \approx 0.05 - 0.1 )
+* $N$ parametre sayısı
+* $\alpha \approx 0.05 - 0.1$
 
 Bu şunu gösterir:
 
-* Parametre artışı → loss düşer
-* Ama **diminishing returns** vardır
+* Parametre artışı → loss azalır
+* Ancak diminishing returns vardır
 
-Daha önemli olan:
+Ayrıca model büyüdükçe veri de büyümelidir.
 
-> Model büyüdükçe veri de büyümelidir.
+Yaklaşık optimal oran:
 
-Genelde önerilen oran:
-
-[
+$$
 \text{token sayısı} \approx 10 - 20 \times \text{parametre sayısı}
-]
+$$
 
 ---
 
-# 10 Genel Eğitim Akışı
+# 10. Eğitim Akışı
 
 1. Forward pass
-2. Cross entropy hesapla
+2. Cross entropy hesaplama
 3. Gradient scaling
 4. Backpropagation
 5. Gradient clipping
@@ -340,28 +310,7 @@ Genelde önerilen oran:
 7. Learning rate update
 8. Validation
 9. Early stopping kontrolü
-10. Checkpoint kaydet
-
----
-
-#  Sonuç
-
-Bu Trainer:
-
-* Küçük modellerden (5M–20M parametre)
-* Orta ölçekli modellere (100M+)
-
-kadar ölçeklenebilir.
-
-Matematiksel olarak:
-
-* MLE optimizasyonu
-* Cosine annealing schedule
-* AdamW adaptif optimizasyon
-* Perplexity temelli değerlendirme
-* Scaling law bilinci
-
-içermektedir.
+10. Checkpoint kaydetme
 
 ---
 
