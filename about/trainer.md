@@ -177,10 +177,10 @@ $$
 ---
 # 10. Early Stopping
 
-Eğer p epoch boyunca validation loss iyileşmezse:
+Eğer $p$ epoch boyunca validation loss iyileşmezse:
 
 $$
-\mathrm{val\_loss}_t \ge \mathrm{best\_val\_loss} \;\Rightarrow\; \text{training stop}
+\mathcal{L}_{\mathrm{val}, t} \ge \mathcal{L}_{\mathrm{best\_val}} \;\;\Rightarrow\;\; \text{training stop}
 $$
 ---
 
