@@ -1,26 +1,38 @@
+
+---
+
 # LLM Trainer – Matematiksel ve Algoritmik Açıklama
 
-Bu doküman PyTorch tabanlı **LLM Trainer** sınıfının matematiksel temelini açıklar.  
-
-README yalnızca eğitim mekanizmasına (Trainer) odaklanmaktadır.
+Bu doküman PyTorch tabanlı **LLM Trainer** sınıfının matematiksel temelini açıklar.
+Odak noktası yalnızca eğitim mekanizmasıdır.
 
 ---
 
 # 1. Problem Tanımı: Otoregresif Dil Modelleme
 
-Bir dil modeli uzunluğu T olan bir token dizisini gözlemler:
+Uzunluğu (T) olan bir token dizisi:
 
 $$
 x = (x_1, x_2, \dots, x_T)
 $$
 
-Zincir kuralına göre dizinin olasılığı:
+Zincir kuralına göre ortak olasılık:
 
 $$
-P(x) = \prod_{t=1}^{T} P(x_t \, | \, x_1, x_2, \dots, x_{t-1})
+P(x)
+====
+
+\prod_{t=1}^{T}
+P(x_t \mid x_1, \dots, x_{t-1})
 $$
 
-Trainer’ın amacı bu olasılığı maksimize etmektir.
+Model her adımda bir sonraki token'ın koşullu olasılığını tahmin eder.
+
+Amaç:
+
+$$
+\max_\theta P_\theta(x)
+$$
 
 ---
 
@@ -29,221 +41,344 @@ Trainer’ın amacı bu olasılığı maksimize etmektir.
 Logaritma alırsak:
 
 $$
-\log P(x) = \sum_{t=1}^{T} \log P(x_t \, | \, x_1, x_2, \dots, x_{t-1})
+\log P_\theta(x)
+================
+
+\sum_{t=1}^{T}
+\log P_\theta(x_t \mid x_{<t})
 $$
 
 Negatif log-likelihood minimize edilir:
 
 $$
-\mathcal{L} = - \sum_{t=1}^{T} \log P_\theta(x_t \, | \, x_1, x_2, \dots, x_{t-1})
+\mathcal{L}
+===========
+
+*
+
+\sum_{t=1}^{T}
+\log P_\theta(x_t \mid x_{<t})
 $$
 
-Batch boyutu B dahil edildiğinde:
+Batch boyutu (B) dahil edilirse:
 
 $$
-\mathcal{L} = - \frac{1}{B T} \sum_{b=1}^{B} \sum_{t=1}^{T} \log P_\theta(x_{b,t})
+\mathcal{L}
+===========
+
+*
+
+\frac{1}{B T}
+\sum_{b=1}^{B}
+\sum_{t=1}^{T}
+\log P_\theta(x_{b,t})
 $$
 
-Bu doğrudan **Cross Entropy Loss** ile hesaplanır.
+Bu ifade doğrudan **cross entropy loss**'tur.
 
 ---
 
-# 3. Cross Entropy ve Softmax İlişkisi
+# 3. Cross Entropy ve Softmax
 
-Model her adımda logits üretir: $z_{t,i}$  
+Model her adımda logits üretir:
+
+$$
+z_{t,i}
+$$
 
 Softmax dönüşümü:
 
 $$
-P_\theta(x_t = i) = \frac{\exp(z_{t,i})}{\sum_{j=1}^{V} \exp(z_{t,j})}
+P_\theta(x_t = i)
+=================
+
+\frac{\exp(z_{t,i})}
+{\sum_{j=1}^{V} \exp(z_{t,j})}
 $$
 
-Tek token için kayıp:
+Tek token kaybı:
 
 $$
-\ell_t = - \log P_\theta(x_t = y_t)
+\ell_t
+======
+
+*
+
+\log P_\theta(x_t = y_t)
 $$
 
-Batch ve zaman boyunca ortalama:
+Toplam kayıp:
 
 $$
-\mathcal{L} = - \frac{1}{B T} \sum_{b=1}^{B} \sum_{t=1}^{T} \log \frac{\exp(z_{b,t,y_{b,t}})}{\sum_{j=1}^{V} \exp(z_{b,t,j})}
+\mathcal{L}
+===========
+
+*
+
+\frac{1}{B T}
+\sum_{b=1}^{B}
+\sum_{t=1}^{T}
+\log
+\frac{\exp(z_{b,t,y_{b,t}})}
+{\sum_{j=1}^{V} \exp(z_{b,t,j})}
 $$
+
+Bu, logits ile hedef indeks üzerinden hesaplanır.
 
 ---
 
 # 4. Perplexity
 
-$$
-\text{Perplexity} = \exp(\mathcal{L})
-$$
-
-Eğer model her token için eşit olasılık dağıtsa $P = 1/K$:
+Tanım:
 
 $$
-\mathcal{L} = \log K \quad \Rightarrow \quad \text{Perplexity} = K
+\text{Perplexity}
+=================
+
+\exp(\mathcal{L})
 $$
+
+Eğer model her token'a eşit olasılık verse:
+
+$$
+P = \frac{1}{K}
+$$
+
+O zaman:
+
+$$
+\mathcal{L} = \log K
+\quad \Rightarrow \quad
+\text{Perplexity} = K
+$$
+
+Yani perplexity efektif seçim sayısını temsil eder.
 
 ---
 
 # 5. Learning Rate Schedule
 
-## 5.1 Warmup
-
-İlk W adımda learning rate lineer artar:
+## Warmup
 
 $$
-\text{lr}(t) = \text{lr}_\text{base} \cdot \frac{t}{W}
+\text{lr}(t)
+============
+
+\text{lr}_{\text{base}}
+\cdot
+\frac{t}{W}
 $$
 
-## 5.2 Cosine Annealing
+Amaç:
 
-$$
-p = \frac{t - W}{T - W}, \quad
-\text{lr}(t) = \frac{1}{2} \text{lr}_\text{base} \left( 1 + \cos(\pi p) \right)
-$$
+* Erken aşamada stabilite
+* Büyük gradient patlamasını önleme
 
 ---
 
-# 6. AdamW Optimizasyonu
+## Cosine Annealing
+
+$$
+p
+=
+
+\frac{t-W}{T-W}
+$$
+
+$$
+\text{lr}(t)
+============
+
+\frac{1}{2}
+\text{lr}_{\text{base}}
+\left(
+1 + \cos(\pi p)
+\right)
+$$
+
+Bu schedule pürüzsüz azalma sağlar.
+
+---
+
+# 6. AdamW
 
 Gradient:
 
 $$
-g_t = \nabla_\theta \mathcal{L}
+g_t
+===
+
+\nabla_\theta \mathcal{L}
 $$
 
 Birinci moment:
 
 $$
-m_t = \beta_1 m_{t-1} + (1 - \beta_1) g_t
+m_t
+===
+
+\beta_1 m_{t-1}
++
+(1-\beta_1) g_t
 $$
 
 İkinci moment:
 
 $$
-v_t = \beta_2 v_{t-1} + (1 - \beta_2) g_t^2
+v_t
+===
+
+\beta_2 v_{t-1}
++
+(1-\beta_2) g_t^2
 $$
 
-Bias düzeltmeleri:
+Bias düzeltme:
 
 $$
-\hat{m}_t = \frac{m_t}{1 - \beta_1^t}, \quad
-\hat{v}_t = \frac{v_t}{1 - \beta_2^t}
+\hat{m}_t
+=========
+
+\frac{m_t}{1-\beta_1^t}
 $$
 
-Parametre güncellemesi:
+$$
+\hat{v}_t
+=========
+
+\frac{v_t}{1-\beta_2^t}
+$$
+
+Güncelleme:
 
 $$
-\theta_{t+1} = \theta_t - \eta \frac{\hat{m}_t}{\sqrt{\hat{v}_t} + \epsilon}
+\theta_{t+1}
+============
+
+## \theta_t
+
+\eta
+\frac{\hat{m}_t}{\sqrt{\hat{v}_t} + \epsilon}
+---------------------------------------------
+
+\eta \lambda \theta_t
 $$
 
-Weight decay:
-
-$$
-\theta_{t+1} = \theta_{t+1} - \eta \lambda \theta_t
-$$
+Son terim weight decay'dir.
 
 ---
 
 # 7. Gradient Clipping
 
+Norm:
+
 $$
-\lVert g \rVert_2 = \sqrt{\sum_i g_i^2}, \quad
-\text{if } \lVert g \rVert_2 > c, \quad
-g \leftarrow g \cdot \frac{c}{\lVert g \rVert_2}
+|g|_2
+=====
+
+\sqrt{\sum_i g_i^2}
 $$
+
+Eğer:
+
+$$
+|g|_2 > c
+$$
+
+ise:
+
+$$
+g
+\leftarrow
+g
+\cdot
+\frac{c}{|g|_2}
+$$
+
+Amaç: exploding gradient önleme.
 
 ---
 
 # 8. Gradient Accumulation
 
+Efektif batch:
+
 $$
-B_\text{eff} = B \times k, \quad
-\mathcal{L}_\text{scaled} = \frac{\mathcal{L}}{k}
+B_{\text{eff}}
+==============
+
+B \cdot k
 $$
 
-Her k adımda bir optimizer step yapılır.
+Loss ölçekleme:
+
+$$
+\mathcal{L}_{\text{scaled}}
+===========================
+
+\frac{\mathcal{L}}{k}
+$$
+
+Her (k) adımda bir optimizer step yapılır.
 
 ---
 
-# 9. Automatic Mixed Precision (AMP)
+# 9. Automatic Mixed Precision
+
+Loss scaling:
 
 $$
-\mathcal{L}_\text{scaled} = \mathcal{L} \cdot s, \quad
-g \leftarrow \frac{g}{s}
+\mathcal{L}_{\text{scaled}}
+===========================
+
+s \mathcal{L}
 $$
+
+Backward sonrası:
+
+$$
+g
+\leftarrow
+\frac{g}{s}
+$$
+
+Amaç: underflow önlemek.
 
 ---
+
 # 10. Early Stopping
 
-Eğer $p$ epoch boyunca validation loss iyileşmezse:
+Eğer:
 
 $$
-\mathcal{L}_{\mathrm{val}, t} \ge \mathcal{L}_{\mathrm{best\_val}} \;\;\Rightarrow\;\; \text{stop training}
+\mathcal{L}*{\text{val},t}
+\ge
+\mathcal{L}*{\text{best}}
 $$
 
-Açıklama:
-
-- $\mathcal{L}_{\mathrm{val}, t}$ → t. epoch’daki validation loss  
-- $\mathcal{L}_{\mathrm{best\_val}}$ → şimdiye kadar görülen en iyi validation loss  
----
-
-# 11. Scaling Law
-
-$$
-\mathcal{L}(N) = a N^{-\alpha} + b, \quad \alpha \approx 0.05-0.1
-$$
-
-Yaklaşık veri oranı:
-
-$$
-\text{token sayısı} \approx 10 \text{ ile } 20 \times \text{parametre sayısı}
-$$
+durumu (p) epoch sürerse eğitim durdurulur.
 
 ---
 
-# 12. Gelecek Çalışmalar
+# 13. Label Smoothing
 
-- Custom CUDA kernel optimizasyonu  
-- Memory-efficient attention  
-- Fused optimizer adımları  
-- Kernel seviyesinde hız iyileştirmeleri  
-- Compute-optimal scaling stratejileri  
-
----
-
-# 13. Advanced Regularization Teknikleri
-
----
-
-## 13.1 Label Smoothing
-
-Standart cross-entropy one-hot hedef kullanır:
+One-hot hedef:
 
 $$
 y_i =
 \begin{cases}
-1 & \text{if } i = y_t \
+1 & i = y_t \
 0 & \text{otherwise}
 \end{cases}
 $$
 
-Bu durumda modelin optimum çözümü:
-
-$$
-P_\theta(x_t = y_t) \to 1
-$$
-
-Bu da **aşırı güven (overconfidence)** üretir.
-
-Label smoothing ile hedef dağılım yumuşatılır:
+Label smoothing:
 
 $$
 y_i =
 \begin{cases}
-1 - \epsilon & \text{if } i = y_t \
-\frac{\epsilon}{V - 1} & \text{otherwise}
+1-\epsilon & i = y_t \
+\frac{\epsilon}{V-1} & \text{otherwise}
 \end{cases}
 $$
 
@@ -253,211 +388,80 @@ $$
 \mathcal{L}
 ===========
 
-* \sum_{i=1}^{V} y_i \log P_\theta(i)
-  $$
+*
 
-### Neden işe yarar?
-
-* Logit büyümesini sınırlar
-* Gradient magnitüdünü stabilize eder
-* Modelin entropy’sini artırır
-* Calibration iyileştirir
-
-Pratikte:
-
-* $\epsilon \in [0.05, 0.2]$
-
----
-
-## 13.2 Dropout Scheduling
-
-Sabit dropout yerine zamanla azalan dropout:
-
-$$
-p(t) = p_{max} \left(1 - \frac{t}{T}\right)
+\sum_{i=1}^{V}
+y_i
+\log P_\theta(i)
 $$
 
-Erken aşama:
+Etkileri:
 
-* Model feature keşfeder
-* Daha güçlü regularization gerekir
-
-Geç aşama:
-
-* İnce ayar yapılır
-* Deterministik davranış avantajlıdır
-
-Bu yaklaşım özellikle büyük Transformer’larda stabilite sağlar.
-
----
-
-## 13.3 Stochastic Depth
-
-Transformer katmanları olasılıksal olarak atlanır:
-
-$$
-h_{l+1} =
-\begin{cases}
-\text{Layer}(h_l) & \text{with prob } 1-p_l \
-h_l & \text{with prob } p_l
-\end{cases}
-$$
-
-Genelde:
-
-$$
-p_l = \frac{l}{L} p_{max}
-$$
-
-Avantaj:
-
-* Derin ağların eğitilebilirliği artar
-* Implicit ensemble etkisi oluşur
-* Gradient flow kolaylaşır
-
----
-
-# 14. Gradient Noise Injection
-
-Gradient’e Gaussian gürültü eklenir:
-
-$$
-g_t \leftarrow g_t + \mathcal{N}(0, \sigma_t^2)
-$$
-
-Zamana bağlı varyans:
-
-$$
-\sigma_t^2 = \frac{\eta}{(1+t)^\gamma}
-$$
-
-Burada:
-
-* $\eta$ → learning rate ölçeği
-* $\gamma \approx 0.5$
-
-### Teorik Etki
-
-Bu yöntem SGD'nin:
-
-$$
-\theta_{t+1} = \theta_t - \eta g_t
-$$
-
-güncellemesini stokastik diferansiyel denkleme yaklaştırır.
-
-Sonuç:
-
-* Sharp minimum yerine flat minimum
-* Daha iyi genelleme
+* Logit büyümesi sınırlanır
+* Entropy artar
+* Calibration iyileşir
 
 ---
 
 # 15. Sharpness-Aware Minimization (SAM)
 
-Amaç:
-
-Sadece düşük loss değil, aynı zamanda **düz (flat) minimum** bulmak.
-
 Tanım:
 
 $$
-\mathcal{L}_{SAM}(\theta)
-=========================
+\mathcal{L}_{\text{SAM}}(\theta)
+================================
 
-\max_{|\epsilon| \le \rho}
+\max_{|\epsilon|_2 \le \rho}
 \mathcal{L}(\theta + \epsilon)
 $$
 
 Yaklaşık çözüm:
 
-1. İlk gradient hesapla:
-
 $$
-g = \nabla_\theta \mathcal{L}
-$$
+\epsilon
+========
 
-2. Pertürbasyon oluştur:
-
-$$
-\epsilon = \rho \frac{g}{|g|}
+\rho
+\frac{g}{|g|_2}
 $$
 
-3. Yeni noktada gradient hesapla:
+Sonra:
 
 $$
-g_{SAM} = \nabla_\theta \mathcal{L}(\theta + \epsilon)
+g_{\text{SAM}}
+==============
+
+\nabla_\theta
+\mathcal{L}(\theta+\epsilon)
 $$
 
-4. Parametre güncelle:
+Güncelleme:
 
 $$
-\theta \leftarrow \theta - \eta g_{SAM}
+\theta
+\leftarrow
+\theta
+------
+
+\eta g_{\text{SAM}}
 $$
 
-### Etki
-
-* Loss yüzeyinin curvature’ı azalır
-* Validation perplexity düşer
-* Overfitting azalır
-
----
-
-Süper yakalamışsın — hata tamamen LaTeX formatından kaynaklanıyor.
-Aşağıya **GitHub uyumlu, düzgün render edilen** ve matematiksel olarak doğru versiyonu bırakıyorum.
+Amaç: flat minimum bulmak.
 
 ---
 
 # 16. Second-Order Yaklaşımlar
 
-## Hessian Tanımı
-
-Loss fonksiyonunun ikinci türevi:
+Hessian:
 
 $$
-H = \nabla^2_\theta \mathcal{L}
+H
+=
+
+\nabla_\theta^2 \mathcal{L}
 $$
 
-Burada:
-
-* $H \in \mathbb{R}^{N \times N}$
-* $N$ → parametre sayısı
-
-Hessian, loss yüzeyinin eğriliğini (curvature) temsil eder.
-
----
-
-## Newton Yöntemi
-
-Birinci dereceden Taylor yerine ikinci dereceden açılım kullanılır:
-
-$$
-\mathcal{L}(\theta + \Delta)
-\approx
-\mathcal{L}(\theta)
-+
-g^T \Delta
-+
-\frac{1}{2}
-\Delta^T H \Delta
-$$
-
-Minimum için türev sıfıra eşitlenir:
-
-$$
-\nabla_\Delta \mathcal{L}
-=========================
-
-g + H \Delta = 0
-$$
-
-Buradan:
-
-$$
-\Delta = - H^{-1} g
-$$
-
-Parametre güncellemesi:
+Newton adımı:
 
 $$
 \theta_{t+1}
@@ -468,171 +472,23 @@ $$
 H^{-1} g_t
 $$
 
----
-
-## Neden Pahalı?
-
-Eğer parametre sayısı $N$ ise:
-
-* Hessian boyutu: $N \times N$
-* Bellek: $O(N^2)$
-* Hesaplama: $O(N^2)$
-* Ters alma: $O(N^3)$
-
-LLM’lerde $N \sim 10^8 - 10^9$ olduğundan doğrudan uygulanamaz.
-
----
-
-## Condition Number
-
-Optimizasyon hızı, Hessian’ın condition number’ına bağlıdır:
+Condition number:
 
 $$
 \kappa(H)
 =========
 
-\frac{\lambda_{max}(H)}{\lambda_{min}(H)}
+\frac{\lambda_{\max}(H)}
+{\lambda_{\min}(H)}
 $$
 
-Burada:
-
-* $\lambda_{max}$ → en büyük özdeğer
-* $\lambda_{min}$ → en küçük özdeğer
-
-Eğer:
-
-$$
-\kappa(H) \gg 1
-$$
-
-ise loss yüzeyi çok eliptiktir → SGD yavaş yakınsar.
-
-Second-order yöntemlerin amacı:
-
-$$
-\kappa(H) \downarrow
-\quad \Rightarrow \quad
-\text{Daha hızlı convergence}
-$$
+Küçük (\kappa) → hızlı yakınsama.
 
 ---
 
-## Pratik Yaklaşımlar
+# 17. Adaptive Gradient Clipping
 
-### 1. Diagonal Approximation
-
-Sadece diagonal elemanlar kullanılır:
-
-$$
-H \approx \text{diag}(h_1, h_2, \dots, h_N)
-$$
-
-Güncelleme:
-
-$$
-\theta_{t+1}
-============
-
-## \theta_t
-
-\eta
-\frac{g_t}{h + \epsilon}
-$$
-
-AdamW aslında diagonal second-order yaklaşımının adaptif versiyonudur.
-
----
-
-### 2. K-FAC (Kronecker-Factored Approximate Curvature)
-
-Fisher matrisi yaklaşık olarak ayrıştırılır:
-
-$$
-F \approx A \otimes B
-$$
-
-Burada:
-
-* $A$ → aktivasyon kovaryansı
-* $B$ → gradient kovaryansı
-* $\otimes$ → Kronecker çarpımı
-
-Ters alma:
-
-$$
-F^{-1}
-\approx
-A^{-1} \otimes B^{-1}
-$$
-
-Bu yöntem özellikle Transformer katmanlarında etkilidir.
-
----
-
-### 3. Shampoo
-
-Matris bazlı preconditioning yapar.
-
-Ağırlık matrisi $W \in \mathbb{R}^{m \times n}$ için:
-
-$$
-G_t = \nabla_W \mathcal{L}
-$$
-
-İki yönlü kovaryans tutulur:
-
-$$
-L_t = \sum G_t G_t^T
-$$
-
-$$
-R_t = \sum G_t^T G_t
-$$
-
-Güncelleme:
-
-$$
-W_{t+1}
-=======
-
-## W_t
-
-\eta
-L_t^{-1/4}
-G_t
-R_t^{-1/4}
-$$
-
-Bu yöntem curvature’ı iki eksende normalize eder.
-
----
-
-## Özet
-
-Second-order yöntemler:
-
-* Curvature bilgisi kullanır
-* Eliptik loss yüzeyinde daha hızlı hareket eder
-* Daha az adımda convergence sağlar
-
-Ancak:
-
-* Hesaplama maliyeti yüksektir
-* Büyük LLM’lerde yaklaşık yöntem gerekir
-
----
-
-$$
-\kappa(H) = \frac{\lambda_{max}}{\lambda_{min}}
-$$
-
-Daha küçük $\kappa$ → daha hızlı convergence.
-
----
-
-# 17. Adaptive Gradient Clipping (AGC)
-
-Standart clipping:
+Standart:
 
 $$
 |g|_2 > c
@@ -641,145 +497,62 @@ $$
 AGC:
 
 $$
-|g|_2 > \lambda |\theta|_2
+|g|_2
+
+>
+
+\lambda
+|\theta|_2
 $$
 
-Bu ölçek bağımsızdır.
-
-Büyük modellerde:
-
-* Layer bazlı clipping yapılır
-* Daha stabil Transformer eğitimi sağlar
+Parametre ölçeğine duyarlıdır.
 
 ---
 
-# 18. Curriculum Learning
+# 21. EMA
 
-Zorluk metriği:
-
-$$
-\text{difficulty}(x)
-====================
-
-* \log P_\theta(x)
-  $$
-
-Veri sırası:
+Güncelleme:
 
 $$
-D_1 \rightarrow D_2 \rightarrow D_3
-$$
+\theta_t^{\text{EMA}}
+=====================
 
-Avantaj:
-
-* Optimization landscape daha pürüzsüz olur
-* Erken aşamada hızlı düşüş
-
----
-
-# 19. Dynamic Sequence Length Scheduling
-
-Başlangıçta kısa context:
-
-$$
-L(t) =
-L_{min}
-+
-\left(\frac{t}{T}\right)
-(L_{max} - L_{min})
-$$
-
-Neden?
-
-Self-attention karmaşıklığı:
-
-$$
-O(L^2)
-$$
-
-Başlangıçta kısa L → daha hızlı iteration.
-
----
-
-# 20. Token-Level Adaptive Sampling
-
-Uniform sampling yerine:
-
-$$
-P(x) \propto \text{loss}(x)^\alpha
-$$
-
-$\alpha > 0$ ise:
-
-* Zor örneklere ağırlık verilir
-
-Hard example mining:
-
-* Rare token öğrenimi hızlanır
-* Vocabulary coverage artar
-
----
-
-# 21. EMA (Exponential Moving Average)
-
-$$theta_t^{EMA}$$
-==============
-
-\alpha \theta^{EMA}_{t-1}
+\alpha \theta_{t-1}^{\text{EMA}}
 +
 (1-\alpha)\theta_t
 $$
 
-Genelde:
+Açılım:
 
 $$
-\alpha \in [0.999, 0.9999]
+\theta_t^{\text{EMA}}
+=====================
+
+\sum_{k=0}^{t}
+(1-\alpha)
+\alpha^k
+\theta_{t-k}
 $$
 
-Validation ve inference EMA ile yapılır.
-
-### Etki
-
-* Parametre varyansı azalır
-* Daha düşük perplexity
-
----
-
-# 22. Activation Checkpointing
-
-Bellek:
+Etkisi:
 
 $$
-O(L \cdot d \cdot N)
-$$
-
-Checkpointing ile:
-
-* Ara aktivasyonlar saklanmaz
-* Backward sırasında yeniden hesaplanır
-
-Trade-off:
-
-$$
-\text{Memory} \downarrow
-\quad
-\text{Compute} \uparrow
+\mathrm{Var}(\theta^{\text{EMA}})
+<
+\mathrm{Var}(\theta)
 $$
 
 ---
 
 # 23. Compute-Optimal Training
 
-Toplam compute:
+Toplam compute yaklaşık:
 
 $$
-C \approx 6 N D
+C
+\approx
+6 N D
 $$
-
-Burada:
-
-* $N$ → parametre
-* $D$ → token
 
 Scaling law:
 
@@ -787,21 +560,16 @@ $$
 \mathcal{L}(N)
 ==============
 
-a N^{-\alpha} + b
+a N^{-\alpha}
++
+b
 $$
 
-Optimal oran:
+Optimal veri oranı:
 
 $$
 D \propto N
 $$
-
-Trainer bunu takip edip:
-
-* Token/parametre oranı
-* Compute budget
-
-üzerinden otomatik durdurma yapabilir.
 
 ---
 
@@ -810,58 +578,44 @@ Trainer bunu takip edip:
 Toplam loss:
 
 $$
-\mathcal{L}_{total}
-===================
+\mathcal{L}_{\text{total}}
+==========================
 
-\mathcal{L}*{LM}
+\mathcal{L}*{\text{LM}}
 +
-\lambda_1 \mathcal{L}*{reg}
+\lambda_1 \mathcal{L}*{\text{reg}}
 +
-\lambda_2 \mathcal{L}_{aux}
+\lambda_2 \mathcal{L}_{\text{aux}}
 $$
-
-Örnek auxiliary loss:
-
-* Contrastive
-* Sentence embedding
-* Distillation
-
-Bu, temsil kalitesini artırabilir.
 
 ---
 
 # 25. Knowledge Distillation
 
-Teacher dağılımı:
-
-$$
-P_T
-$$
-
-Student:
-
-$$
-P_S
-$$
-
-Temperature scaling:
+Softmax with temperature:
 
 $$
 P(i)
 ====
 
-\frac{\exp(z_i / T)}{\sum_j \exp(z_j / T)}
+\frac{\exp(z_i/T)}
+{\sum_j \exp(z_j/T)}
 $$
 
 Distillation loss:
 
 $$
-\mathcal{L}_{KD}
-================
+\mathcal{L}_{\text{KD}}
+=======================
 
 T^2
-\cdot
-\text{KL}(P_T^T | P_S^T)
+,
+\mathrm{KL}
+\left(
+P_T^{(T)}
+;|;
+P_S^{(T)}
+\right)
 $$
 
 Toplam:
@@ -870,43 +624,29 @@ $$
 \mathcal{L}
 ===========
 
-\alpha \mathcal{L}*{CE}
+\alpha \mathcal{L}*{\text{CE}}
 +
-(1-\alpha) \mathcal{L}*{KD}
+(1-\alpha)\mathcal{L}*{\text{KD}}
 $$
-
-Amaç:
-
-* Küçük modelde büyük model davranışı
-* Daha düşük perplexity / parametre
 
 ---
 
 # 26. Checkpoint Averaging
 
-Son k checkpoint:
-
 $$
-\theta_{avg}
-============
+\theta_{\text{avg}}
+===================
 
 \frac{1}{k}
 \sum_{i=1}^{k}
 \theta_i
 $$
 
-EMA’ye alternatif.
-
-Genelde:
-
-* Son epoch’larda uygulanır
-* Validation stabilizasyonu sağlar
+EMA’ye benzer şekilde varyansı azaltır.
 
 ---
 
-# 27. Research-Level Monitoring
-
-Ek ölçümler:
+# 27. Monitoring
 
 Gradient norm:
 
@@ -920,24 +660,21 @@ $$
 |\Delta \theta|_2
 $$
 
-Curvature approx:
-
-$$
-\text{trace}(H)
-$$
-
 Attention entropy:
 
 $$
-H_{attn}
-========
+H_{\text{attn}}
+===============
 
 *
 
-\sum p \log p
+\sum
+p
+\log p
 $$
-
-Bu metrikler scaling ve optimization analizi için kritik.
 
 ---
 
+
+
+İstersen bir sonraki adımda bunu tamamen **akademik makale formatına (ICLR style)** dönüştürebiliriz.
