@@ -36,8 +36,6 @@ Logaritma alırsak:
 
 $$
 \log P_\theta(x)
-================
-
 \sum_{t=1}^{T}
 \log P_\theta(x_t \mid x_{<t})
 $$
@@ -46,10 +44,6 @@ Negatif log-likelihood:
 
 $$
 \mathcal{L}
-===========
-
-*
-
 \sum_{t=1}^{T}
 \log P_\theta(x_t \mid x_{<t})
 $$
