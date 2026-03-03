@@ -35,16 +35,14 @@ $$
 Logaritma alırsak:
 
 $$
-\log P_\theta(x)
-\sum_{t=1}^{T}
+\log P_\theta(x)\sum_{t=1}^{T}
 \log P_\theta(x_t \mid x_{<t})
 $$
 
 Negatif log-likelihood:
 
 $$
-\mathcal{L}
-\sum_{t=1}^{T}
+\mathcal{L}\sum_{t=1}^{T}
 \log P_\theta(x_t \mid x_{<t})
 $$
 
@@ -52,10 +50,7 @@ Batch boyutu ( B ) dahil edilirse:
 
 $$
 \mathcal{L}
-===========
-
 *
-
 \frac{1}{B T}
 \sum_{b=1}^{B}
 \sum_{t=1}^{T}
