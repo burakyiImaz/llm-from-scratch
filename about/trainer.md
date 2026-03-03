@@ -722,8 +722,7 @@ Hard example mining:
 
 # 21. EMA (Exponential Moving Average)
 
-$$
-\theta^{EMA}_t
+$$theta_t^{EMA}$$
 ==============
 
 \alpha \theta^{EMA}_{t-1}
