@@ -18,10 +18,7 @@ $$
 Zincir kuralına göre ortak olasılık:
 
 $$
-P(x)
-
-
-\prod_{t=1}^{T}
+P(x)\prod_{t=1}^{T}
 P(x_t \mid x_1, \dots, x_{t-1})
 $$
 
