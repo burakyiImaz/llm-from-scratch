@@ -403,15 +403,61 @@ $$
 
 ---
 
+Süper yakalamışsın — hata tamamen LaTeX formatından kaynaklanıyor.
+Aşağıya **GitHub uyumlu, düzgün render edilen** ve matematiksel olarak doğru versiyonu bırakıyorum.
+
+---
+
 # 16. Second-Order Yaklaşımlar
 
-Hessian:
+## Hessian Tanımı
+
+Loss fonksiyonunun ikinci türevi:
 
 $$
 H = \nabla^2_\theta \mathcal{L}
 $$
 
-Newton yöntemi:
+Burada:
+
+* $H \in \mathbb{R}^{N \times N}$
+* $N$ → parametre sayısı
+
+Hessian, loss yüzeyinin eğriliğini (curvature) temsil eder.
+
+---
+
+## Newton Yöntemi
+
+Birinci dereceden Taylor yerine ikinci dereceden açılım kullanılır:
+
+$$
+\mathcal{L}(\theta + \Delta)
+\approx
+\mathcal{L}(\theta)
++
+g^T \Delta
++
+\frac{1}{2}
+\Delta^T H \Delta
+$$
+
+Minimum için türev sıfıra eşitlenir:
+
+$$
+\nabla_\Delta \mathcal{L}
+=========================
+
+g + H \Delta = 0
+$$
+
+Buradan:
+
+$$
+\Delta = - H^{-1} g
+$$
+
+Parametre güncellemesi:
 
 $$
 \theta_{t+1}
@@ -422,20 +468,159 @@ $$
 H^{-1} g_t
 $$
 
-Tam Hessian pahalıdır:
+---
 
-* Hesaplama: $O(N^2)$
+## Neden Pahalı?
+
+Eğer parametre sayısı $N$ ise:
+
+* Hessian boyutu: $N \times N$
 * Bellek: $O(N^2)$
+* Hesaplama: $O(N^2)$
+* Ters alma: $O(N^3)$
 
-Yaklaşık yöntemler:
+LLM’lerde $N \sim 10^8 - 10^9$ olduğundan doğrudan uygulanamaz.
 
-* K-FAC → Kronecker factorization
-* Shampoo → Matrix preconditioning
-* Diagonal Hessian approx
+---
 
-Amaç:
+## Condition Number
 
-Condition number düşürmek:
+Optimizasyon hızı, Hessian’ın condition number’ına bağlıdır:
+
+$$
+\kappa(H)
+=========
+
+\frac{\lambda_{max}(H)}{\lambda_{min}(H)}
+$$
+
+Burada:
+
+* $\lambda_{max}$ → en büyük özdeğer
+* $\lambda_{min}$ → en küçük özdeğer
+
+Eğer:
+
+$$
+\kappa(H) \gg 1
+$$
+
+ise loss yüzeyi çok eliptiktir → SGD yavaş yakınsar.
+
+Second-order yöntemlerin amacı:
+
+$$
+\kappa(H) \downarrow
+\quad \Rightarrow \quad
+\text{Daha hızlı convergence}
+$$
+
+---
+
+## Pratik Yaklaşımlar
+
+### 1. Diagonal Approximation
+
+Sadece diagonal elemanlar kullanılır:
+
+$$
+H \approx \text{diag}(h_1, h_2, \dots, h_N)
+$$
+
+Güncelleme:
+
+$$
+\theta_{t+1}
+============
+
+## \theta_t
+
+\eta
+\frac{g_t}{h + \epsilon}
+$$
+
+AdamW aslında diagonal second-order yaklaşımının adaptif versiyonudur.
+
+---
+
+### 2. K-FAC (Kronecker-Factored Approximate Curvature)
+
+Fisher matrisi yaklaşık olarak ayrıştırılır:
+
+$$
+F \approx A \otimes B
+$$
+
+Burada:
+
+* $A$ → aktivasyon kovaryansı
+* $B$ → gradient kovaryansı
+* $\otimes$ → Kronecker çarpımı
+
+Ters alma:
+
+$$
+F^{-1}
+\approx
+A^{-1} \otimes B^{-1}
+$$
+
+Bu yöntem özellikle Transformer katmanlarında etkilidir.
+
+---
+
+### 3. Shampoo
+
+Matris bazlı preconditioning yapar.
+
+Ağırlık matrisi $W \in \mathbb{R}^{m \times n}$ için:
+
+$$
+G_t = \nabla_W \mathcal{L}
+$$
+
+İki yönlü kovaryans tutulur:
+
+$$
+L_t = \sum G_t G_t^T
+$$
+
+$$
+R_t = \sum G_t^T G_t
+$$
+
+Güncelleme:
+
+$$
+W_{t+1}
+=======
+
+## W_t
+
+\eta
+L_t^{-1/4}
+G_t
+R_t^{-1/4}
+$$
+
+Bu yöntem curvature’ı iki eksende normalize eder.
+
+---
+
+## Özet
+
+Second-order yöntemler:
+
+* Curvature bilgisi kullanır
+* Eliptik loss yüzeyinde daha hızlı hareket eder
+* Daha az adımda convergence sağlar
+
+Ancak:
+
+* Hesaplama maliyeti yüksektir
+* Büyük LLM’lerde yaklaşık yöntem gerekir
+
+---
 
 $$
 \kappa(H) = \frac{\lambda_{max}}{\lambda_{min}}
