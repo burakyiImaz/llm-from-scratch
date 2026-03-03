@@ -1,559 +1,367 @@
----
-
-# LLM Trainer – Matematiksel ve Algoritmik Açıklama
-
-Bu doküman PyTorch tabanlı **LLM Trainer** sınıfının matematiksel temelini açıklar.
-Odak noktası yalnızca eğitim mekanizmasıdır.
 
 ---
 
-# 1. Problem Tanımı: Otoregresif Dil Modelleme
+#  LLM Trainer – Matematiksel Açıklamalı Eğitim Altyapısı
 
-Uzunluğu ( T ) olan bir token dizisi:
+Bu proje, PyTorch tabanlı bir **Large Language Model (LLM)** eğitim altyapısıdır.
+Trainer sınıfı aşağıdaki gelişmiş özellikleri içerir:
 
-$$
-x = (x_1, x_2, \dots, x_T)
-$$
+* AdamW optimizer
+* Warmup + Cosine Annealing learning rate schedule
+* Gradient clipping
+* Gradient accumulation
+* Automatic Mixed Precision (AMP)
+* Early stopping
+* Perplexity hesaplama
+* Checkpoint kaydetme / yükleme
 
-Zincir kuralına göre ortak olasılık:
+Bu dokümanda sistemin **matematiksel temelleri detaylı şekilde açıklanmaktadır.**
 
-$$
-P(x)\prod_{t=1}^{T}
-P(x_t \mid x_1, \dots, x_{t-1})
-$$
+---
+
+# 1️ Modelin Optimize Ettiği Amaç Fonksiyonu
+
+LLM'ler temel olarak **next-token prediction** problemi çözer.
+
+Verilen bir token dizisi:
+
+[
+x = (x_1, x_2, ..., x_T)
+]
+
+Modelin amacı:
+
+[
+P(x_t \mid x_{<t})
+]
+
+olasılığını modellemektir.
+
+---
+
+## Cross Entropy Loss
+
+Trainer'da kullanılan loss:
+
+```python
+self.loss_fn = nn.CrossEntropyLoss()
+```
+
+Matematiksel olarak:
+
+[
+\mathcal{L} = - \sum_{t=1}^{T} \log P_\theta(x_t \mid x_{<t})
+]
+
+Batch boyutunu da dahil edersek:
+
+[
+\mathcal{L} = - \frac{1}{B T}
+\sum_{b=1}^{B} \sum_{t=1}^{T}
+\log P_\theta(x_{b,t})
+]
+
+Bu loss:
+
+* Log-likelihood maximization
+* Maximum likelihood estimation (MLE)
+
+yapmaktadır.
+
+---
+
+# 2️ Perplexity
+
+Evaluation sırasında hesaplanan metrik:
+
+```python
+perplexity = math.exp(avg_loss)
+```
+
+Matematiksel olarak:
+
+[
+\text{Perplexity} = e^{\mathcal{L}}
+]
+
+Perplexity şunu ifade eder:
+
+> Model ortalama olarak bir token için kaç olası seçenek arasında kararsız kalıyor?
+
+Örneğin:
+
+* PPL = 10 → model ortalama 10 seçenek arasında kararsız
+* PPL = 2 → çok iyi model
+
+---
+
+# 3️ Learning Rate Schedule
+
+Trainer'da iki aşamalı schedule vardır:
+
+---
+
+##  Warmup Phase
+
+İlk ( W ) adımda learning rate lineer artar:
+
+[
+\text{lr}_t =
+\text{base_lr} \cdot
+\frac{t}{W}
+]
 
 Amaç:
 
-$$
-\max_\theta P_\theta(x)
-$$
+* Başlangıçta büyük gradient patlamasını önlemek
+* Stabil başlangıç sağlamak
 
 ---
 
-# 2. Maksimum Olabilirlik (MLE)
+## 🌊 Cosine Annealing Phase
 
-Logaritma alırsak:
+Warmup sonrası:
 
-$$
-\log P_\theta(x)\sum_{t=1}^{T}
-\log P_\theta(x_t \mid x_{<t})
-$$
-
-Negatif log-likelihood:
-
-$$
-\mathcal{L}\sum_{t=1}^{T}
-\log P_\theta(x_t \mid x_{<t})
-$$
-
-Batch boyutu ( B ) dahil edilirse:
-
-$$
-\mathcal{L}
-*
-\frac{1}{B T}
-\sum_{b=1}^{B}
-\sum_{t=1}^{T}
-\log P_\theta(x_{b,t})
-$$
-
-Bu ifade cross-entropy loss’a eşdeğerdir.
-
----
-
-# 3. Cross Entropy ve Softmax
-
-Model logits üretir:
-
-$$
-z_{t,i}
-$$
-
-Softmax dönüşümü:
-
-$$
-P_\theta(x_t = i)
-=================
-
-\frac{\exp(z_{t,i})}
-{\sum_{j=1}^{V} \exp(z_{t,j})}
-$$
-
-Tek token kaybı:
-
-$$
-\ell_t
-======
-
-*
-
-\log P_\theta(x_t = y_t)
-$$
-
-Toplam kayıp:
-
-$$
-\mathcal{L}
-===========
-
-*
-
-\frac{1}{B T}
-\sum_{b=1}^{B}
-\sum_{t=1}^{T}
-\log
-\frac{\exp(z_{b,t,y_{b,t}})}
-{\sum_{j=1}^{V} \exp(z_{b,t,j})}
-$$
-
----
-
-# 4. Perplexity
-
-$$
-\text{Perplexity}
-=================
-
-\exp(\mathcal{L})
-$$
-
-Eğer model eşit dağılım üretirse:
-
-$$
-P = \frac{1}{K}
-$$
-
-$$
-\mathcal{L} = \log K
-\quad \Rightarrow \quad
-\text{Perplexity} = K
-$$
-
----
-
-# 5. Learning Rate Schedule
-
-## Warmup
-
-$$
-\text{lr}(t)
-============
-
-\text{lr}_{\text{base}}
-\cdot
-\frac{t}{W}
-$$
-
-## Cosine Annealing
-
-$$
-p
-=
-
+[
+\text{progress} =
 \frac{t - W}{T - W}
-$$
+]
 
-$$
-\text{lr}(t)
-============
-
+[
+\text{lr}_t =
 \frac{1}{2}
-\text{lr}_{\text{base}}
+\text{base_lr}
 \left(
-1 + \cos(\pi p)
+1 + \cos(\pi \cdot \text{progress})
 \right)
-$$
+]
+
+Bu:
+
+* Learning rate'i yavaşça azaltır
+* Eğitimin sonuna doğru ince ayar yapar
 
 ---
 
-# 6. AdamW
+# 4️⃣ AdamW Optimizasyonu
 
-Gradient:
+Kullanılan optimizer:
 
-$$
-g_t
-===
+```python
+optim.AdamW(...)
+```
 
-\nabla_\theta \mathcal{L}
-$$
+Adam güncellemesi:
 
-Birinci moment:
+[
+m_t = \beta_1 m_{t-1} + (1 - \beta_1) g_t
+]
 
-$$
-m_t
-===
+[
+v_t = \beta_2 v_{t-1} + (1 - \beta_2) g_t^2
+]
 
-\beta_1 m_{t-1}
-+
-(1-\beta_1) g_t
-$$
+Bias correction:
 
-İkinci moment:
+[
+\hat{m}_t = \frac{m_t}{1 - \beta_1^t}
+]
 
-$$
-v_t
-===
+[
+\hat{v}_t = \frac{v_t}{1 - \beta_2^t}
+]
 
-\beta_2 v_{t-1}
-+
-(1-\beta_2) g_t^2
-$$
+Parametre güncellemesi:
 
-Bias düzeltme:
+[
+\theta_{t+1} =
+\theta_t -
+\eta \frac{\hat{m}_t}{\sqrt{\hat{v}_t} + \epsilon}
+]
 
-$$
-\hat{m}_t
-=========
+AdamW'de weight decay ayrı uygulanır:
 
-\frac{m_t}{1-\beta_1^t}
-$$
-
-$$
-\hat{v}_t
-=========
-
-\frac{v_t}{1-\beta_2^t}
-$$
-
-Güncelleme:
-
-$$
-\theta_{t+1}
-============
-
-## \theta_t
-
-\eta
-\frac{\hat{m}_t}{\sqrt{\hat{v}_t} + \epsilon}
----------------------------------------------
-
+[
+\theta_{t+1} =
+\theta_{t+1} -
 \eta \lambda \theta_t
-$$
+]
+
+Bu klasik L2 regularization’dan farklıdır.
 
 ---
 
-# 7. Gradient Clipping
+# 5️ Gradient Clipping
 
-$$
-\lVert g \rVert_2
-=================
+Kod:
 
-\sqrt{\sum_i g_i^2}
-$$
+```python
+torch.nn.utils.clip_grad_norm_(...)
+```
 
-Eğer
+Eğer:
 
-$$
-\lVert g \rVert_2 > c
-$$
+[
+|g|_2 > c
+]
 
 ise:
 
-$$
-g
-\leftarrow
-g
-\cdot
-\frac{c}{\lVert g \rVert_2}
-$$
+[
+g \leftarrow
+g \cdot \frac{c}{|g|_2}
+]
+
+Amaç:
+
+* Gradient explosion önlemek
+* Stabil training
 
 ---
 
-# 8. Gradient Accumulation
+# 6️⃣ Gradient Accumulation
 
-$$
-B_{\text{eff}}
-==============
+Batch çok büyük olduğunda memory yetmeyebilir.
 
-B \cdot k
-$$
+Trainer:
 
-$$
-\mathcal{L}_{\text{scaled}}
-===========================
+[
+\text{effective batch size} =
+\text{batch size} \times
+\text{gradient accumulation steps}
+]
 
+Loss şu şekilde ölçeklenir:
+
+[
+\mathcal{L}_{scaled} =
 \frac{\mathcal{L}}{k}
-$$
+]
+
+k = accumulation steps
+
+Bu sayede:
+
+* Daha büyük batch etkisi
+* Daha stabil gradient
 
 ---
 
-# 9. Automatic Mixed Precision
+# 7️ Automatic Mixed Precision (AMP)
 
-$$
-\mathcal{L}_{\text{scaled}}
-===========================
+FP32 yerine:
 
-s \mathcal{L}
-$$
+* FP16 + FP32 karışık kullanılır
 
-$$
-g
-\leftarrow
-\frac{g}{s}
-$$
+Bu:
+
+* Bellek tüketimini azaltır
+* Eğitimi hızlandırır
+
+Gradient scaler:
+
+[
+\mathcal{L}_{scaled} =
+\mathcal{L} \cdot s
+]
+
+Backprop sonrası:
+
+[
+g \leftarrow \frac{g}{s}
+]
+
+Overflow varsa scaler otomatik düşürülür.
 
 ---
 
-# 10. Early Stopping
+# 8️ Early Stopping
 
-$$
-\mathcal{L}*{\text{val},t}
+Eğer:
+
+[
+\text{val_loss}_{t}
 \ge
-\mathcal{L}*{\text{best}}
-$$
+\text{best_val_loss}
+]
 
-koşulu ( p ) epoch sürerse eğitim durdurulur.
+durumu ( p ) epoch boyunca devam ederse:
 
----
+[
+\text{training stop}
+]
 
-# 13. Label Smoothing
+Amaç:
 
-$$
-y_i =
-\begin{cases}
-1 & i = y_t \
-0 & \text{otherwise}
-\end{cases}
-$$
-
-Label smoothing:
-
-$$
-y_i =
-\begin{cases}
-1-\epsilon & i = y_t \
-\frac{\epsilon}{V-1} & \text{otherwise}
-\end{cases}
-$$
-
-Yeni loss:
-
-$$
-\mathcal{L}
-===========
-
-*
-
-\sum_{i=1}^{V}
-y_i
-\log P_\theta(i)
-$$
+* Overfitting önlemek
+* Gereksiz hesaplama engellemek
 
 ---
 
-# 15. Sharpness-Aware Minimization (SAM)
+# 9️ Scaling Law (LLM'lerde Temel İlişki)
 
-$$
-\mathcal{L}_{\text{SAM}}(\theta)
-================================
+LLM literatüründe yaklaşık şu ilişki gözlenir:
 
-\max_{\lVert \epsilon \rVert_2 \le \rho}
-\mathcal{L}(\theta + \epsilon)
-$$
+[
+\mathcal{L}(N) =
+a N^{-\alpha} + b
+]
 
-$$
-\epsilon
-========
+Burada:
 
-\rho
-\frac{g}{\lVert g \rVert_2}
-$$
+* ( N ) = parametre sayısı
+* ( \alpha \approx 0.05 - 0.1 )
 
-$$
-g_{\text{SAM}}
-==============
+Bu şunu gösterir:
 
-\nabla_\theta
-\mathcal{L}(\theta+\epsilon)
-$$
+* Parametre artışı → loss düşer
+* Ama **diminishing returns** vardır
 
-$$
-\theta
-\leftarrow
-\theta
-------
+Daha önemli olan:
 
-\eta g_{\text{SAM}}
-$$
+> Model büyüdükçe veri de büyümelidir.
+
+Genelde önerilen oran:
+
+[
+\text{token sayısı} \approx 10 - 20 \times \text{parametre sayısı}
+]
 
 ---
 
-# 16. Second-Order Yaklaşımlar
+# 10 Genel Eğitim Akışı
 
-$$
-H
-=
-
-\nabla_\theta^2 \mathcal{L}
-$$
-
-Newton adımı:
-
-$$
-\theta_{t+1}
-============
-
-## \theta_t
-
-H^{-1} g_t
-$$
-
-Condition number:
-
-$$
-\kappa(H)
-=========
-
-\frac{\lambda_{\max}(H)}
-{\lambda_{\min}(H)}
-$$
+1. Forward pass
+2. Cross entropy hesapla
+3. Gradient scaling
+4. Backpropagation
+5. Gradient clipping
+6. Optimizer step
+7. Learning rate update
+8. Validation
+9. Early stopping kontrolü
+10. Checkpoint kaydet
 
 ---
 
-# 17. Adaptive Gradient Clipping
+#  Sonuç
 
-$$
-\lVert g \rVert_2
+Bu Trainer:
 
->
+* Küçük modellerden (5M–20M parametre)
+* Orta ölçekli modellere (100M+)
 
-\lambda
-\lVert \theta \rVert_2
-$$
+kadar ölçeklenebilir.
 
----
+Matematiksel olarak:
 
-# 21. EMA
+* MLE optimizasyonu
+* Cosine annealing schedule
+* AdamW adaptif optimizasyon
+* Perplexity temelli değerlendirme
+* Scaling law bilinci
 
-$$
-\theta_t^{\text{EMA}}
-=====================
-
-\alpha \theta_{t-1}^{\text{EMA}}
-+
-(1-\alpha)\theta_t
-$$
-
-Açılım:
-
-$$
-\theta_t^{\text{EMA}}
-=====================
-
-\sum_{k=0}^{t}
-(1-\alpha)
-\alpha^k
-\theta_{t-k}
-$$
+içermektedir.
 
 ---
-
-# 23. Compute-Optimal Training
-
-$$
-C
-\approx
-6 N D
-$$
-
-$$
-\mathcal{L}(N)
-==============
-
-a N^{-\alpha}
-+
-b
-$$
-
-$$
-D \propto N
-$$
-
----
-
-# 24. Multi-Objective Training
-
-$$
-\mathcal{L}_{\text{total}}
-==========================
-
-\mathcal{L}*{\text{LM}}
-+
-\lambda_1 \mathcal{L}*{\text{reg}}
-+
-\lambda_2 \mathcal{L}_{\text{aux}}
-$$
-
----
-
-# 25. Knowledge Distillation
-
-$$
-P(i)
-====
-
-\frac{\exp(z_i/T)}
-{\sum_j \exp(z_j/T)}
-$$
-
-$$
-\mathcal{L}_{\text{KD}}
-=======================
-
-T^2
-\mathrm{KL}
-\left(
-P_T^{(T)}
-\parallel
-P_S^{(T)}
-\right)
-$$
-
-$$
-\mathcal{L}
-===========
-
-\alpha \mathcal{L}*{\text{CE}}
-+
-(1-\alpha)\mathcal{L}*{\text{KD}}
-$$
-
----
-
-# 26. Checkpoint Averaging
-
-$$
-\theta_{\text{avg}}
-===================
-
-\frac{1}{k}
-\sum_{i=1}^{k}
-\theta_i
-$$
-
----
-
-# 27. Monitoring
-
-$$
-\lVert g \rVert_2
-$$
-
-$$
-\lVert \Delta \theta \rVert_2
-$$
-
-$$
-H_{\text{attn}}
-===============
-
-*
-
-\sum
-p
-\log p
-$$
-
----
-
 
