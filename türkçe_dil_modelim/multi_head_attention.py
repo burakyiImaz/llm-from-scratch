@@ -40,21 +40,17 @@ class MultiHeadAttention(nn.Module):
         self.context_length = context_length
         self.device = device
 
-        # 🔹 PyTorch MultiheadAttention
-        # device parametresi almaz → sonradan .to(device) yapılır
         self.multi_head_attention = nn.MultiheadAttention(
             embed_size,
             num_heads,
             dropout=dropout_rate
         ).to(device)
 
-        # 🔹 Attention çıkışını tekrar embedding boyutuna getirir
         self.projection = nn.Linear(
             embed_size,
             output_size
         ).to(device)
 
-        #  Causal mask (geleceği görmemesi için)
         self.register_buffer(
             "mask",
             torch.triu(
@@ -64,14 +60,11 @@ class MultiHeadAttention(nn.Module):
         )
 
     def forward(self, x):
-        # x shape: (seq_len, batch, embed_dim)
 
         seq_len = x.shape[0]
 
-        #  Context length sınırı
         x = x[:self.context_length]
 
-        #  Maskeyi doğru boyutta al
         attention_mask = self.mask[:seq_len, :seq_len]
 
         out, _ = self.multi_head_attention(
