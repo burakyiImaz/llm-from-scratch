@@ -39,7 +39,7 @@ class Embedding(nn.Module):
     def __init__(self, vocab_size, embedding_dim, context_length, device="cpu"):
         super().__init__()
 
-        #  vocab_size'ı dışarıdan erişilebilir yapıyoruz
+        #  vocab_size'ı dışarıdan erişilebilir yaptım
         # Böylece model.forward içinde
         # self.embedding.num_embeddings HATASI almayacağız
         self.num_embeddings = vocab_size  
