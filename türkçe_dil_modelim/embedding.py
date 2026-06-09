@@ -66,7 +66,6 @@ class Embedding(nn.Module):
         """
 
         #  Güvenlik: token id vocab dışına çıkmış mı?
-        # Bu kontrol SENİN debug için eklediğin yerle birebir uyumlu
         if torch.any(x >= self.num_embeddings):
             raise ValueError("Token id vocab_size dışına çıktı")
 
